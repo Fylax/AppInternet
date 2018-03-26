@@ -2,6 +2,7 @@ package it.polito.ese1.servlet;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.polito.ese1.controller.MainServlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

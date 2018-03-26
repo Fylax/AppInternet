@@ -17,7 +17,7 @@
 
   <servlet>
     <servlet-name>MainServlet</servlet-name>
-    <servlet-class>it.polito.ese1.servlet.MainServlet</servlet-class>
+    <servlet-class>it.polito.ese1.controller.MainServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
 

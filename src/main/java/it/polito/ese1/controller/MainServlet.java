@@ -1,7 +1,9 @@
-package it.polito.ese1.servlet;
+package it.polito.ese1.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.polito.ese1.model.GlobalPosition;
+import it.polito.ese1.model.GlobalPositions;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,7 +21,7 @@ public class MainServlet extends HttpServlet {
 
     private static Map<String, String> user = new HashMap<String, String>();
 
-    private static Map<String, List<GlobalPosition>> referencePositions = new ConcurrentHashMap<String, List<GlobalPosition>>();
+    private static final Map<String, GlobalPositions> referencePositions = new ConcurrentHashMap<String, GlobalPositions>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,9 +30,10 @@ public class MainServlet extends HttpServlet {
         ObjectMapper objectMapper = new ObjectMapper();
 
         resp.setContentType("application/json");
-        synchronized (referencePositions) {
 
-            objectMapper.writeValue(resp.getWriter(), referencePositions.get(userSession));
+        GlobalPositions user_positions = referencePositions.get(userSession);
+        synchronized (user_positions) {
+            objectMapper.writeValue(resp.getWriter(), user_positions.getPositions());
         }
         //for (GlobalPosition pos: referencePositions.get(userSession)) {    }
 
@@ -48,18 +51,10 @@ public class MainServlet extends HttpServlet {
 
             List<GlobalPosition> listPos = objectMapper.readValue(jsonData, new TypeReference<List<GlobalPosition>>(){});
 
-            //TODO: here should be checked validity of positions sequence!!!
-
-            for (GlobalPosition currPos: listPos) {
-
-                synchronized (referencePositions) {
-
-                    referencePositions.get(userSession).add(currPos);
-
-                    }
+            GlobalPositions user_positions = referencePositions.get(userSession);
+            synchronized (user_positions) {
+                user_positions.addPositions(listPos);
             }
-
-
         }catch (IOException io){
             throw new RuntimeException(io);
         }
@@ -69,7 +64,7 @@ public class MainServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-            //  init...
+        //  init...
         BufferedReader br = null;
         FileReader fr = null;
         String [] parts;
@@ -87,7 +82,7 @@ public class MainServlet extends HttpServlet {
                 user.put(parts[0], parts[1]);
 
                 // initialize positions..
-                referencePositions.put(parts[0], new ArrayList<GlobalPosition>());
+                referencePositions.put(parts[0], new GlobalPositions());
 
             }
 

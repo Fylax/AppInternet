@@ -4,31 +4,33 @@ import java.util.Date;
 
 public class GlobalPosition {
 
-    private double latitude;
-    private double longitude;
-    private Date timestamp;
+  private final double latitude;
+  private final double longitude;
+  private final Date timestamp;
 
-    public GlobalPosition(double latitude, double longitude, long timestamp) {
-        boolean valid = (latitude >= -90) &&
-                (latitude <= 90) &&
-                (longitude >= -180) &&
-                (longitude <= 180);
-        if(!valid) throw new IllegalArgumentException();
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.timestamp = new Date(timestamp);
+  public GlobalPosition(double latitude, double longitude, long timestamp) {
+    boolean valid = (latitude >= -90) &&
+                    (latitude <= 90) &&
+                    (longitude >= -180) &&
+                    (longitude <= 180);
+    if (!valid) {
+      throw new IllegalArgumentException();
     }
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.timestamp = new Date(timestamp);
+  }
 
-    public double getLatitude() {
-        return this.latitude;
-    }
+  public double getLatitude() {
+    return this.latitude;
+  }
 
-    public double getLongitude() {
-        return this.longitude;
-    }
+  public double getLongitude() {
+    return this.longitude;
+  }
 
-    public Date getTimestamp() {
-        return this.timestamp;
-    }
+  public Date getTimestamp() {
+    return this.timestamp;
+  }
 
 }

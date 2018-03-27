@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ese1.model.GlobalPosition;
 import it.polito.ese1.model.GlobalPositions;
+import it.polito.ese1.model.PositionException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,106 +14,114 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainServlet extends HttpServlet {
 
-    private static Map<String, String> user = new HashMap<String, String>();
+  private static final Map<String, String> user = new HashMap<>();
 
-    private static final Map<String, GlobalPositions> referencePositions = new ConcurrentHashMap<String, GlobalPositions>();
+  private static final Map<String, GlobalPositions> referencePositions = new HashMap<>();
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String userSession = req.getSession(false).getAttribute("user").toString();
-        ObjectMapper objectMapper = new ObjectMapper();
+    String userSession = req.getSession(false).getAttribute("user").toString();
+    ObjectMapper objectMapper = new ObjectMapper();
 
-        resp.setContentType("application/json");
+    resp.setContentType("application/json");
 
-        GlobalPositions user_positions = referencePositions.get(userSession);
-        synchronized (user_positions) {
-            objectMapper.writeValue(resp.getWriter(), user_positions.getPositions());
-        }
-        //for (GlobalPosition pos: referencePositions.get(userSession)) {    }
+    GlobalPositions user_positions = referencePositions.get(userSession);
+    synchronized (user_positions) {
+      objectMapper.writeValue(resp.getWriter(), user_positions.getPositions());
+    }
+    //for (GlobalPosition pos: referencePositions.get(userSession)) {    }
 
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+    String jsonData;
+    String userSession = req.getSession(false).getAttribute("user").toString();
+    ObjectMapper objectMapper = new ObjectMapper();
+    jsonData = req.getReader().readLine();
+
+    try {
+
+      List<GlobalPosition> listPos = objectMapper.readValue(jsonData, new TypeReference<List<GlobalPosition>>() {
+      });
+
+      GlobalPositions user_positions = referencePositions.get(userSession);
+      synchronized (user_positions) {
+        user_positions.addPositions(listPos);
+      }
+    } catch (IOException io) {
+      // TODO internal server error?
+      throw new RuntimeException(io);
+    } catch (PositionException e) {
+      // TODO bad request!
+      throw new RuntimeException(e);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  }
 
-        String jsonData;
-        String userSession = req.getSession(false).getAttribute("user").toString();
-        ObjectMapper objectMapper = new ObjectMapper();
-        jsonData = req.getReader().readLine();
+  @Override
+  public void init() throws ServletException {
 
-        try {
+    //  init...
+    BufferedReader br = null;
+    FileReader fr = null;
+    String[] parts;
 
-            List<GlobalPosition> listPos = objectMapper.readValue(jsonData, new TypeReference<List<GlobalPosition>>(){});
+    try {
 
-            GlobalPositions user_positions = referencePositions.get(userSession);
-            synchronized (user_positions) {
-                user_positions.addPositions(listPos);
-            }
-        }catch (IOException io){
-            throw new RuntimeException(io);
-        }
+      fr = new FileReader(this.getServletContext().getRealPath("/WEB-INF") + "/users.txt");
+      br = new BufferedReader(fr);
 
-    }
+      String line;
 
-    @Override
-    public void init() throws ServletException {
+      while ((line = br.readLine()) != null) {
 
-        //  init...
-        BufferedReader br = null;
-        FileReader fr = null;
-        String [] parts;
+        parts = line.split(" ");
+        user.put(parts[0], parts[1]);
 
-        try {
+        // initialize positions..
+        referencePositions.put(parts[0], new GlobalPositions());
 
-            fr = new FileReader(this.getServletContext().getRealPath("/WEB-INF") + "/users.txt");
-            br = new BufferedReader(fr);
-
-            String line;
-
-            while ((line = br.readLine()) != null) {
-
-                parts = line.split(" ");
-                user.put(parts[0], parts[1]);
-
-                // initialize positions..
-                referencePositions.put(parts[0], new GlobalPositions());
-
-            }
+      }
 
 
-        } catch (IOException e) {
+    } catch (IOException e) {
 
-            throw new ServletException();   // better RuntimeException ???
+      throw new ServletException();   // better RuntimeException ???
 
-        } finally {
+    } finally {
 
-            try {
+      try {
 
-                if (br != null)
-                    br.close();
-
-                if (fr != null)
-                    fr.close();
-
-            } catch (IOException ex) {
-
-                ex.printStackTrace();
-
-            }
+        if (br != null) {
+          br.close();
         }
 
+        if (fr != null) {
+          fr.close();
+        }
+
+      } catch (IOException ex) {
+
+        ex.printStackTrace();
+
+      }
     }
 
-    public static boolean checkUser(String u, String p) {
+  }
 
-        return (user.containsKey(u) && user.get(u).equals(p));
-    }
+  public static boolean checkUser(String u, String p) {
+
+    return (user.containsKey(u) && user.get(u).equals(p));
+  }
 
 }

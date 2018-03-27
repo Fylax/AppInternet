@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ese1.model.GlobalPosition;
 import it.polito.ese1.model.GlobalPositions;
 import it.polito.ese1.model.PositionException;
+import it.polito.ese1.model.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,9 +22,8 @@ import java.util.Map;
 
 public class MainServlet extends HttpServlet {
 
-  private static final Map<String, String> user = new HashMap<>();
-
-  private static final Map<String, GlobalPositions> referencePositions = new HashMap<>();
+  private static final Map<String, String> USERS = new HashMap<>();
+  private static final Map<String, User> USER_MAP = new HashMap<>();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,10 +33,8 @@ public class MainServlet extends HttpServlet {
 
     resp.setContentType("application/json");
 
-    GlobalPositions user_positions = referencePositions.get(userSession);
-    synchronized (user_positions) {
-      objectMapper.writeValue(resp.getWriter(), user_positions.getPositions());
-    }
+    var currentUser = USER_MAP.get(userSession);
+    objectMapper.writeValue(resp.getWriter(), currentUser.getPositions());
     //for (GlobalPosition pos: referencePositions.get(userSession)) {    }
 
   }
@@ -51,13 +49,12 @@ public class MainServlet extends HttpServlet {
 
     try {
 
-      List<GlobalPosition> listPos = objectMapper.readValue(jsonData, new TypeReference<List<GlobalPosition>>() {
-      });
+      List<GlobalPosition> listPos = objectMapper.readValue(jsonData,
+                                                            new TypeReference<List<GlobalPosition>>() {
+                                                            });
 
-      GlobalPositions user_positions = referencePositions.get(userSession);
-      synchronized (user_positions) {
-        user_positions.addPositions(listPos);
-      }
+      var currentUser = USER_MAP.get(userSession);
+      currentUser.addPositions(listPos);
     } catch (IOException io) {
       // TODO internal server error?
       throw new RuntimeException(io);
@@ -83,14 +80,11 @@ public class MainServlet extends HttpServlet {
 
       String line;
 
+      int i = 0;
       while ((line = br.readLine()) != null) {
-
         parts = line.split(" ");
-        user.put(parts[0], parts[1]);
-
-        // initialize positions..
-        referencePositions.put(parts[0], new GlobalPositions());
-
+        USER_MAP.put(parts[0], new User(parts[0]));
+        i += 1;
       }
 
 
@@ -121,7 +115,7 @@ public class MainServlet extends HttpServlet {
 
   public static boolean checkUser(String u, String p) {
 
-    return (user.containsKey(u) && user.get(u).equals(p));
+    return (USERS.containsKey(u) && USERS.get(u).equals(p));
   }
 
 }

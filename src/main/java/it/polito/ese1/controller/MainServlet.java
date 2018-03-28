@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ese1.model.Position;
 import it.polito.ese1.model.PositionException;
 import it.polito.ese1.model.User;
+import it.polito.ese1.view.JsonPosition;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,12 +28,9 @@ public class MainServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String userSession = req.getSession(false).getAttribute("user").toString();
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    resp.setContentType("application/json");
-
     var currentUser = USER_MAP.get(userSession);
-    objectMapper.writeValue(resp.getWriter(), currentUser.getPositions());
+    it.polito.ese1.view.Position pos = new JsonPosition();
+    pos.serialize(resp, currentUser);
     //for (Position pos: referencePositions.get(userSession)) {    }
 
   }
@@ -112,7 +110,6 @@ public class MainServlet extends HttpServlet {
   }
 
   public static boolean checkUser(String u, String p) {
-
     return (USERS.containsKey(u) && USERS.get(u).equals(p));
   }
 

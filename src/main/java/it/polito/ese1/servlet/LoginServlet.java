@@ -12,11 +12,11 @@ import javax.servlet.http.*;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    @Override
+    /*@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendRedirect("login.jsp");
 
-    }
+    }*/
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -28,11 +28,10 @@ public class LoginServlet extends HttpServlet {
 
         //create ObjectMapper instance and read JSON
         ObjectMapper objectMapper = new ObjectMapper();
-        jsonData = request.getReader().readLine();
 
         try {
 
-            JsonNode rootNode = objectMapper.readTree(jsonData);
+            JsonNode rootNode = objectMapper.readTree(request.getReader());
             JsonNode idNode = rootNode.path("user");
             username = idNode.asText();
 
@@ -53,10 +52,9 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", username);   //TODO: diamo per scontato siano univoci in users.txt ?!?!
             //setting session to expiry in 30 mins
             session.setMaxInactiveInterval(30*60);
-            Cookie userName = new Cookie("user", username);
-            userName.setMaxAge(30*60);
-            response.addCookie(userName);
-            response.sendRedirect("HelloWorld.jsp");
+
+            //TODO: il redirect cosi non funziona, dobbiamo specificare eventualmente l'intero path
+            //response.sendRedirect("HelloWorld.jsp");
         }
         else {
             response.sendError(401, " * The user name or password is incorrect!!! * ");

@@ -7,6 +7,7 @@ import it.polito.ese1.model.PositionException;
 import it.polito.ese1.model.User;
 import it.polito.ese1.view.JsonPosition;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,6 @@ import java.util.Map;
 
 public class MainServlet extends HttpServlet {
 
-  private static final Map<String, String> USERS = new HashMap<>();
   private static final Map<String, User> USER_MAP = new HashMap<>();
 
   @Override
@@ -38,16 +38,14 @@ public class MainServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-    String jsonData;
     String userSession = req.getSession(false).getAttribute("user").toString();
     ObjectMapper objectMapper = new ObjectMapper();
-    jsonData = req.getReader().readLine();
 
     try {
 
-      List<Position> listPos = objectMapper.readValue(jsonData,
+      List<Position> listPos = objectMapper.readValue(req.getReader(),
                                                       new TypeReference<List<Position>>() {
-                                                            });
+                                                      });
 
       var currentUser = USER_MAP.get(userSession);
       currentUser.addPositions(listPos);
@@ -76,13 +74,10 @@ public class MainServlet extends HttpServlet {
 
       String line;
 
-      int i = 0;
       while ((line = br.readLine()) != null) {
         parts = line.split(" ");
-        USER_MAP.put(parts[0], new User(parts[0]));
-        i += 1;
+        USER_MAP.put(parts[0], new User(parts[0], parts[1]));
       }
-
 
     } catch (IOException e) {
 
@@ -110,7 +105,8 @@ public class MainServlet extends HttpServlet {
   }
 
   public static boolean checkUser(String u, String p) {
-    return (USERS.containsKey(u) && USERS.get(u).equals(p));
+
+    return (USER_MAP.containsKey(u) && USER_MAP.get(u).equals(p));
   }
 
 }

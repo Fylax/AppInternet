@@ -9,9 +9,11 @@ public class User {
   private Positions positions = new Positions();
 
   private String name;
+  private String pwd;
 
-  public User(String name) {
+  public User(String name, String pwd) {
     this.name = name;
+    this.pwd = pwd;
   }
 
 

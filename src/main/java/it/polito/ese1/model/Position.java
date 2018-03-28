@@ -6,6 +6,12 @@ public class Position {
   private final double longitude;
   private final long timestamp;
 
+  public Position () {
+    latitude = 0;
+    longitude = 0;
+    timestamp = 0;
+  }
+
   public Position(double latitude, double longitude, long timestamp) {
     boolean valid = (latitude >= -90) &&
                     (latitude <= 90) &&

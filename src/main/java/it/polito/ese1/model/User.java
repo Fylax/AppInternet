@@ -28,13 +28,22 @@ public class User {
 
   public void addPositions(List<Position> positions) throws PositionException {
     this.lock.writeLock().lock();
-    this.positions.addPositions(positions);
+    try {
+      this.positions.addPositions(positions);
+    }
+    catch(PositionException e){
+      this.lock.writeLock().unlock();
+      throw e;
+    }
     this.lock.writeLock().unlock();
   }
 
-  public List<Position> getPositions() {
+
+  public List<Position> getPositions(String startString, String endString) {
+    long start =  startString == null ? 0 : Long.valueOf(startString);
+    long end =  endString == null ? Long.MAX_VALUE : Long.valueOf(endString);
     this.lock.readLock().lock();
-    var positions = this.positions.getPositions();
+    var positions = this.positions.getPositions(start, end);
     this.lock.readLock().unlock();
     return positions;
   }

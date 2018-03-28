@@ -30,7 +30,11 @@ public class MainServlet extends HttpServlet {
     String userSession = req.getSession(false).getAttribute("user").toString();
     var currentUser = USER_MAP.get(userSession);
     it.polito.ese1.view.Position pos = new JsonPosition();
-    pos.serialize(resp, currentUser);
+    String start = req.getParameter("start");
+    String end = req.getParameter("end");
+
+    List<Position>  positionList = currentUser.getPositions(start, end);
+    pos.serialize(resp, positionList);
     //for (Position pos: referencePositions.get(userSession)) {    }
 
   }

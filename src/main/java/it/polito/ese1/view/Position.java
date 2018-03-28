@@ -1,10 +1,9 @@
 package it.polito.ese1.view;
 
-import it.polito.ese1.model.User;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public interface Position {
-  void serialize(HttpServletResponse response, User user) throws IOException;
+  void serialize(HttpServletResponse response, List<it.polito.ese1.model.Position> positionList) throws IOException;
 }

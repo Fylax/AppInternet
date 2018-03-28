@@ -2,6 +2,8 @@ package it.polito.ese1.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Positions {
 
@@ -27,7 +29,7 @@ public class Positions {
       reference = positions.get(0);
     } else {
       i = 0;
-      reference = this.positions.get(this.positions.size());
+      reference = this.positions.get(this.positions.size() - 1);
     }
 
     Distance distance = new HaversineDistance();
@@ -36,7 +38,7 @@ public class Positions {
       Position current = positions.get(i);
       // First check if timestamps are valid (if not, no distance computation is performed)
       // then compute the distance and get the speed in m/s.
-      boolean valid = current.getTimestamp() < reference.getTimestamp() &&
+      boolean valid = current.getTimestamp() > reference.getTimestamp() &&
                       ((distance.getDistance(reference, current)) /
                        (current.getTimestamp() - reference.getTimestamp())) < 100;
       if (!valid) {
@@ -47,7 +49,14 @@ public class Positions {
     this.positions.addAll(positions);
   }
 
-  List<Position> getPositions() {
-    return this.positions;
+
+  List<Position> getPositions(long start, long end){
+    if(start == 0 && end == 0)
+      return this.positions;
+    if(start > end)     //in caso i parametri non siano coerenti ritorna una lista vuota
+      return new LinkedList<>();
+    List<Position> listP = this.positions.stream().filter(p ->
+              p.getTimestamp() >= start && p.getTimestamp() <= end).collect(Collectors.toList());
+    return listP;
   }
 }

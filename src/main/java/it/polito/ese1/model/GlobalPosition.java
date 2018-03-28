@@ -1,11 +1,12 @@
 package it.polito.ese1.model;
 
+import java.util.Date;
 
 public class GlobalPosition {
 
   private final double latitude;
   private final double longitude;
-  private final long timestamp;
+  private final Date timestamp;
 
   public GlobalPosition(double latitude, double longitude, long timestamp) {
     boolean valid = (latitude >= -90) &&
@@ -17,7 +18,7 @@ public class GlobalPosition {
     }
     this.latitude = latitude;
     this.longitude = longitude;
-    this.timestamp = timestamp;
+    this.timestamp = new Date(timestamp);
   }
 
   public double getLatitude() {
@@ -28,7 +29,7 @@ public class GlobalPosition {
     return this.longitude;
   }
 
-  public long getTimestamp() {
+  public Date getTimestamp() {
     return this.timestamp;
   }
 

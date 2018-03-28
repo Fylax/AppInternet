@@ -9,6 +9,15 @@ public class User {
   private Positions positions = new Positions();
 
   private String name;
+
+  public String getPwd() {
+    return pwd;
+  }
+
+  public void setPwd(String pwd) {
+    this.pwd = pwd;
+  }
+
   private String pwd;
 
   public User(String name, String pwd) {

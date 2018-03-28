@@ -106,7 +106,7 @@ public class MainServlet extends HttpServlet {
 
   public static boolean checkUser(String u, String p) {
 
-    return (USER_MAP.containsKey(u) && USER_MAP.get(u).equals(p));
+    return (USER_MAP.containsKey(u) && USER_MAP.get(u).getPwd().equals(p));
   }
 
 }

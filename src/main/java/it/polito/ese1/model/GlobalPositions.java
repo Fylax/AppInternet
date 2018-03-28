@@ -35,10 +35,10 @@ public class GlobalPositions {
     for (; i < numPositions; i++) {
       GlobalPosition current = positions.get(i);
       // First check if timestamps are valid (if not, no distance computation is performed)
-      // then compute the distance and get the speed in mm/ms (which is equal to m/s).
-      boolean valid = current.getTimestamp().after(reference.getTimestamp()) &&
-                      ((distance.getDistance(reference, current) * 1000) /
-                       (current.getTimestamp().getTime() - reference.getTimestamp().getTime())) < 100;
+      // then compute the distance and get the speed in m/s.
+      boolean valid = current.getTimestamp() < reference.getTimestamp() &&
+                      ((distance.getDistance(reference, current)) /
+                       (current.getTimestamp() - reference.getTimestamp())) < 100;
       if (!valid) {
         throw new PositionException();
       }

@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class User {
   private ReadWriteLock lock = new ReentrantReadWriteLock(true);
-  private GlobalPositions positions = new GlobalPositions();
+  private Positions positions = new Positions();
 
   private String name;
 
@@ -15,13 +15,13 @@ public class User {
   }
 
 
-  public void addPositions(List<GlobalPosition> positions) throws PositionException {
+  public void addPositions(List<Position> positions) throws PositionException {
     this.lock.writeLock().lock();
     this.positions.addPositions(positions);
     this.lock.writeLock().unlock();
   }
 
-  public List<GlobalPosition> getPositions() {
+  public List<Position> getPositions() {
     this.lock.readLock().lock();
     var positions = this.positions.getPositions();
     this.lock.readLock().unlock();

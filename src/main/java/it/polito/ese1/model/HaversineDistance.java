@@ -5,7 +5,7 @@ class HaversineDistance implements Distance {
   private static final double R = 6371e3;
 
   @Override
-  public double getDistance(GlobalPosition src, GlobalPosition dst) {
+  public double getDistance(Position src, Position dst) {
     double lat1 = Math.toRadians(src.getLatitude());
     double lat2 = Math.toRadians(dst.getLatitude());
     double deltaLng = Math.toRadians(dst.getLongitude() - src.getLongitude());

@@ -2,12 +2,10 @@ package it.polito.ese1.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.polito.ese1.model.GlobalPosition;
-import it.polito.ese1.model.GlobalPositions;
+import it.polito.ese1.model.Position;
 import it.polito.ese1.model.PositionException;
 import it.polito.ese1.model.User;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +33,7 @@ public class MainServlet extends HttpServlet {
 
     var currentUser = USER_MAP.get(userSession);
     objectMapper.writeValue(resp.getWriter(), currentUser.getPositions());
-    //for (GlobalPosition pos: referencePositions.get(userSession)) {    }
+    //for (Position pos: referencePositions.get(userSession)) {    }
 
   }
 
@@ -49,8 +47,8 @@ public class MainServlet extends HttpServlet {
 
     try {
 
-      List<GlobalPosition> listPos = objectMapper.readValue(jsonData,
-                                                            new TypeReference<List<GlobalPosition>>() {
+      List<Position> listPos = objectMapper.readValue(jsonData,
+                                                      new TypeReference<List<Position>>() {
                                                             });
 
       var currentUser = USER_MAP.get(userSession);

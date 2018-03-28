@@ -3,9 +3,9 @@ package it.polito.ese1.model;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GlobalPositions {
+public class Positions {
 
-  private final List<GlobalPosition> positions = new LinkedList<>();
+  private final List<Position> positions = new LinkedList<>();
 
   /**
    * Checks a list of positions and, if they validate, it adds them to the ones already defined for
@@ -15,13 +15,13 @@ public class GlobalPositions {
    *
    * @param positions List of given user positions.
    */
-  void addPositions(List<GlobalPosition> positions) throws PositionException {
+  void addPositions(List<Position> positions) throws PositionException {
     if (positions.isEmpty()) {
       return;
     }
 
     int i;
-    GlobalPosition reference;
+    Position reference;
     if (this.positions.isEmpty()) {
       i = 1;
       reference = positions.get(0);
@@ -33,7 +33,7 @@ public class GlobalPositions {
     Distance distance = new HaversineDistance();
     int numPositions = positions.size();
     for (; i < numPositions; i++) {
-      GlobalPosition current = positions.get(i);
+      Position current = positions.get(i);
       // First check if timestamps are valid (if not, no distance computation is performed)
       // then compute the distance and get the speed in m/s.
       boolean valid = current.getTimestamp() < reference.getTimestamp() &&
@@ -47,7 +47,7 @@ public class GlobalPositions {
     this.positions.addAll(positions);
   }
 
-  List<GlobalPosition> getPositions() {
+  List<Position> getPositions() {
     return this.positions;
   }
 }

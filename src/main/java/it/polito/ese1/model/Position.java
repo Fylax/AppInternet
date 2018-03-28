@@ -1,12 +1,12 @@
 package it.polito.ese1.model;
 
-public class GlobalPosition {
+public class Position {
 
   private final double latitude;
   private final double longitude;
   private final long timestamp;
 
-  public GlobalPosition(double latitude, double longitude, long timestamp) {
+  public Position(double latitude, double longitude, long timestamp) {
     boolean valid = (latitude >= -90) &&
                     (latitude <= 90) &&
                     (longitude >= -180) &&

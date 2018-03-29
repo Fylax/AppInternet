@@ -35,8 +35,6 @@ public class MainServlet extends HttpServlet {
 
     List<Position>  positionList = currentUser.getPositions(start, end);
     pos.serialize(resp, positionList);
-    //for (Position pos: referencePositions.get(userSession)) {    }
-
   }
 
   @Override

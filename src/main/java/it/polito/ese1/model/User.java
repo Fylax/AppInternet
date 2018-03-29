@@ -30,21 +30,33 @@ public class User {
     this.lock.writeLock().lock();
     try {
       this.positions.addPositions(positions);
-    }
-    catch(PositionException e){
+    } finally {
       this.lock.writeLock().unlock();
-      throw e;
     }
-    this.lock.writeLock().unlock();
   }
 
 
   public List<Position> getPositions(String startString, String endString) {
-    long start =  startString == null ? 0 : Long.valueOf(startString);
-    long end =  endString == null ? Long.MAX_VALUE : Long.valueOf(endString);
+    long start;
+    try {
+      start = Long.valueOf(startString);
+    } catch (NumberFormatException nfe) {
+      start = 0;
+    }
+    long end;
+    try {
+      end = Long.valueOf(endString);
+    } catch (NumberFormatException nfe) {
+      end = Long.MAX_VALUE;
+    }
+    List<Position> positions = null;
     this.lock.readLock().lock();
-    var positions = this.positions.getPositions(start, end);
-    this.lock.readLock().unlock();
+    try {
+      positions = this.positions.getPositions(start, end);
+    } catch (PositionException ignored) {
+    } finally {
+      this.lock.readLock().unlock();
+    }
     return positions;
   }
 }

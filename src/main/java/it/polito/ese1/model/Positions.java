@@ -1,8 +1,8 @@
 package it.polito.ese1.model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Positions {
@@ -50,13 +50,33 @@ public class Positions {
   }
 
 
-  List<Position> getPositions(long start, long end){
-    if(start == 0 && end == 0)
-      return this.positions;
-    if(start > end)     //in caso i parametri non siano coerenti ritorna una lista vuota
-      return new LinkedList<>();
-    List<Position> listP = this.positions.stream().filter(p ->
-              p.getTimestamp() >= start && p.getTimestamp() <= end).collect(Collectors.toList());
-    return listP;
+  List<Position> getPositions() {
+    try {
+      return this.getPositions(0L, 0L);
+    } catch (PositionException pe) {
+      // impossible catch
+      return null;
+    }
+  }
+
+  List<Position> getPositions(long since) {
+    try {
+      return this.getPositions(since, Long.MAX_VALUE);
+    } catch (PositionException pe) {
+      // impossible catch
+      return null;
+    }
+  }
+
+  List<Position> getPositions(long start, long end) throws PositionException {
+    if (start == 0 && end == 0) {
+      return new ArrayList<>(this.positions);
+    }
+    if (start > end) { // in caso i parametri non siano coerenti ritorna una lista vuota
+      throw new PositionException();
+    }
+    return this.positions.stream().
+        filter(p -> p.getTimestamp() >= start && p.getTimestamp() <= end).
+        collect(Collectors.toList());
   }
 }

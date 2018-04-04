@@ -32,9 +32,9 @@ public class FilterPosition implements Filter {
     if (loggedIn ^ loginRequest) {
       chain.doFilter(request, response);
     } else if (loggedIn && loginRequest) {
-
+      response.sendError(HttpServletResponse.SC_CONFLICT, "You are already loggedIn.");
     } else {
-      response.sendError(401, " * Unauthorized!!! * ");
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, " * Unauthorized!!! * ");
     }
 
   }

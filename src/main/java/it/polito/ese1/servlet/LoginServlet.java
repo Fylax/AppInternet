@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ese1.controller.MainServlet;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
@@ -19,12 +18,10 @@ public class LoginServlet extends HttpServlet {
     }*/
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-
         String username;
         String password;
-        String jsonData;
 
         //create ObjectMapper instance and read JSON
         ObjectMapper objectMapper = new ObjectMapper();
@@ -39,7 +36,8 @@ public class LoginServlet extends HttpServlet {
             password = idNode.asText();
 
         }catch (IOException io){
-            throw new RuntimeException(io);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurs processing the request.");
+            return;
         }
 
         //System.out.println("User: " + username + "  -  Password: " + password);

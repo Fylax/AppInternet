@@ -51,29 +51,21 @@ public class Positions {
 
 
   List<Position> getPositions() {
-    try {
-      return this.getPositions(0L, 0L);
-    } catch (PositionException pe) {
-      // impossible catch
-      return null;
-    }
+    return this.getPositions(0L, 0L);
   }
 
   List<Position> getPositions(long since) {
-    try {
-      return this.getPositions(since, Long.MAX_VALUE);
-    } catch (PositionException pe) {
-      // impossible catch
-      return null;
-    }
+    return this.getPositions(since, Long.MAX_VALUE);
   }
 
-  List<Position> getPositions(long start, long end) throws PositionException {
+  List<Position> getPositions(long start, long end){
     if (start == 0 && end == 0) {
       return new ArrayList<>(this.positions);
     }
-    if (start > end) { // in caso i parametri non siano coerenti ritorna una lista vuota
-      throw new PositionException();
+    if (start > end) {
+      return this.positions.stream().
+              filter(p -> p.getTimestamp() >= end && p.getTimestamp() <= start).
+              collect(Collectors.toList());
     }
     return this.positions.stream().
         filter(p -> p.getTimestamp() >= start && p.getTimestamp() <= end).

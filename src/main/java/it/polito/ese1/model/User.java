@@ -53,7 +53,6 @@ public class User {
     this.lock.readLock().lock();
     try {
       positions = this.positions.getPositions(start, end);
-    } catch (PositionException ignored) {
     } finally {
       this.lock.readLock().unlock();
     }

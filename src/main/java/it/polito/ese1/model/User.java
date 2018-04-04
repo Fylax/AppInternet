@@ -39,17 +39,17 @@ public class User {
   public List<Position> getPositions(String startString, String endString) {
     long start;
     try {
-      start = Long.valueOf(startString);
+      start = Math.round(Double.valueOf(startString));
     } catch (NumberFormatException nfe) {
       start = 0;
     }
     long end;
     try {
-      end = Long.valueOf(endString);
+      end = Math.round(Double.valueOf(endString));
     } catch (NumberFormatException nfe) {
       end = Long.MAX_VALUE;
     }
-    List<Position> positions = null;
+    List<Position> positions;
     this.lock.readLock().lock();
     try {
       positions = this.positions.getPositions(start, end);

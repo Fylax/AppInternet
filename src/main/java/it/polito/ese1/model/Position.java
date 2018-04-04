@@ -1,6 +1,6 @@
 package it.polito.ese1.model;
 
-public class Position {
+public final class Position {
 
   private final double latitude;
   private final double longitude;

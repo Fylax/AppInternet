@@ -49,15 +49,14 @@ public class MainServlet extends HttpServlet {
     try {
 
       List<Position> listPos = objectMapper.readValue(req.getReader(),
-                                                      new TypeReference<List<Position>>() {
-                                                      });
+              new TypeReference<List<Position>>() {
+              });
 
       var currentUser = USER_MAP.get(userSession);
       currentUser.addPositions(listPos);
     } catch (PositionException e) {
       resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Your positions are not valid.");
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurs processing your request.");
     }
     //maybe is better handle error using a servlet in order to handle directly ServletException, IoException and RunTimeException

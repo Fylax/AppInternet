@@ -6,7 +6,7 @@ public class Position {
   private final double longitude;
   private final long timestamp;
 
-  public Position () {
+  public Position() {
     latitude = 0;
     longitude = 0;
     timestamp = 0;
@@ -14,9 +14,9 @@ public class Position {
 
   public Position(double latitude, double longitude, long timestamp) {
     boolean valid = (latitude >= -90) &&
-                    (latitude <= 90) &&
-                    (longitude >= -180) &&
-                    (longitude <= 180);
+            (latitude <= 90) &&
+            (longitude >= -180) &&
+            (longitude <= 180);
     if (!valid) {
       throw new IllegalArgumentException();
     }

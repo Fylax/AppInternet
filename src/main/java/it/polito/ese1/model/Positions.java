@@ -39,8 +39,8 @@ public class Positions {
       // First check if timestamps are valid (if not, no distance computation is performed)
       // then compute the distance and get the speed in m/s.
       boolean valid = current.getTimestamp() > reference.getTimestamp() &&
-                      ((distance.getDistance(reference, current)) /
-                       (current.getTimestamp() - reference.getTimestamp())) < 100;
+              ((distance.getDistance(reference, current)) /
+                      (current.getTimestamp() - reference.getTimestamp())) < 100;
       if (!valid) {
         throw new PositionException();
       }
@@ -58,7 +58,7 @@ public class Positions {
     return this.getPositions(since, Long.MAX_VALUE);
   }
 
-  List<Position> getPositions(long start, long end){
+  List<Position> getPositions(long start, long end) {
     if (start == 0 && end == 0) {
       return new ArrayList<>(this.positions);
     }
@@ -68,7 +68,7 @@ public class Positions {
               collect(Collectors.toList());
     }
     return this.positions.stream().
-        filter(p -> p.getTimestamp() >= start && p.getTimestamp() <= end).
-        collect(Collectors.toList());
+            filter(p -> p.getTimestamp() >= start && p.getTimestamp() <= end).
+            collect(Collectors.toList());
   }
 }

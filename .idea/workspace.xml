@@ -9,16 +9,8 @@
     <bookmark url="file://$PROJECT_DIR$" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be9901c3-0482-4347-a77f-f4ead54d6f64" name="Default" comment="Aggiunta gestione nel FilterPosition per Accept and Content-Type headers. Ho fatto qualche test con postman e va. Ovviamente verificate! Buon pranzo ragazzi!!!">
-      <change beforePath="" afterPath="$PROJECT_DIR$/Es1.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Es1_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/Es1_war_exploded.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="be9901c3-0482-4347-a77f-f4ead54d6f64" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ese1/servlet/FilterPosition.java" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ese1/servlet/FilterPosition.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ese1/servlet/LoginServlet.java" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ese1/servlet/LoginServlet.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ese1/view/JsonPosition.java" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ese1/view/JsonPosition.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -744,7 +736,7 @@
       <workItem from="1521975469121" duration="22060000" />
       <workItem from="1522083270301" duration="5864000" />
       <workItem from="1522830715956" duration="1781000" />
-      <workItem from="1522832530417" duration="18250000" />
+      <workItem from="1522832530417" duration="18286000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiunto .gitignore, finito GlobalPosition (spostato in model)">
       <created>1522085500691</created>
@@ -753,11 +745,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522085500692</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Aggiunta gestione nel FilterPosition per Accept and Content-Type headers. Ho fatto qualche test con postman e va. Ovviamente verificate! Buon pranzo ragazzi!!!">
+      <created>1522928349949</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1522928349949</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75035000" />
+    <option name="totallyTimeSpent" value="75071000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

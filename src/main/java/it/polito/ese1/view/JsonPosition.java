@@ -11,8 +11,8 @@ import java.util.List;
 public class JsonPosition implements Position {
 
   @Override
-  public void serialize(HttpServletResponse response, List<it.polito.ese1.model.Position> positionList)
-      throws IOException {
+  public void serialize(HttpServletResponse response, List<it.polito.ese1.model.Position> positionList) throws IOException
+  {
     var objectMapper = new ObjectMapper();
     response.setContentType("application/json");
     objectMapper.writeValue(response.getWriter(), positionList);

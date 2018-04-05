@@ -21,6 +21,7 @@ public class LoginServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String username;
     String password;
+    System.out.println("* I AM HERE!");
 
     //create ObjectMapper instance and read JSON
     ObjectMapper objectMapper = new ObjectMapper();
@@ -46,7 +47,7 @@ public class LoginServlet extends HttpServlet {
       // 200 OK, initializing user's session..
 
       HttpSession session = request.getSession();
-      session.setAttribute("user", username);   //TODO: diamo per scontato siano univoci in users.txt ?!?!
+      session.setAttribute("user", username);
       //setting session to expiry in 30 mins
       session.setMaxInactiveInterval(30 * 60);
 

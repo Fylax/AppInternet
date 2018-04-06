@@ -5,6 +5,7 @@ import jdk.incubator.http.HttpClient;
 import jdk.incubator.http.HttpRequest;
 import jdk.incubator.http.HttpResponse;
 
+import java.net.CookieManager;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Main {
             HttpClient client = HttpClient.
                     newBuilder().
                     version(HttpClient.Version.HTTP_2).
+                    cookieHandler(new CookieManager()).
                     followRedirects(HttpClient.Redirect.SECURE).
                     build();
 

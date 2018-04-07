@@ -40,13 +40,13 @@ public class User {
     long start;
     try {
       start = Math.round(Double.valueOf(startString));
-    } catch (NumberFormatException nfe) {
+    } catch (NumberFormatException | NullPointerException e) {
       start = 0;
     }
     long end;
     try {
       end = Math.round(Double.valueOf(endString));
-    } catch (NumberFormatException nfe) {
+    } catch (NumberFormatException | NullPointerException e) {
       end = Long.MAX_VALUE;
     }
     List<Position> positions;

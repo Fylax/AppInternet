@@ -13,8 +13,9 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.0" />
           <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0" />
         </element>
+        <element id="dir-copy" path="$PROJECT_DIR$/Server/src/main/webapp/WEB-INF" />
       </element>
-      <element id="dir-copy" path="$PROJECT_DIR$/Server/src/main/webapp/WEB-INF" />
+
     </root>
   </artifact>
 </component>

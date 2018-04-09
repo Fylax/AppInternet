@@ -50,7 +50,6 @@ public class Main {
 
                 HttpRequest req_p = HttpRequest.newBuilder().
                         uri(new URI(baseUri + "position")).
-                        header("Cookie", resp.headers().firstValue("set-cookie").get()).
                         header("content-type", "application/json").
                         POST(HttpRequest.BodyPublisher.fromString(s)).
                         build();
@@ -61,7 +60,6 @@ public class Main {
                 if(res.statusCode() == 200){
                     HttpRequest r1 = HttpRequest.newBuilder().
                             uri(new URI(baseUri + "position")).
-                            header("Cookie", resp.headers().firstValue("set-cookie").get()).
                             header("accept", "application/json").
                             GET().
                             build();
@@ -70,23 +68,21 @@ public class Main {
 
                     HttpRequest r2 = HttpRequest.newBuilder().
                             uri(new URI(baseUri + "position?start=123&end=1234567")).
-                            header("Cookie", resp.headers().firstValue("set-cookie").get()).
                             header("accept", "application/json").
                             GET().
                             build();
                     HttpResponse<String> res2 = client.send(r2, HttpResponse.BodyHandler.asString(Charset.defaultCharset()));
-                    System.out.println(res2.toString());
+                    System.out.println(res2.body());
                 }
 
                 HttpRequest out = HttpRequest.newBuilder().
                         uri(new URI(baseUri + "logout")).
-                        header("Cookie", resp.headers().firstValue("set-cookie").get()).
                         header("content-type", "application/json").
-                        POST(HttpRequest.BodyPublisher.noBody()).
+                        GET().
                         build();
 
                 HttpResponse<String> r = client.send(out, HttpResponse.BodyHandler.asString(Charset.defaultCharset()));
-                System.out.println(r.toString());
+                System.out.println(r.body());
             }
             System.out.println(resp.toString());
         } catch (Exception e) {

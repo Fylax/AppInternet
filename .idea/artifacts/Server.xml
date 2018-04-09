@@ -2,6 +2,7 @@
   <artifact type="war" name="Server">
     <output-path>$PROJECT_DIR$/out/artifacts/Server</output-path>
     <root id="archive" name="Server.war">
+      <element id="javaee-facet-resources" facet="it.polito.it_AI.server/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="it.polito.it_AI.server" />
@@ -13,6 +14,7 @@
           <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0" />
         </element>
       </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/Server/src/main/webapp/WEB-INF" />
     </root>
   </artifact>
 </component>

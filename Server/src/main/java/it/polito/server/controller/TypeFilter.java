@@ -12,10 +12,7 @@ import java.io.IOException;
 
 public class TypeFilter implements Filter {
 
-  private ServletContext context;
-
   public void init(FilterConfig filterConfig) throws ServletException {
-    this.context = filterConfig.getServletContext();
   }
 
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -32,6 +29,7 @@ public class TypeFilter implements Filter {
       }
       if (!contentType.equalsIgnoreCase(MediaType.APPLICATION_JSON)) {
         response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        return;
       }
     } else if (request.getMethod().equalsIgnoreCase("GET")) {
       String acceptType = request.getHeader(HttpHeaders.ACCEPT);
@@ -39,8 +37,10 @@ public class TypeFilter implements Filter {
           !acceptType.equalsIgnoreCase("application/*") &&
           !acceptType.equalsIgnoreCase(MediaType.WILDCARD)) {
         response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+        return;
       }
     }
+    chain.doFilter(req, res);
   }
 
   public void destroy() {

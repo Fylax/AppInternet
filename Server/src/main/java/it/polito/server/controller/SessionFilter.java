@@ -30,7 +30,7 @@ public class SessionFilter implements Filter {
     final boolean loginRequest = request.getRequestURI().equals(request.getContextPath() + "/login");
 
     if (loggedIn ^ loginRequest) {
-      chain.doFilter(request, response);
+      chain.doFilter(req, res);
     } else if (loggedIn && loginRequest) {
       response.sendError(HttpServletResponse.SC_BAD_REQUEST);
     } else {

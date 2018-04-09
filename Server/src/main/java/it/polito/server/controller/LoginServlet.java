@@ -1,21 +1,23 @@
-package it.polito.ese1.servlet;
+package it.polito.server.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.polito.ese1.controller.MainServlet;
+import it.polito.server.model.User;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    /*@Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("login.jsp");
-
-    }*/
+  private static final Map<String, User> USER_MAP = new HashMap<>();
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -42,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 
     //System.out.println("User: " + username + "  -  Password: " + password);
 
-    if (MainServlet.checkUser(username, password)) {
+    if (LoginServlet.checkUser(username, password)) {
 
       // 200 OK, initializing user's session..
 
@@ -59,4 +61,27 @@ public class LoginServlet extends HttpServlet {
 
   }
 
+  @Override
+  public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    try (
+        FileReader fr = new FileReader(super.getServletContext().getRealPath("/WEB-INF") + "/users.txt");
+        BufferedReader br = new BufferedReader(fr)
+    ) {
+
+      String line;
+      String[] parts;
+      while ((line = br.readLine()) != null) {
+        parts = line.split(" ");
+        USER_MAP.put(parts[0], new User(parts[0], parts[1]));
+      }
+    } catch (IOException e) {
+      throw new ServletException();
+    }
+  }
+
+  private static boolean checkUser(String u, String p) {
+
+    return (USER_MAP.containsKey(u) && USER_MAP.get(u).getPwd().equals(p));
+  }
 }

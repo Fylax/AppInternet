@@ -1,4 +1,4 @@
-package it.polito.ese1.model;
+package it.polito.server.model;
 
 import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;

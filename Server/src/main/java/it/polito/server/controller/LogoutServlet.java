@@ -1,4 +1,4 @@
-package it.polito.ese1.servlet;
+package it.polito.server.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,19 +1,16 @@
-package it.polito.ese1.controller;
+package it.polito.server.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.polito.ese1.model.Position;
-import it.polito.ese1.model.PositionException;
-import it.polito.ese1.model.User;
-import it.polito.ese1.view.JsonPosition;
+import it.polito.server.model.Position;
+import it.polito.server.model.PositionException;
+import it.polito.server.model.User;
+import it.polito.server.view.JsonPosition;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +26,7 @@ public class MainServlet extends HttpServlet {
     try {
       String userSession = req.getSession(false).getAttribute("user").toString();
       var currentUser = USER_MAP.get(userSession);
-      it.polito.ese1.view.Position pos = new JsonPosition();
+      it.polito.server.view.Position pos = new JsonPosition();
       String start = req.getParameter("start");
       String end = req.getParameter("end");
 
@@ -63,54 +60,6 @@ public class MainServlet extends HttpServlet {
 
   }
 
-  @Override
-  public void init() throws ServletException {
 
-    //  init...
-    BufferedReader br = null;
-    FileReader fr = null;
-    String[] parts;
-
-    try {
-
-      fr = new FileReader(this.getServletContext().getRealPath("/WEB-INF") + "/users.txt");
-      br = new BufferedReader(fr);
-
-      String line;
-
-      while ((line = br.readLine()) != null) {
-        parts = line.split(" ");
-        USER_MAP.put(parts[0], new User(parts[0], parts[1]));
-      }
-
-    } catch (IOException e) {
-
-      throw new ServletException();   // better RuntimeException ???
-
-    } finally {
-
-      try {
-
-        if (br != null) {
-          br.close();
-        }
-
-        if (fr != null) {
-          fr.close();
-        }
-
-      } catch (IOException ex) {
-
-        ex.printStackTrace();
-
-      }
-    }
-
-  }
-
-  public static boolean checkUser(String u, String p) {
-
-    return (USER_MAP.containsKey(u) && USER_MAP.get(u).getPwd().equals(p));
-  }
 
 }

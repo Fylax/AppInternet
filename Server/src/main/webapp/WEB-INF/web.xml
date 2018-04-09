@@ -6,12 +6,12 @@
   <display-name>Archetype Created Web Application</display-name>
 
   <filter>
-    <filter-name>myfilterPos</filter-name>
-    <filter-class>it.polito.server.controller.FilterPosition</filter-class>
+    <filter-name>typeFilter</filter-name>
+    <filter-class>it.polito.server.controller.TypeFilter</filter-class>
   </filter>
 
   <filter-mapping>
-    <filter-name>myfilterPos</filter-name>
+    <filter-name>typeFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 

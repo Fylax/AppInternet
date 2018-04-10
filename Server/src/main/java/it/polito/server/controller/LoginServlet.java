@@ -14,16 +14,14 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-  private static final Map<String, User> USER_MAP = new HashMap<>();
+  static final Map<String, User> USER_MAP = new HashMap<>();
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String username;
     String password;
-    System.out.println("* I AM HERE!");
 
     //create ObjectMapper instance and read JSON
     ObjectMapper objectMapper = new ObjectMapper();
@@ -41,8 +39,6 @@ public class LoginServlet extends HttpServlet {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurs processing the request.");
       return;
     }
-
-    //System.out.println("User: " + username + "  -  Password: " + password);
 
     if (LoginServlet.checkUser(username, password)) {
 

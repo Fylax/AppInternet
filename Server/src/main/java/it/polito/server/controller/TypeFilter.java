@@ -33,7 +33,7 @@ public class TypeFilter implements Filter {
       }
     } else if (request.getMethod().equalsIgnoreCase("GET")) {
       String acceptType = request.getHeader(HttpHeaders.ACCEPT);
-      if (!acceptType.equalsIgnoreCase(MediaType.APPLICATION_JSON) &&
+      if (acceptType != null && !acceptType.equalsIgnoreCase(MediaType.APPLICATION_JSON) &&
           !acceptType.equalsIgnoreCase("application/*") &&
           !acceptType.equalsIgnoreCase(MediaType.WILDCARD)) {
         response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);

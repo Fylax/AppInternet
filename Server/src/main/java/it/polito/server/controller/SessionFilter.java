@@ -1,15 +1,10 @@
 package it.polito.server.controller;
-import it.polito.server.model.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SessionFilter implements Filter {
 

@@ -5,6 +5,7 @@ import jdk.incubator.http.HttpClient;
 import jdk.incubator.http.HttpRequest;
 import jdk.incubator.http.HttpResponse;
 
+import java.io.IOException;
 import java.net.CookieManager;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -53,8 +54,15 @@ public class Main {
                         header("content-type", "application/json").
                         POST(HttpRequest.BodyPublisher.fromString(s)).
                         build();
-
-                HttpResponse<String> res = client.send(req_p, HttpResponse.BodyHandler.asString(Charset.defaultCharset()));
+                System.out.println(req_p.headers());
+              HttpResponse<String> res = null;
+                try {
+                   res = client.send(req_p, HttpResponse.BodyHandler.asString(Charset.defaultCharset()));
+                }
+                catch(IOException e){
+                  System.out.println(res.statusCode());
+                  System.out.println(res.headers());
+                }
                 System.out.println(res.toString());
 
                 if(res.statusCode() == 200){
@@ -72,17 +80,16 @@ public class Main {
                             GET().
                             build();
                     HttpResponse<String> res2 = client.send(r2, HttpResponse.BodyHandler.asString(Charset.defaultCharset()));
-                    System.out.println(res2.body());
+                    System.out.println(res2.toString());
                 }
 
                 HttpRequest out = HttpRequest.newBuilder().
                         uri(new URI(baseUri + "logout")).
-                        header("content-type", "application/json").
                         GET().
                         build();
 
                 HttpResponse<String> r = client.send(out, HttpResponse.BodyHandler.asString(Charset.defaultCharset()));
-                System.out.println(r.body());
+                System.out.println(r.toString());
             }
             System.out.println(resp.toString());
         } catch (Exception e) {

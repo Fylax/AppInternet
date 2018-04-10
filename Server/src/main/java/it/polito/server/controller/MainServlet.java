@@ -8,6 +8,7 @@ import it.polito.server.model.User;
 import it.polito.server.view.JsonPosition;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,16 +17,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@WebServlet("/position")
 public class MainServlet extends HttpServlet {
-
-  private static final Map<String, User> USER_MAP = new HashMap<>();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     try {
       String userSession = req.getSession(false).getAttribute("user").toString();
-      var currentUser = USER_MAP.get(userSession);
+      var currentUser = LoginServlet.USER_MAP.get(userSession);
       it.polito.server.view.Position pos = new JsonPosition();
       String start = req.getParameter("start");
       String end = req.getParameter("end");
@@ -49,7 +48,7 @@ public class MainServlet extends HttpServlet {
               new TypeReference<List<Position>>() {
               });
 
-      var currentUser = USER_MAP.get(userSession);
+      var currentUser = LoginServlet.USER_MAP.get(userSession);
       currentUser.addPositions(listPos);
     } catch (PositionException e) {
       resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Your positions are not valid.");

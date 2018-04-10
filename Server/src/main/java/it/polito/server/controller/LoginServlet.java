@@ -4,14 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.server.model.User;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 public class LoginServlet extends HttpServlet {
@@ -26,17 +27,22 @@ public class LoginServlet extends HttpServlet {
     //create ObjectMapper instance and read JSON
     ObjectMapper objectMapper = new ObjectMapper();
 
+    Reader reader;
     try {
-
+       reader = request.getReader();
+    } catch (IOException io) {
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      return;
+    }
+    try {
       JsonNode rootNode = objectMapper.readTree(request.getReader());
       JsonNode idNode = rootNode.path("user");
       username = idNode.asText();
 
       idNode = rootNode.path("pwd");
       password = idNode.asText();
-
     } catch (IOException io) {
-      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurs processing the request.");
+      response.sendError(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
 
@@ -54,14 +60,13 @@ public class LoginServlet extends HttpServlet {
     } else {
       response.sendError(401, " * The user name or password is incorrect!!! * ");
     }
-
   }
 
   @Override
   public void init(ServletConfig config) throws ServletException {
     super.init(config);
     try (
-        FileReader fr = new FileReader(super.getServletContext().getRealPath("/WEB-INF") + "/users.txt");
+        Reader fr = new FileReader(super.getServletContext().getRealPath("/WEB-INF") + "/users.txt");
         BufferedReader br = new BufferedReader(fr)
     ) {
 

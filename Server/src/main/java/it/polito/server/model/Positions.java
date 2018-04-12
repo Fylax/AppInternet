@@ -59,6 +59,7 @@ public class Positions {
   }
 
   List<Position> getPositions(long start, long end) {
+
     if (start == 0 && end == 0) {
       return new ArrayList<>(this.positions);
     }

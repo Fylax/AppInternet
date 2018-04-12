@@ -38,7 +38,7 @@ public class Main {
 
             HttpResponse<String> resp = client.send(req, HttpResponse.BodyHandler.asString());
 
-            if( resp.statusCode() == 200){
+            if( resp.statusCode() == 200 ){
 
                 Position p1 = new Position(54,66, 123456);
                 Position p2 = new Position(54, 66, 123666);

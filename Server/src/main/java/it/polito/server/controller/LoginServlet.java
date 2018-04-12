@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
       return;
     }
     try {
-      JsonNode rootNode = objectMapper.readTree(request.getReader());
+      JsonNode rootNode = objectMapper.readTree(reader);
       JsonNode idNode = rootNode.path("user");
       username = idNode.asText();
 

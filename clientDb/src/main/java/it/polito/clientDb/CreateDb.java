@@ -30,7 +30,7 @@ public class CreateDb {
                          "username VARCHAR(100) NOT NULL UNIQUE," +
                          "secret CHAR(60) NOT NULL," +
                          "email VARCHAR(100) NOT NULL UNIQUE," +
-                         "status status NOT NULL DEFAULT 'awaiting');");
+                         "status user_status NOT NULL DEFAULT 'awaiting');");
       statement.executeBatch();
     } catch (Exception e) {
       System.out.println(e.getMessage());

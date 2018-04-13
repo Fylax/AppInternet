@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="clientDb" />
-        <module name="it.polito.it_AI.client" />
-        <module name="it.polito.it_AI.server" />
+        <module name="Client1" />
+        <module name="ClientCreateDb" />
+        <module name="Server1" />
       </profile>
     </annotationProcessing>
   </component>

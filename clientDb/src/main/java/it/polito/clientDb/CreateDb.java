@@ -5,9 +5,9 @@ import java.sql.*;
 public class CreateDb {
 
   public static void main(String[] args) {
-    try{
+    try {
       Class.forName("org.postgresql.Driver");
-    }catch (ClassNotFoundException e){
+    } catch (ClassNotFoundException e) {
       System.exit(-1);
     }
     try {
@@ -20,24 +20,21 @@ public class CreateDb {
 
   }
 
-  private static void createDatabase(Connection c) throws SQLException{
-    Statement s= null;
-    try {
-      String query="CREATE TYPE status AS ENUM ('banned', 'approved', 'awaiting');" +
-              "CREATE TABLE user (" +
-              "id SERIAL PRIMARY KEY," +
-              "username VARCHAR(100)," +
-              "secret CHAR(60)," +
-              "email VARCHAR(100)," +
-              "status status);";
-      s = c.createStatement();
-      s.executeQuery(query);
-    } finally {
-      try { if (s!=null) s.close();}
-      catch(Exception e){
-        System.out.println(e.getMessage());
-        e.printStackTrace();
-      }
+  private static void createDatabase(Connection c) throws SQLException {
+    try (Statement statement = c.createStatement()) {
+      statement.addBatch("DROP TYPE IF EXISTS user_status;");
+      statement.addBatch("DROP TABLE IF EXISTS users;");
+      statement.addBatch("CREATE TYPE user_status AS ENUM ('banned', 'approved', 'awaiting');");
+      statement.addBatch("CREATE TABLE users (" +
+                         "id SERIAL PRIMARY KEY," +
+                         "username VARCHAR(100) NOT NULL UNIQUE," +
+                         "secret CHAR(60) NOT NULL," +
+                         "email VARCHAR(100) NOT NULL UNIQUE," +
+                         "status status NOT NULL DEFAULT 'awaiting');");
+      statement.executeBatch();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      e.printStackTrace();
     }
   }
 

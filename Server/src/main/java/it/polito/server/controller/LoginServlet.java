@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
       String[] parts;
       while ((line = br.readLine()) != null) {
         parts = line.split(" ");
-        USER_MAP.put(parts[0], new User(parts[0], parts[1]));
+        USER_MAP.put(parts[0], new User(parts[0], parts[1], null, null));
       }
     } catch (IOException e) {
       throw new ServletException();
@@ -83,6 +83,6 @@ public class LoginServlet extends HttpServlet {
 
   private static boolean checkUser(String u, String p) {
 
-    return (USER_MAP.containsKey(u) && USER_MAP.get(u).getPwd().equals(p));
+    return (USER_MAP.containsKey(u) && USER_MAP.get(u).getSecret().equals(p));
   }
 }

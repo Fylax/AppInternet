@@ -8,21 +8,25 @@ public class User {
   private ReadWriteLock lock = new ReentrantReadWriteLock(true);
   private Positions positions = new Positions();
 
-  private String name;
+  private int uid;
+  private String username;
+  private String secret;
+  private String email;
+  private UserStatus userStatus;
 
-  public String getPwd() {
-    return pwd;
+  public String getSecret() {
+    return secret;
   }
 
-  public void setPwd(String pwd) {
-    this.pwd = pwd;
+  public void setSecret(String secret) {
+    this.secret = secret;
   }
 
-  private String pwd;
-
-  public User(String name, String pwd) {
-    this.name = name;
-    this.pwd = pwd;
+  public User(String name, String pwd, String email, UserStatus userStatus) {
+    this.username = name;
+    this.secret = pwd;
+    this.email = email;
+    this.userStatus = userStatus;
   }
 
 

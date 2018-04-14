@@ -27,7 +27,7 @@
     <input type="text" name="user"/><br>
 
     Please enter your password
-    <input type="text" name="pwd"/>
+    <input type="text" name="secret"/>
 
     <input type="submit" value="submit">
 

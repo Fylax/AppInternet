@@ -8,6 +8,7 @@
     <modules>
         <module>Server</module>
         <module>Client</module>
+        <module>clientDb</module>
     </modules>
     <name>Es1 Maven Webapp</name>
     <url>http://maven.apache.org</url>

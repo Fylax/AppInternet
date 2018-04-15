@@ -39,7 +39,7 @@ public class CreateDb {
                     "pos_id BIGSERIAL PRIMARY KEY," +
                     "t_stamp timestamp NOT NULL," +
                     "curr_location point NOT NULL," +
-                    "user_id VARCHAR(100) NOT NULL REFERENCES users(username))");
+                    "user_id INTEGER NOT NULL REFERENCES users(uid))");
 
             statement.addBatch("INSERT INTO users VALUES(DEFAULT, " +
                     "'corrado'," +
@@ -63,7 +63,7 @@ public class CreateDb {
                     "POINT(45.0649801, 7.6581405)," +
                     "'elena')");
             statement.addBatch("INSERT INTO positions VALUES(DEFAULT, " +
-                    "NOW()," +
+                    "NOW() + 1," +
                     "POINT(45.0649811, 7.6581415)," +
                     "'ciccio')");
             statement.executeBatch();

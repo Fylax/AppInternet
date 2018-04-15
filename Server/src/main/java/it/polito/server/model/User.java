@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class User {
-  private ReadWriteLock lock = new ReentrantReadWriteLock(true);
+
   private Positions positions = new Positions();
 
   private int uid;
@@ -20,21 +20,20 @@ public class User {
     this.userStatus = userStatus;
   }
 
+  public int getUid() {
+    return this.uid;
+  }
+
   public String getUsername() {
     return username;
   }
 
   public void addPositions(List<Position> positions) throws PositionException {
-    this.lock.writeLock().lock();
-    try {
-      this.positions.addPositions(positions);
-    } finally {
-      this.lock.writeLock().unlock();
-    }
+      this.positions.add(positions);
   }
 
 
-  public List<Position> getPositions(String user, String startString, String endString) {
+  public List<Position> getPositions(String startString, String endString) {
     long start;
     try {
       start = Math.round(Double.valueOf(startString));
@@ -47,14 +46,7 @@ public class User {
     } catch (NumberFormatException | NullPointerException e) {
       end = Long.MAX_VALUE;
     }
-    List<Position> positions;
-    this.lock.readLock().lock();
-    try {
-
-      positions = this.positions.getPositions(user, start, end);
-    } finally {
-      this.lock.readLock().unlock();
-    }
+    List<Position> positions = this.positions.get(this, start, end);
     return positions;
   }
 }

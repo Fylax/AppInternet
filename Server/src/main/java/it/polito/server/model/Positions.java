@@ -7,7 +7,26 @@ import java.util.stream.Collectors;
 
 public class Positions {
 
-  private final List<Position> positions = new LinkedList<>();
+  // TODO deve diventare cachedPosition
+  private final LinkedList<Position> positions = new LinkedList<>();
+  private final Distance distance = new HaversineDistance();
+
+  void add(Position position) throws PositionException {
+    if (this.positions.isEmpty()) {
+      this.positions.add(position);
+    } else {
+      Position reference = this.positions.getLast();
+      // First check if timestamps are valid (if not, no distance computation is performed)
+      // then compute the distance and get the speed in m/s.
+      boolean valid = position.getTimestamp() > reference.getTimestamp() &&
+                      ((distance.getDistance(reference, position)) /
+                       (position.getTimestamp() - reference.getTimestamp())) < 100;
+      if (!valid) {
+        throw new PositionException();
+      }
+    }
+  }
+
   /**
    * Checks a list of positions and, if they validate, it adds them to the ones already defined for
    * this user.
@@ -16,39 +35,17 @@ public class Positions {
    *
    * @param positions List of given user positions.
    */
-  void addPositions(List<Position> positions) throws PositionException {
+  void add(List<Position> positions) throws PositionException {
     if (positions.isEmpty()) {
       return;
     }
 
-    int i;
-    Position reference;
-    if (this.positions.isEmpty()) {
-      i = 1;
-      reference = positions.get(0);
-    } else {
-      i = 0;
-      reference = this.positions.get(this.positions.size() - 1);
+    for (var position: positions) {
+      this.add(position);
     }
-
-    Distance distance = new HaversineDistance();
-    int numPositions = positions.size();
-    for (; i < numPositions; i++) {
-      Position current = positions.get(i);
-      // First check if timestamps are valid (if not, no distance computation is performed)
-      // then compute the distance and get the speed in m/s.
-      boolean valid = current.getTimestamp() > reference.getTimestamp() &&
-              ((distance.getDistance(reference, current)) /
-                      (current.getTimestamp() - reference.getTimestamp())) < 100;
-      if (!valid) {
-        throw new PositionException();
-      }
-      reference = current;
-    }
-    this.positions.addAll(positions);
   }
 
-  List<Position> getPositions(String user, long start, long end) {
+  List<Position> get(User user, long start, long end) {
     if (start == 0 && end == 0) {
       return new ArrayList<>(this.positions);
     }
@@ -67,11 +64,11 @@ public class Positions {
 
   }
 
-  List<Position> getPositions(String user) {
-    return this.getPositions(user, 0L, 0L);
+  List<Position> get(User user) {
+    return this.get(user, 0L, 0L);
   }
 
-  List<Position> getPositions(String user, long since) {
-    return this.getPositions(user, since, Long.MAX_VALUE);
+  List<Position> get(User user, long since) {
+    return this.get(user, since, Long.MAX_VALUE);
   }
 }

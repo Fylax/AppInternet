@@ -4,8 +4,14 @@ import java.util.List;
 
 
 //TODO: si riesce a fare un solo metodo cghe varia la query in base al num di parametri? altrimenti c'è tanto codice duplicato
+// by Nico, immagino basti solo l'ultimo, tanto i controlli vengono fatti prima
 public interface PositionsDAO {
-    List<Position> getPositions(String user_id);
-    List<Position> getPositions(String user_id, long since);
-    List<Position> getPositions(String user_id, long start, long end);
+
+  void addPositions(User user, Positions positions);
+
+  List<Position> getPositions(User user);
+
+  List<Position> getPositions(User user, long since);
+
+  List<Position> getPositions(User user, long start, long end);
 }

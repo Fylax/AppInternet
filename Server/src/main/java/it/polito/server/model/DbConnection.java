@@ -1,5 +1,6 @@
 package it.polito.server.model;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -10,11 +11,13 @@ public class DbConnection {
   private static DbConnection dbConn;
   private DataSource dataSource;
 
-  private DbConnection(){
+  private DbConnection() {
     try {
-      InitialContext cxt = new InitialContext();
-      this.dataSource = (DataSource) cxt.lookup( "java:/comp/env/jdbc/postgres" );
-      if(this.dataSource == null){
+      Context initialContext = new InitialContext();
+      Context environmentContext = (Context) initialContext.lookup("java:comp/env");
+
+      this.dataSource = (DataSource) environmentContext.lookup("jdbc/db");
+      if (this.dataSource == null) {
         throw new RuntimeException();
       }
     } catch (NamingException e) {
@@ -22,15 +25,11 @@ public class DbConnection {
     }
   }
 
-  public static DbConnection getInstance(){
-    if(dbConn == null){
+  static Connection getConnection() throws SQLException {
+    if (dbConn == null) {
       dbConn = new DbConnection();
     }
-    return dbConn;
-  }
-
-  public Connection getConnection() throws SQLException {
-    return dataSource.getConnection();
+    return dbConn.dataSource.getConnection();
   }
 
 }

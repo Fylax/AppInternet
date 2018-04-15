@@ -1,5 +1,8 @@
 package it.polito.clientDb;
 
+import it.polito.server.model.User;
+import it.polito.server.model.UserDAOImpl;
+
 import java.sql.*;
 
 public class CreateDb {
@@ -13,7 +16,6 @@ public class CreateDb {
     try {
       Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db", "root", "pass");
       createDatabase(con);
-      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -25,14 +27,14 @@ public class CreateDb {
             statement.addBatch("DROP TABLE IF EXISTS positions;");
             statement.addBatch("DROP TABLE IF EXISTS users;");
             statement.addBatch("DROP TYPE IF EXISTS user_status;");
-            statement.addBatch("CREATE TYPE user_status AS ENUM ('banned', 'approved', 'awaiting');");
+            statement.addBatch("CREATE TYPE user_status AS ENUM ('BANNED', 'APPROVED', 'AWAITING');");
 
             statement.addBatch("CREATE TABLE users (" +
                     "uid SERIAL PRIMARY KEY," +
                     "username VARCHAR(100) NOT NULL UNIQUE," +
                     "secret CHAR(60) NOT NULL," +
                     "email VARCHAR(100) NOT NULL UNIQUE," +
-                    "status user_status NOT NULL DEFAULT 'awaiting');");
+                    "status user_status NOT NULL DEFAULT 'AWAITING');");
 
             statement.addBatch("CREATE TABLE positions (" +
                     "pos_id BIGSERIAL PRIMARY KEY," +
@@ -44,18 +46,20 @@ public class CreateDb {
                     "'corrado'," +
                     "'$2a$10$dBIKrfUFTozThRxKL5bH8uZC9xOwdepJI5EXLIL0ZCz2N.BIUygi6'," +
                     "'prova@hotmail.it'," +
-                    "'approved')");
+                    "'APPROVED')");
             statement.addBatch("INSERT INTO users VALUES(DEFAULT, " +
                     "'elena'," +
                     "'$2a$10$sKW4LyhqK3D/ZEZlyJaMYuWT8Hi/EXw4wYw.V1DOQqxkxK/kHaxIO'," +
                     "'prova1@hotmail.it'," +
-                    "'approved')");
+                    "'APPROVED')");
             statement.addBatch("INSERT INTO users VALUES(DEFAULT, " +
                     "'ciccio'," +
                     "'$2a$10$zAbz3Qd3nN.sTsinoy6qYO6f6K.cGYA6lzIaiE2mgNyjhETF/SwK2'," +
                     "'prova2@hotmail.it'," +
-                    "'approved')");
+                    "'APPROVED')");
             statement.executeBatch();
+            c.close();
+            (new UserDAOImpl()).findAll();
 
         } catch (java.sql.BatchUpdateException eb) {
             throw eb.getNextException();

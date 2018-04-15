@@ -70,7 +70,6 @@ public class UserDAOImpl implements it.polito.server.model.UserDAO {
     return null;
   }
 
-  @Override
   public boolean checkUser(int id) {
     return false;
   }

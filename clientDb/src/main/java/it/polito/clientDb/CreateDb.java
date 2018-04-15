@@ -1,8 +1,5 @@
 package it.polito.clientDb;
 
-import it.polito.server.model.User;
-import it.polito.server.model.UserDAOImpl;
-
 import java.sql.*;
 
 public class CreateDb {
@@ -16,6 +13,7 @@ public class CreateDb {
     try {
       Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/db", "root", "pass");
       createDatabase(con);
+      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -58,9 +56,6 @@ public class CreateDb {
                     "'prova2@hotmail.it'," +
                     "'APPROVED')");
             statement.executeBatch();
-            c.close();
-            (new UserDAOImpl()).findAll();
-
         } catch (java.sql.BatchUpdateException eb) {
             throw eb.getNextException();
         } catch (Exception e) {

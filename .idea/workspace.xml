@@ -6,21 +6,14 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95c7e18a-88b0-43ad-9ef9-da65d48b5eef" name="Default" comment="Implementata connessione al db mediante connection pool nel server">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/DbConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/webapp/META-INF/context.xml" afterDir="false" />
+    <list default="true" id="95c7e18a-88b0-43ad-9ef9-da65d48b5eef" name="Default" comment="Bozza interfaccia DAO per gli utenti">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/Client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Client/Client.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/it.polito.it_AI.server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/it.polito.it_AI.server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/webapp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/Server/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -38,26 +31,17 @@
       <file leaf-file-name="web.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
+            <state relative-caret-position="646">
               <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginServlet.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginServlet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="864">
-              <caret line="76" column="70" selection-start-line="76" selection-start-column="70" selection-end-line="76" selection-end-column="70" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="context.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/webapp/META-INF/context.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="54" selection-start-line="3" selection-start-column="54" selection-end-line="3" selection-end-column="54" />
+            <state relative-caret-position="986">
+              <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
             </state>
           </provider>
         </entry>
@@ -65,8 +49,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+            <state relative-caret-position="240">
+              <caret line="32" column="8" selection-start-line="32" selection-start-column="8" selection-end-line="37" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -74,8 +58,8 @@
       <file leaf-file-name="CreateDb.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+            <state relative-caret-position="-49">
+              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -83,8 +67,8 @@
       <file leaf-file-name="ServerContextListener.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="30" column="54" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
+            <state relative-caret-position="172">
+              <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -95,7 +79,7 @@
       <file leaf-file-name="DbConnection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/DbConnection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state relative-caret-position="427">
               <caret line="32" selection-start-line="32" selection-end-line="32" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -113,19 +97,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserDAOImpl.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserDAOImpl.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="223">
+              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
               <folding>
-                <element signature="e#320#321#0" expanded="true" />
-                <element signature="e#341#342#0" expanded="true" />
-                <element signature="e#386#387#0" expanded="true" />
-                <element signature="e#407#408#0" expanded="true" />
-                <element signature="e#462#463#0" expanded="true" />
-                <element signature="e#483#484#0" expanded="true" />
+                <element signature="e#334#335#0" expanded="true" />
+                <element signature="e#385#386#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/clientDb/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="291">
+              <caret line="18" column="36" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserDAO.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAO.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -162,15 +160,16 @@
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAO.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserStatus.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java" />
-        <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java" />
         <option value="$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/dbConnection.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/DbConnection.java" />
         <option value="$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/context.xml" />
         <option value="$PROJECT_DIR$/Server/pom.xml" />
-        <option value="$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java" />
+        <option value="$PROJECT_DIR$/clientDb/pom.xml" />
+        <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java" />
+        <option value="$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java" />
+        <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java" />
       </list>
     </option>
   </component>
@@ -186,6 +185,13 @@
     <option name="FILTER_INFO" value="true" />
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
@@ -208,8 +214,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -342,6 +346,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -350,8 +356,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/clientDb" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.14941406" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -374,6 +380,7 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
@@ -482,7 +489,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Server">
+  <component name="RunManager" selected="Application.CreateDB">
     <configuration name="CreateDB" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="it.polito.clientDb.CreateDb" />
       <module name="clientDb" />
@@ -610,7 +617,7 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3ddd9fa6-d257-4145-97f7-519527cedbbc" name="Default" comment="" />
+      <changelist id="95c7e18a-88b0-43ad-9ef9-da65d48b5eef" name="Default" comment="" />
       <created>1523265079509</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -620,6 +627,7 @@
       <workItem from="1523613703407" duration="189000" />
       <workItem from="1523614792131" duration="1889000" />
       <workItem from="1523623686285" duration="2913000" />
+      <workItem from="1523783958758" duration="1932000" />
     </task>
     <task id="LOCAL-00001" summary="Aggiunto doFilter, aggiunta copia web-inf dentro al war">
       <created>1523287697733</created>
@@ -663,68 +671,61 @@
       <option name="project" value="LOCAL" />
       <updated>1523701654100</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Implementata connessione al db mediante connection pool nel server">
+      <created>1523718645523</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1523718645524</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Bozza interfaccia DAO per gli utenti">
+      <created>1523718705866</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1523718705866</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="29034000" />
+    <option name="totallyTimeSpent" value="31585000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="right" id="Palette" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50075644" side_tool="true" weight="0.39933994" />
-      <window_info anchor="bottom" id="Application Servers" order="11" weight="0.32838285" />
-      <window_info anchor="right" id="Maven Projects" order="7" weight="0.32980332" />
-      <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="8" />
-      <window_info id="Designer" order="7" />
-      <window_info anchor="right" id="Database" order="8" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="6" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924356" weight="0.39933994" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32838285" />
-      <window_info anchor="bottom" id="Messages" order="15" visible="true" weight="0.32838285" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info id="Image Layers" order="1" />
-      <window_info anchor="bottom" id="Java Enterprise" order="8" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32838285" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32838285" />
-      <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18003026" />
-      <window_info id="Web" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32838285" />
-      <window_info anchor="right" id="Theme Preview" order="4" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="17" sideWeight="0.5045573" side_tool="true" visible="true" weight="0.32965517" />
-      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.25" />
-      <window_info id="Favorites" order="10" side_tool="true" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Java Enterprise" order="18" />
+      <window_info anchor="right" id="Palette" order="13" />
+      <window_info anchor="bottom" id="Event Log" order="17" sideWeight="0.5060514" side_tool="true" weight="0.32838285" />
       <window_info anchor="bottom" id="Application Servers" order="19" weight="0.32965517" />
-      <window_info anchor="bottom" id="Terminal" order="20" />
-      <window_info anchor="right" id="Palette&#9;" order="10" />
       <window_info anchor="right" id="Maven Projects" order="11" />
-      <window_info id="Web" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="21" show_stripe_button="false" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
-      <window_info id="Structure" order="9" side_tool="true" weight="0.25" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info id="Designer" order="13" />
       <window_info anchor="right" id="Database" order="12" />
-      <window_info anchor="bottom" id="Version Control" order="22" sideWeight="0.4986979" weight="0.32965517" />
+      <window_info id="Structure" order="9" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info id="UI Designer" order="12" />
       <window_info anchor="bottom" id="Debug" order="5" sideWeight="0.49804688" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="16" />
+      <window_info anchor="bottom" id="Messages" order="23" sideWeight="0.494705" weight="0.32838285" />
+      <window_info anchor="right" id="Palette&#9;" order="10" />
+      <window_info id="Image Layers" order="1" />
+      <window_info anchor="bottom" id="Java Enterprise" order="18" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="22" sideWeight="0.4977307" weight="0.32838285" />
+      <window_info anchor="bottom" id="Run" order="4" sideWeight="0.49394855" visible="true" weight="0.32838285" />
+      <window_info anchor="bottom" id="Terminal" order="20" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" visible="true" weight="0.25416037" />
+      <window_info id="Web" order="11" side_tool="true" />
+      <window_info anchor="right" id="Theme Preview" order="4" />
+      <window_info id="Favorites" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="14" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info id="UI Designer" order="12" />
-      <window_info anchor="bottom" id="Run" order="4" sideWeight="0.49544272" weight="0.32965517" />
-      <window_info anchor="bottom" id="Messages" order="23" sideWeight="0.4986979" weight="0.32965517" />
-      <window_info anchor="right" id="Palette" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info id="Designer" order="13" />
+      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32838285" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -741,7 +742,8 @@
     <MESSAGE value="Aggiunta dependency core.jackson.databind nel client" />
     <MESSAGE value="Aggiunto listener nel server e caricato il driver postgres" />
     <MESSAGE value="Implementata connessione al db mediante connection pool nel server" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementata connessione al db mediante connection pool nel server" />
+    <MESSAGE value="Bozza interfaccia DAO per gli utenti" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bozza interfaccia DAO per gli utenti" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -763,13 +765,20 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="58" column="48" lean-forward="true" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -843,13 +852,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/artifacts/Server.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="11" lean-forward="true" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/artifacts/Server.xml" />
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/SessionFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -929,13 +932,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/artifacts/Server.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/artifacts/Server.xml" />
     <entry file="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar!/javax/servlet/http/HttpServlet.java" />
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/TypeFilter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -996,13 +993,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clientDb/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="14" column="46" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/postgresql/postgresql/9.1-901-1.jdbc4/postgresql-9.1-901-1.jdbc4.jar!/org/postgresql/Driver.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1014,28 +1004,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="e#320#321#0" expanded="true" />
-            <element signature="e#341#342#0" expanded="true" />
-            <element signature="e#386#387#0" expanded="true" />
-            <element signature="e#407#408#0" expanded="true" />
-            <element signature="e#462#463#0" expanded="true" />
-            <element signature="e#483#484#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
@@ -1051,19 +1019,16 @@
         <state relative-caret-position="-85" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/artifacts/it_polito_it_AI_server_war.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
+        <state relative-caret-position="646">
           <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/DbConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
+        <state relative-caret-position="427">
           <caret line="32" selection-start-line="32" selection-end-line="32" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1078,24 +1043,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java">
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+        <state relative-caret-position="240">
+          <caret line="32" column="8" selection-start-line="32" selection-start-column="8" selection-end-line="37" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clientDb/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="30" column="54" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
+        <state relative-caret-position="172">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1104,8 +1076,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="76" column="70" selection-start-line="76" selection-start-column="70" selection-end-line="76" selection-end-column="70" />
+        <state relative-caret-position="986">
+          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-49">
+          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/UserDAOImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+          <folding>
+            <element signature="e#334#335#0" expanded="true" />
+            <element signature="e#385#386#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1163,12 +1153,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Es1</last-edited>
+          <last-edited>clientDb</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

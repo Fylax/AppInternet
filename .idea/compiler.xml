@@ -14,5 +14,9 @@
         <module name="Server1" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Client" target="10" />
+      <module name="it.polito.it_AI.server" target="10" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -30,7 +30,7 @@ public class PostgresUserDAO implements UserDAO {
     String queryString = "SELECT uid, secret, email, status FROM users WHERE username = ?";
     try (Connection connection = DbConnection.getConnection();
          PreparedStatement ps = connection.prepareStatement(queryString)) {
-      ps.setString(1, username);
+          ps.setString(1, username);
       try (ResultSet resultSet = ps.executeQuery()) {
         if (!resultSet.next()) {
           throw new InvalidLoginException(); // User not found
@@ -71,10 +71,8 @@ public class PostgresUserDAO implements UserDAO {
 
   @Override
   public User findByEmail(String email) {
-    return null;
+    throw new UnsupportedOperationException();
   }
 
-  public boolean checkUser(int id) {
-    return false;
-  }
+
 }

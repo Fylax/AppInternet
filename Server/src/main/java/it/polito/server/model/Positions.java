@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 public class Positions {
 
   private final List<Position> positions = new LinkedList<>();
-
   /**
    * Checks a list of positions and, if they validate, it adds them to the ones already defined for
    * this user.
@@ -49,27 +48,30 @@ public class Positions {
     this.positions.addAll(positions);
   }
 
-
-  List<Position> getPositions() {
-    return this.getPositions(0L, 0L);
-  }
-
-  List<Position> getPositions(long since) {
-    return this.getPositions(since, Long.MAX_VALUE);
-  }
-
-  List<Position> getPositions(long start, long end) {
-
+  List<Position> getPositions(String user, long start, long end) {
     if (start == 0 && end == 0) {
       return new ArrayList<>(this.positions);
     }
-    if (start > end) {
-      return this.positions.stream().
-              filter(p -> p.getTimestamp() >= end && p.getTimestamp() <= start).
-              collect(Collectors.toList());
+
+      if (start > end) {
+          return (new PostgresPositionDAO()).getPositions(user, end);
+          //   return this.positions.stream().
+          //      filter(p -> p.getTimestamp() >= end && p.getTimestamp() <= start).
+          //    collect(Collectors.toList());
     }
-    return this.positions.stream().
-            filter(p -> p.getTimestamp() >= start && p.getTimestamp() <= end).
-            collect(Collectors.toList());
+    //return this.positions.stream().
+    //        filter(p -> p.getTimestamp() >= start && p.getTimestamp() <= end).
+    //        collect(Collectors.toList());
+
+      return (new PostgresPositionDAO()).getPositions(user);
+
+  }
+
+  List<Position> getPositions(String user) {
+    return this.getPositions(user, 0L, 0L);
+  }
+
+  List<Position> getPositions(String user, long since) {
+    return this.getPositions(user, since, Long.MAX_VALUE);
   }
 }

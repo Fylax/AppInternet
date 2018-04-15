@@ -21,6 +21,7 @@ public class CreateDb {
   }
 
     private static void createDatabase(Connection c) throws SQLException {
+      /***   USERS TABLE   ***/
         try (Statement statement = c.createStatement()) {
             statement.addBatch("DROP TABLE IF EXISTS positions;");
             statement.addBatch("DROP TABLE IF EXISTS users;");
@@ -37,8 +38,8 @@ public class CreateDb {
             statement.addBatch("CREATE TABLE positions (" +
                     "pos_id BIGSERIAL PRIMARY KEY," +
                     "t_stamp timestamp NOT NULL," +
-                    "location point NOT NULL," +
-                    "user_id INTEGER NOT NULL REFERENCES users(uid))");
+                    "curr_location point NOT NULL," +
+                    "user_id VARCHAR(100) NOT NULL REFERENCES users(username))");
 
             statement.addBatch("INSERT INTO users VALUES(DEFAULT, " +
                     "'corrado'," +
@@ -55,6 +56,16 @@ public class CreateDb {
                     "'$2a$10$zAbz3Qd3nN.sTsinoy6qYO6f6K.cGYA6lzIaiE2mgNyjhETF/SwK2'," +
                     "'prova2@hotmail.it'," +
                     "'APPROVED')");
+
+                                /*** add dummy positions ***/
+            statement.addBatch("INSERT INTO positions VALUES(DEFAULT, " +
+                    "NOW()," +
+                    "POINT(45.0649801, 7.6581405)," +
+                    "'elena')");
+            statement.addBatch("INSERT INTO positions VALUES(DEFAULT, " +
+                    "NOW()," +
+                    "POINT(45.0649811, 7.6581415)," +
+                    "'ciccio')");
             statement.executeBatch();
         } catch (java.sql.BatchUpdateException eb) {
             throw eb.getNextException();

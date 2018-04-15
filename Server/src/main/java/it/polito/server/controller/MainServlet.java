@@ -23,12 +23,13 @@ public class MainServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     try {
+
       User currentUser = (User) req.getSession(false).getAttribute("user");
       it.polito.server.view.Position pos = new JsonPosition();
       String start = req.getParameter("start");
       String end = req.getParameter("end");
 
-      List<Position> positionList = currentUser.getPositions(start, end);
+      List<Position> positionList = currentUser.getPositions(currentUser.getUsername(), start, end);
       pos.serialize(resp, positionList);
     } catch (Exception e) {
       resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurs processing your request.");

@@ -20,6 +20,9 @@ public class User {
     this.userStatus = userStatus;
   }
 
+  public String getUsername() {
+    return username;
+  }
 
   public void addPositions(List<Position> positions) throws PositionException {
     this.lock.writeLock().lock();
@@ -31,7 +34,7 @@ public class User {
   }
 
 
-  public List<Position> getPositions(String startString, String endString) {
+  public List<Position> getPositions(String user, String startString, String endString) {
     long start;
     try {
       start = Math.round(Double.valueOf(startString));
@@ -47,7 +50,8 @@ public class User {
     List<Position> positions;
     this.lock.readLock().lock();
     try {
-      positions = this.positions.getPositions(start, end);
+
+      positions = this.positions.getPositions(user, start, end);
     } finally {
       this.lock.readLock().unlock();
     }

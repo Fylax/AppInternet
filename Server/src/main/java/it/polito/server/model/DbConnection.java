@@ -16,7 +16,7 @@ public class DbConnection {
       Context initialContext = new InitialContext();
       Context environmentContext = (Context) initialContext.lookup("java:comp/env");
 
-      this.dataSource = (DataSource) environmentContext.lookup("jdbc/db");
+      this.dataSource = (DataSource) environmentContext.lookup("jdbc/postgres");
       if (this.dataSource == null) {
         throw new RuntimeException();
       }

@@ -23,8 +23,7 @@ public class MainServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     try {
-      String userSession = req.getSession(false).getAttribute("user").toString();
-      var currentUser = LoginServlet.USER_MAP.get(userSession);
+      User currentUser = (User) req.getSession(false).getAttribute("user");
       it.polito.server.view.Position pos = new JsonPosition();
       String start = req.getParameter("start");
       String end = req.getParameter("end");
@@ -39,16 +38,15 @@ public class MainServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-    String userSession = req.getSession(false).getAttribute("user").toString();
+    User currentUser = (User) req.getSession(false).getAttribute("user");
     ObjectMapper objectMapper = new ObjectMapper();
 
     try {
 
       List<Position> listPos = objectMapper.readValue(req.getReader(),
-              new TypeReference<List<Position>>() {
-              });
+                                                      new TypeReference<List<Position>>() {
+                                                      });
 
-      var currentUser = LoginServlet.USER_MAP.get(userSession);
       currentUser.addPositions(listPos);
     } catch (PositionException e) {
       resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Your positions are not valid.");
@@ -58,7 +56,6 @@ public class MainServlet extends HttpServlet {
     //maybe is better handle error using a servlet in order to handle directly ServletException, IoException and RunTimeException
 
   }
-
 
 
 }

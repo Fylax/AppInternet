@@ -1,5 +1,8 @@
 package it.polito.server.model;
 
+import org.mindrot.jbcrypt.BCrypt;
+
+import javax.ws.rs.InternalServerErrorException;
 import java.sql.*;
 import java.util.List;
 
@@ -23,9 +26,28 @@ public class PostgresUserDAO implements UserDAO {
   }
 
   @Override
-  public User findById(int id) {
-
-    return null;
+  public User getUser(final String username, final String password) throws InvalidLoginException {
+    String queryString = "SELECT uid, secret, email, status FROM users WHERE username = ?";
+    try (Connection connection = DbConnection.getConnection();
+         PreparedStatement ps = connection.prepareStatement(queryString)) {
+      ps.setString(1, username);
+      try (ResultSet resultSet = ps.executeQuery()) {
+        if (!resultSet.next()) {
+          throw new InvalidLoginException(); // User not found
+        }
+        String secret = resultSet.getString("secret");
+        if (!BCrypt.checkpw(password, secret)) {
+          throw new InvalidLoginException();
+        }
+        int uid = resultSet.getInt("uid");
+        String email = resultSet.getString("email");
+        UserStatus status = UserStatus.valueOf(resultSet.getString("status"));
+        // TODO exception on status != approved
+        return new User(uid, username, email, status);
+      }
+    } catch (SQLException e) {
+      throw new InternalServerErrorException();
+    }
   }
 
   @Override

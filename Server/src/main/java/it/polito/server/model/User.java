@@ -10,21 +10,12 @@ public class User {
 
   private int uid;
   private String username;
-  private String secret;
   private String email;
   private UserStatus userStatus;
 
-  public String getSecret() {
-    return secret;
-  }
-
-  public void setSecret(String secret) {
-    this.secret = secret;
-  }
-
-  public User(String name, String pwd, String email, UserStatus userStatus) {
+  public User(int uid, String name, String email, UserStatus userStatus) {
+    this.uid = uid;
     this.username = name;
-    this.secret = pwd;
     this.email = email;
     this.userStatus = userStatus;
   }

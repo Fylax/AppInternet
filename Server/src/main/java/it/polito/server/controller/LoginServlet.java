@@ -2,7 +2,10 @@ package it.polito.server.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.polito.server.model.InvalidLoginException;
+import it.polito.server.model.PostgresUserDAO;
 import it.polito.server.model.User;
+import it.polito.server.model.UserDAO;
 
 
 import java.io.BufferedReader;
@@ -17,8 +20,6 @@ import javax.servlet.http.*;
 
 public class LoginServlet extends HttpServlet {
 
-  static final Map<String, User> USER_MAP = new HashMap<>();
-
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String username;
@@ -29,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
     Reader reader;
     try {
-       reader = request.getReader();
+      reader = request.getReader();
     } catch (IOException io) {
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       return;
@@ -46,43 +47,15 @@ public class LoginServlet extends HttpServlet {
       return;
     }
 
-    if (LoginServlet.checkUser(username, password)) {
-
-      // 200 OK, initializing user's session..
-
+    UserDAO userDAO = new PostgresUserDAO();
+    try {
+      User user = userDAO.getUser(username, password);
       HttpSession session = request.getSession();
-      session.setAttribute("user", username);
+      session.setAttribute("user", user);
       //setting session to expiry in 30 mins
       session.setMaxInactiveInterval(30 * 60);
-
-      //TODO: il redirect cosi non funziona, dobbiamo specificare eventualmente l'intero path
-      //response.sendRedirect("HelloWorld.jsp");
-    } else {
+    } catch (InvalidLoginException e) {
       response.sendError(401, " * The user name or password is incorrect!!! * ");
     }
-  }
-
-  @Override
-  public void init(ServletConfig config) throws ServletException {
-    super.init(config);
-    try (
-        Reader fr = new FileReader(super.getServletContext().getRealPath("/WEB-INF") + "/users.txt");
-        BufferedReader br = new BufferedReader(fr)
-    ) {
-
-      String line;
-      String[] parts;
-      while ((line = br.readLine()) != null) {
-        parts = line.split(" ");
-        USER_MAP.put(parts[0], new User(parts[0], parts[1], null, null));
-      }
-    } catch (IOException e) {
-      throw new ServletException();
-    }
-  }
-
-  private static boolean checkUser(String u, String p) {
-
-    return (USER_MAP.containsKey(u) && USER_MAP.get(u).getSecret().equals(p));
   }
 }

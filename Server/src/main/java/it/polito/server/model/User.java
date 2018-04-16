@@ -1,12 +1,10 @@
 package it.polito.server.model;
 
 import java.util.List;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class User {
 
-  private Positions positions = new Positions();
+  private PositionManager positionManager = new PositionManager();
 
   private int uid;
   private String username;
@@ -29,7 +27,7 @@ public class User {
   }
 
   public void addPositions(List<Position> positions) throws PositionException {
-      this.positions.add(positions);
+      this.positionManager.add(this, positions);
   }
 
 
@@ -46,7 +44,7 @@ public class User {
     } catch (NumberFormatException | NullPointerException e) {
       end = Long.MAX_VALUE;
     }
-    List<Position> positions = this.positions.get(this, start, end);
+    List<Position> positions = this.positionManager.get(this, start, end);
     return positions;
   }
 }

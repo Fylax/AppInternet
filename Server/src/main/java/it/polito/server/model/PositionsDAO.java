@@ -7,7 +7,7 @@ import java.util.List;
 // by Nico, immagino basti solo l'ultimo, tanto i controlli vengono fatti prima
 public interface PositionsDAO {
 
-  void addPositions(User user, Positions positions);
+  void addPositions(User user, List<Position> positions);
 
   List<Position> getPositions(User user);
 

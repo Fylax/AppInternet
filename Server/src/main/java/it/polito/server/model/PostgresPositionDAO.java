@@ -2,18 +2,54 @@ package it.polito.server.model;
 
 import org.postgresql.geometric.PGpoint;
 import javax.ws.rs.InternalServerErrorException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class PostgresPositionDAO implements PositionsDAO{
 
     @Override
-    public void addPositions(User user, Positions positions) {
-      // TODO transition?
+    public void addPositions(User user, List<Position> positions){
+      PreparedStatement ps = null;
+      Connection connection = null;
+      String query = "INSERT INTO positions (t_stamp, curr_location, user_id)" +
+              "VALUES(?, POINT(?, ?), ?)";
+      try {
+        connection = DbConnection.getConnection();
+        try {
+          connection.setAutoCommit(false);
+          ps = connection.prepareStatement(query);
+          for (Position p : positions) {
+            ps.setLong(1, p.getTimestamp());
+            ps.setDouble(2, p.getLatitude());
+            ps.setDouble(3, p.getLongitude());
+            ps.setInt(4, user.getUid());
+            ps.executeUpdate();
+          }
+          connection.commit();
+        } catch (Exception e) {
+          connection.rollback();
+          e.printStackTrace();
+        }
+      }
+      catch (SQLException e){
+        e.printStackTrace();
+      }finally {
+        if(ps != null){
+          try {
+            ps.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+        if(connection != null){
+          try {
+            connection.close();
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+      }
     }
 
     @Override

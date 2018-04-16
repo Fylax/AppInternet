@@ -37,7 +37,7 @@ public class CreateDb {
 
             statement.addBatch("CREATE TABLE positions (" +
                     "pos_id BIGSERIAL PRIMARY KEY," +
-                    "t_stamp timestamp NOT NULL," +
+                    "t_stamp BIGINT NOT NULL," +
                     "curr_location point NOT NULL," +
                     "user_id INTEGER NOT NULL REFERENCES users(uid))");
 
@@ -57,15 +57,16 @@ public class CreateDb {
                     "'prova2@hotmail.it'," +
                     "'APPROVED')");
 
+            long time = System.currentTimeMillis();
                                 /*** add dummy positions ***/
             statement.addBatch("INSERT INTO positions VALUES(DEFAULT, " +
-                    "NOW()," +
-                    "POINT(45.0649801, 7.6581405)," +
-                    "'elena')");
+                    time +
+                    ",POINT(45.0649801, 7.6581405)," +
+                    "1)");
             statement.addBatch("INSERT INTO positions VALUES(DEFAULT, " +
-                    "NOW() + 1," +
-                    "POINT(45.0649811, 7.6581415)," +
-                    "'ciccio')");
+                    time + 1 +
+                    ",POINT(45.0649811, 7.6581415)," +
+                    "1)");
             statement.executeBatch();
         } catch (java.sql.BatchUpdateException eb) {
             throw eb.getNextException();

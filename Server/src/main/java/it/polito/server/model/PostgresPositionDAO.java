@@ -1,13 +1,9 @@
 package it.polito.server.model;
 
-import javafx.geometry.Point2D;
-import org.mindrot.jbcrypt.BCrypt;
 import org.postgresql.geometric.PGpoint;
-
 import javax.ws.rs.InternalServerErrorException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -33,8 +29,8 @@ public class PostgresPositionDAO implements PositionsDAO{
         try (ResultSet resultSet = ps.executeQuery()) {
           while (resultSet.next()) {
             PGpoint point = (PGpoint) resultSet.getObject("curr_location");
-            Timestamp t_stamp = resultSet.getTimestamp("t_stamp");
-            currPositions.add(new Position(point.x, point.y , t_stamp.getTime()/1000));
+            long t_stamp = resultSet.getLong("t_stamp");
+            currPositions.add(new Position(point.x, point.y , t_stamp));
           }
         }
       } catch (SQLException e) {

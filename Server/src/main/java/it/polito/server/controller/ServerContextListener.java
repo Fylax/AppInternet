@@ -1,13 +1,8 @@
 package it.polito.server.controller;
 
-import it.polito.server.model.DbConnection;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 @WebListener
 public class ServerContextListener implements ServletContextListener {

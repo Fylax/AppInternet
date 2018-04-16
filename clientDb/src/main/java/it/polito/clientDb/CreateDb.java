@@ -35,11 +35,13 @@ public class CreateDb {
                     "email VARCHAR(100) NOT NULL UNIQUE," +
                     "status user_status NOT NULL DEFAULT 'AWAITING');");
 
-            statement.addBatch("CREATE TABLE positions (" +
-                    "pos_id BIGSERIAL PRIMARY KEY," +
-                    "t_stamp BIGINT NOT NULL," +
-                    "curr_location point NOT NULL," +
-                    "user_id INTEGER NOT NULL REFERENCES users(uid))");
+      statement.addBatch("CREATE TABLE positions (" +
+                         "pos_id BIGSERIAL PRIMARY KEY," +
+                         "t_stamp BIGINT NOT NULL," +
+                         "curr_location point NOT NULL," +
+                         "user_id INTEGER NOT NULL REFERENCES users(uid) ON DELETE RESTRICT" +
+                         ")");
+      statement.addBatch("CREATE INDEX t_stamp_uid ON positions (user_id, t_stamp);");
 
             statement.addBatch("INSERT INTO users VALUES(DEFAULT, " +
                     "'corrado'," +
@@ -57,8 +59,7 @@ public class CreateDb {
                     "'prova2@hotmail.it'," +
                     "'APPROVED')");
 
-            long time = System.currentTimeMillis();
-                                /*** add dummy positions ***/
+                                long time = System.currentTimeMillis();/*** add dummy positions ***/
             statement.addBatch("INSERT INTO positions VALUES(DEFAULT, " +
                     time +
                     ",POINT(45.0649801, 7.6581405)," +

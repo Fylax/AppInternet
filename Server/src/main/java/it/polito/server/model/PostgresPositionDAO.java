@@ -10,15 +10,15 @@ public class PostgresPositionDAO implements PositionsDAO{
 
     @Override
     public void addPositions(User user, List<Position> positions){
-      PreparedStatement ps = null;
+
       Connection connection = null;
       String query = "INSERT INTO positions (t_stamp, curr_location, user_id)" +
               "VALUES(?, POINT(?, ?), ?)";
       try {
         connection = DbConnection.getConnection();
-        try {
-          connection.setAutoCommit(false);
-          ps = connection.prepareStatement(query);
+        connection.setAutoCommit(false);
+        try (PreparedStatement ps = connection.prepareStatement(query))
+        {
           for (Position p : positions) {
             ps.setLong(1, p.getTimestamp());
             ps.setDouble(2, p.getLatitude());
@@ -35,13 +35,6 @@ public class PostgresPositionDAO implements PositionsDAO{
       catch (SQLException e){
         e.printStackTrace();
       }finally {
-        if(ps != null){
-          try {
-            ps.close();
-          } catch (SQLException e) {
-            e.printStackTrace();
-          }
-        }
         if(connection != null){
           try {
             connection.close();

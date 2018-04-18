@@ -1,4 +1,7 @@
-package it.polito.server.model;
+package it.polito.server.model.dao;
+
+import it.polito.server.model.InvalidLoginException;
+import it.polito.server.model.User;
 
 import java.util.List;
 

@@ -3,19 +3,13 @@ package it.polito.server.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.server.model.InvalidLoginException;
-import it.polito.server.model.PostgresUserDAO;
+import it.polito.server.model.dao.postgres.PostgresUserDAO;
 import it.polito.server.model.User;
-import it.polito.server.model.UserDAO;
+import it.polito.server.model.dao.UserDAO;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 public class LoginServlet extends HttpServlet {

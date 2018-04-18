@@ -1,25 +1,33 @@
 package it.polito.server.model;
 
+import it.polito.server.model.dao.PositionsDAO;
+import it.polito.server.model.dao.postgres.PostgresPositionDAO;
+
 import java.util.List;
 
 public class PositionManager {
 
-  //TODO: fare una select sull'ultima posizione inserita nel db se presente per inizializzare cachedPosition
   private Position cachedPosition = null;
   private final Distance distance = new HaversineDistance();
+  private final User holder;
+
+  PositionManager(User user) {
+    this.holder = user;
+    this.cachedPosition = (new PostgresPositionDAO()).fetchLast(this.holder);
+  }
 
   void checkPositionValidity(List<Position> positions) throws PositionException {
     Position lastPosition = cachedPosition; //in questo modo modifico solo la variabile locale,
     // se qualcosa va storto l'ultima posizione inserita rimane invariata
-    for(Position p : positions) {
+    for (Position p : positions) {
       if (lastPosition == null) {
         lastPosition = p;
       } else {
         // First check if timestamps are valid (if not, no distance computation is performed)
         // then compute the distance and get the speed in m/s.
         boolean valid = p.getTimestamp() > lastPosition.getTimestamp() &&
-                ((distance.getDistance(lastPosition, p)) /
-                        (p.getTimestamp() - lastPosition.getTimestamp())) < 100;
+                        ((distance.getDistance(lastPosition, p)) /
+                         (p.getTimestamp() - lastPosition.getTimestamp())) < 100;
         if (!valid) {
           throw new PositionException();
         }
@@ -37,39 +45,40 @@ public class PositionManager {
    *
    * @param positions List of given user positions.
    */
-  void add(User user, List<Position> positions) throws PositionException {
+  void add(List<Position> positions) throws PositionException {
     if (positions.isEmpty()) {
       return;
     }
     checkPositionValidity(positions);
     PositionsDAO positionsDAO = new PostgresPositionDAO();
-    positionsDAO.addPositions(user, positions);
+    positionsDAO.addPositions(this.holder, positions);
   }
 
-  List<Position> get(User user, long start, long end) {
-    if (start == 0 && end == Long.MAX_VALUE) {
-      return (new PostgresPositionDAO()).getPositions(user);
+  List<Position> get(String start, String end) {
+    boolean hasStart = true;
+    boolean hasEnd = true;
+    long startL = 0;
+    try {
+      startL = Math.round(Double.valueOf(start));
+    } catch (NumberFormatException | NullPointerException e) {
+      hasStart = false;
     }
 
-      if (start > end) {
-          return (new PostgresPositionDAO()).getPositions(user, end);
-          //   return this.positions.stream().
-          //      filter(p -> p.getTimestamp() >= end && p.getTimestamp() <= start).
-          //    collect(Collectors.toList());
+    long endL = 0;
+    try {
+      endL = Math.round(Double.valueOf(end));
+    } catch (NumberFormatException e) {
+      hasEnd = false;
     }
-    //return this.positions.stream().
-    //        filter(p -> p.getTimestamp() >= start && p.getTimestamp() <= end).
-    //        collect(Collectors.toList());
 
-      return (new PostgresPositionDAO()).getPositions(user, start, end);
-
+    if(hasStart && hasEnd) {
+      return (new PostgresPositionDAO()).fetchInterval(this.holder, startL, endL);
+    } else if(!hasStart && !hasEnd) {
+      return (new PostgresPositionDAO()).fetchAll(this.holder);
+    } else if (hasStart) {
+      return (new PostgresPositionDAO()).fetchSince(this.holder, startL);
+    } else {
+      return (new PostgresPositionDAO()).fetchUpTo(this.holder, endL);
+    }
   }
-
-  /*List<Position> get(User user) {
-    return this.get(user, 0L, 0L);
-  }
-
-  List<Position> get(User user, long since) {
-    return this.get(user, since, Long.MAX_VALUE);
-  }*/
 }

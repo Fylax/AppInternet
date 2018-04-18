@@ -1,4 +1,4 @@
-package it.polito.server.model;
+package it.polito.server.model.dao.postgres;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -7,11 +7,11 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DbConnection {
-  private static DbConnection dbConn;
+class PostgresConnection {
+  private static PostgresConnection dbConn;
   private DataSource dataSource;
 
-  private DbConnection() {
+  private PostgresConnection() {
     try {
       Context initialContext = new InitialContext();
       Context environmentContext = (Context) initialContext.lookup("java:comp/env");
@@ -27,7 +27,7 @@ public class DbConnection {
 
   static Connection getConnection() throws SQLException {
     if (dbConn == null) {
-      dbConn = new DbConnection();
+      dbConn = new PostgresConnection();
     }
     return dbConn.dataSource.getConnection();
   }

@@ -32,6 +32,7 @@ public class MainServlet extends HttpServlet {
       List<Position> positionList = currentUser.getPositions(start, end);
       pos.serialize(resp, positionList);
     } catch (Exception e) {
+      e.printStackTrace();
       resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurs processing your request.");
     }
   }

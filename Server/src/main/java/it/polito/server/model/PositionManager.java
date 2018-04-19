@@ -11,7 +11,7 @@ public class PositionManager {
   private final Distance distance = new HaversineDistance();
   private final User holder;
 
-  PositionManager(User user) {
+  PositionManager(User user) throws ConnectionException {
     this.holder = user;
     this.cachedPosition = (new PostgresPositionDAO()).fetchLast(this.holder);
   }
@@ -45,7 +45,7 @@ public class PositionManager {
    *
    * @param positions List of given user positions.
    */
-  void add(List<Position> positions) throws PositionException {
+  void add(List<Position> positions) throws PositionException, ConnectionException {
     if (positions.isEmpty()) {
       return;
     }
@@ -54,7 +54,7 @@ public class PositionManager {
     positionsDAO.addPositions(this.holder, positions);
   }
 
-  List<Position> get(String start, String end) {
+  List<Position> get(String start, String end) throws ConnectionException {
     boolean hasStart = true;
     boolean hasEnd = true;
     long startL = 0;
@@ -67,11 +67,14 @@ public class PositionManager {
     long endL = 0;
     try {
       endL = Math.round(Double.valueOf(end));
-    } catch (NumberFormatException e) {
+    } catch (NumberFormatException | NullPointerException e) {
       hasEnd = false;
     }
 
     if(hasStart && hasEnd) {
+      if(endL < startL) {
+        return (new PostgresPositionDAO()).fetchInterval(this.holder, endL, startL);
+      }
       return (new PostgresPositionDAO()).fetchInterval(this.holder, startL, endL);
     } else if(!hasStart && !hasEnd) {
       return (new PostgresPositionDAO()).fetchAll(this.holder);

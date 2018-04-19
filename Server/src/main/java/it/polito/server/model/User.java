@@ -10,7 +10,7 @@ public class User {
   private UserStatus userStatus;
   private PositionManager positionManager;
 
-  public User(int uid, String name, String email, UserStatus userStatus) {
+  public User(int uid, String name, String email, UserStatus userStatus) throws ConnectionException {
     this.uid = uid;
     this.username = name;
     this.email = email;
@@ -26,12 +26,12 @@ public class User {
     return username;
   }
 
-  public void addPositions(List<Position> positions) throws PositionException {
+  public void addPositions(List<Position> positions) throws PositionException, ConnectionException {
       this.positionManager.add(positions);
   }
 
 
-  public List<Position> getPositions(String start, String end) {
+  public List<Position> getPositions(String start, String end) throws ConnectionException {
     return this.positionManager.get(start, end);
   }
 }

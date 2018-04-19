@@ -2,6 +2,7 @@ package it.polito.server.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.polito.server.model.ConnectionException;
 import it.polito.server.model.InvalidLoginException;
 import it.polito.server.model.dao.postgres.PostgresUserDAO;
 import it.polito.server.model.User;
@@ -49,7 +50,9 @@ public class LoginServlet extends HttpServlet {
       //setting session to expiry in 30 mins
       session.setMaxInactiveInterval(30 * 60);
     } catch (InvalidLoginException e) {
-      response.sendError(401, " * The user name or password is incorrect!!! * ");
+      response.sendError(403, " * The user name or password is incorrect!!! * ");
+    } catch (ConnectionException e){
+      response.sendError(500);
     }
   }
 }

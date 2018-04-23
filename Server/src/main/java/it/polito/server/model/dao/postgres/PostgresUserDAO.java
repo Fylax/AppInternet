@@ -53,27 +53,6 @@ public class PostgresUserDAO implements UserDAO {
     }
   }
 
-
-  //TODO: togliere perchè non ha utilità
-  @Override
-  public List<User> findAll() {
-    String queryString = "SELECT * FROM users";
-    try (
-        Connection connection = PostgresConnection.getConnection();
-        PreparedStatement ps = connection.prepareStatement(queryString);
-        ResultSet resultSet = ps.executeQuery()) {
-      while (resultSet.next()) {
-        System.out.println("username " + resultSet.getString("username")
-                           + ", secretHash " + resultSet.getString("secret")
-                           + ", email " + resultSet.getString("email")
-                           + ", status " + resultSet.getString("status"));
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
   @Override
   public User findByEmail(String email) {
     throw new UnsupportedOperationException();

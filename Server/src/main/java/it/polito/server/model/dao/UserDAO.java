@@ -11,7 +11,6 @@ public interface UserDAO {
   void delete(User u);
   void update(User u);
   User getUser(final String username, final String password) throws InvalidLoginException, ConnectionException;
-  List<User> findAll();
   User findByEmail(String email);
 
 }

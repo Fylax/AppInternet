@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.server.model.ConnectionException;
 import it.polito.server.model.InvalidLoginException;
+import it.polito.server.model.UserStatusException;
 import it.polito.server.model.dao.postgres.PostgresUserDAO;
 import it.polito.server.model.User;
 import it.polito.server.model.dao.UserDAO;
@@ -51,6 +52,8 @@ public class LoginServlet extends HttpServlet {
       session.setMaxInactiveInterval(30 * 60);
     } catch (InvalidLoginException e) {
       response.sendError(403, " * The user name or password is incorrect!!! * ");
+    }catch (UserStatusException e){
+      response.sendError(403, "User is not approved");
     } catch (ConnectionException e){
       response.sendError(500);
     }

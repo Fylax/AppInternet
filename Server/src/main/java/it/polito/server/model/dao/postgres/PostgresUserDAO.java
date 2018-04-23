@@ -1,10 +1,7 @@
 package it.polito.server.model.dao.postgres;
 
-import it.polito.server.model.ConnectionException;
-import it.polito.server.model.InvalidLoginException;
-import it.polito.server.model.User;
+import it.polito.server.model.*;
 import it.polito.server.model.dao.UserDAO;
-import it.polito.server.model.UserStatus;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.ws.rs.InternalServerErrorException;
@@ -29,7 +26,7 @@ public class PostgresUserDAO implements UserDAO {
   }
 
   @Override
-  public User getUser(final String username, final String password) throws InvalidLoginException, ConnectionException {
+  public User getUser(final String username, final String password) throws InvalidLoginException, ConnectionException, UserStatusException {
     String queryString = "SELECT uid, secret, email, status FROM users WHERE username = ?";
     try (Connection connection = PostgresConnection.getConnection();
          PreparedStatement ps = connection.prepareStatement(queryString)) {
@@ -45,7 +42,9 @@ public class PostgresUserDAO implements UserDAO {
         int uid = resultSet.getInt("uid");
         String email = resultSet.getString("email");
         UserStatus status = UserStatus.valueOf(resultSet.getString("status"));
-        // TODO exception on status != approved
+        if(status != UserStatus.APPROVED){
+          throw new UserStatusException();
+        }
         return new User(uid, username, email, status);
       }
     } catch (SQLException e) {

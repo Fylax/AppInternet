@@ -1,6 +1,8 @@
 package it.polito.ai.authorization_server.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -8,7 +10,6 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "user_id")
   private Long id;
 
   private String username;
@@ -17,8 +18,12 @@ public class User {
 
   private String email;
 
-  @Column(name = "user_status")
-  private  UserStatus userStatus;
+  @Column(name = "status")
+  private UserStatus userStatus;
+
+  @Column(name = "role")
+  @OneToMany(mappedBy = "user")
+  private Set<UserRole> userRoles;
 
   public User() {
 
@@ -29,6 +34,8 @@ public class User {
     this.password = password;
     this.email = email;
     this.userStatus = userStatus;
+    this.userRoles = new HashSet<>();
+    this.userRoles.add(new UserRole(this));
   }
 
   public String getUsername() {
@@ -53,6 +60,12 @@ public class User {
 
   public void setUserStatus(UserStatus userStatus) {
     this.userStatus = userStatus;
+  }
+
+  public Set<UserRole.Role> getRoles() {
+    Set<UserRole.Role> roles = new HashSet<>();
+    this.userRoles.forEach(r -> roles.add(r.getRole()));
+    return roles;
   }
 
 }

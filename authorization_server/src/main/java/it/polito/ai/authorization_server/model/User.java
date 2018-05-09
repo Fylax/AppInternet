@@ -3,6 +3,7 @@ package it.polito.ai.authorization_server.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
   @Id

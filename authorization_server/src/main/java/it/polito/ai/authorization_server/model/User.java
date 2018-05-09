@@ -62,8 +62,8 @@ public class User {
     this.userStatus = userStatus;
   }
 
-  public Set<UserRole.Role> getRoles() {
-    Set<UserRole.Role> roles = new HashSet<>();
+  public Set<Role> getRoles() {
+    Set<Role> roles = new HashSet<>();
     this.userRoles.forEach(r -> roles.add(r.getRole()));
     return roles;
   }

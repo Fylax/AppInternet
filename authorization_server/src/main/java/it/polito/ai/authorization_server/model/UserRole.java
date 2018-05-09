@@ -1,10 +1,9 @@
 package it.polito.ai.authorization_server.model;
 
-import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 
 @Entity
+@Table(name = "user_roles")
 public class UserRole {
 
   @Id
@@ -12,7 +11,7 @@ public class UserRole {
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name="id")
+  @JoinColumn(name="user_id")
   private User user;
 
   private Role role;

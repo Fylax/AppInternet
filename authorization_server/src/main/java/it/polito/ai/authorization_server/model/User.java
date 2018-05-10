@@ -23,7 +23,7 @@ public class User {
   private UserStatus userStatus;
 
   @Column(name = "role")
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST})
   private Set<UserRole> userRoles;
 
   public User() {

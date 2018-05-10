@@ -1,9 +1,11 @@
 package it.polito.ai.authorization_server.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -17,19 +19,29 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
+@PropertySource("classpath:application.properties")
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+  @Value("${spring.key}")
+  private String key;
+
+  @Value("${spring.client_id}")
+  private String client_id;
+
+  @Value("${spring.client_secret}")
+  private String client_secret;
 
   @Autowired
   private AuthenticationManager authenticationManager;
 
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-    security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+    security.tokenKeyAccess("permitAll()");
   }
 
   @Override
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-    clients.inMemory().withClient("client").secret("{noop}secret").authorizedGrantTypes("password")
+    clients.inMemory().withClient(client_id).secret(client_secret).authorizedGrantTypes("authorization_code")
             .scopes("read","write");
   }
 
@@ -49,7 +61,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Bean
   public JwtAccessTokenConverter accessTokenConverter() {
     JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-    converter.setSigningKey("123");
+    converter.setSigningKey(key);
     return converter;
   }
 

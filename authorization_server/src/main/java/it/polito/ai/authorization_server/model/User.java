@@ -11,20 +11,23 @@ public class User {
   @Id
   @SequenceGenerator(name="users_user_id_seq", sequenceName="users_user_id_seq", allocationSize=1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="users_user_id_seq")
-  @Column(name = "user_id", updatable = false, nullable = false)
+  @Column(name="user_id", columnDefinition="BIGSERIAL", updatable = false, nullable = false)
   private Long id;
 
+  @Column(nullable = false)
   private String username;
 
+  @Column(nullable = false)
   private String password;
 
+  @Column(nullable = false)
   private String email;
 
-  @Column(name = "status")
+  @Column(name = "status", nullable = false)
   private UserStatus userStatus;
 
-  @Column(name = "role")
-  @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST})
+  @Column(name = "role_id", nullable = false)
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<UserRole> userRoles;
 
   public User() {
@@ -70,4 +73,13 @@ public class User {
     return roles;
   }
 
+  public void addRole(Role role) {
+    var newRole = new UserRole(this);
+    newRole.setRole(role);
+    this.userRoles.add(newRole);
+  }
+
+  public Long getId() {
+    return id;
+  }
 }

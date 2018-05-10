@@ -6,11 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="authorization_server" />
-        <module name="client" />
-        <module name="clientDb" />
-        <module name="server" />
+        <module name="springserver" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="client" target="10" />
+      <module name="clientDb" target="10" />
+      <module name="Es1" target="10" />
+      <module name="server" target="10" />
+    </bytecodeTargetLevel>
   </component>
 </project>

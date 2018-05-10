@@ -9,8 +9,9 @@ import java.util.Set;
 public class User {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "user_id")
+  @SequenceGenerator(name="users_user_id_seq", sequenceName="users_user_id_seq", allocationSize=1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="usr_id_seq")
+  @Column(name = "user_id", updatable = false, nullable = false)
   private Long id;
 
   private String username;

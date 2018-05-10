@@ -3,11 +3,13 @@ package it.polito.ai.authorization_server.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "roles")
 public class UserRole {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @SequenceGenerator(name="roles_role_id_seq", sequenceName="roles_role_id_seq", allocationSize=1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="roles_role_id_seq")
+  @Column(name="role_id", columnDefinition="BIGSERIAL", updatable = false, nullable = false)
   private Long id;
 
   @ManyToOne

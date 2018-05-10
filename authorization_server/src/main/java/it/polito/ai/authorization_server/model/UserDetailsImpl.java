@@ -1,7 +1,5 @@
 package it.polito.ai.authorization_server.model;
 
-import it.polito.ai.authorization_server.model.User;
-import it.polito.ai.authorization_server.model.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

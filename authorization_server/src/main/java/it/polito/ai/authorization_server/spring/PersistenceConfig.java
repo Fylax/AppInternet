@@ -81,9 +81,11 @@ public class PersistenceConfig {
                 env.getProperty("hibernate.hbm2ddl.auto"));
         setProperty("hibernate.dialect",
                 env.getProperty("hibernate.dialect"));
+        setProperty("hibernate.connection.autocommit", env.getProperty("jdbc.defaultAutoCommit"));
+        //setProperty("hibernate.show_sql", "true");
         //setProperty("hibernate.globally_quoted_identifiers",
         //        "true");
-        setProperty("hibernate.jdbc.lob.non_contextual_creation", "true");
+        //setProperty("hibernate.jdbc.lob.non_contextual_creation", "true");
       }
     };
   }

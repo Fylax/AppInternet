@@ -14,8 +14,10 @@ public class UserRole {
 
   @ManyToOne
   @JoinColumn(name="user_id")
+  @Column(nullable = false)
   private User user;
 
+  @Column(nullable = false)
   private Role role;
 
   public UserRole() {}

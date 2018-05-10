@@ -2,6 +2,7 @@ package it.polito.ai.authorization_server.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -9,9 +10,9 @@ import java.util.Set;
 public class User {
 
   @Id
-  @SequenceGenerator(name="users_user_id_seq", sequenceName="users_user_id_seq", allocationSize=1)
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="users_user_id_seq")
-  @Column(name="user_id", columnDefinition="BIGSERIAL", updatable = false, nullable = false)
+  @SequenceGenerator(name = "users_user_id_seq", sequenceName = "users_user_id_seq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_user_id_seq")
+  @Column(name = "user_id", columnDefinition = "BIGSERIAL", updatable = false, nullable = false)
   private Long id;
 
   @Column(nullable = false)
@@ -77,6 +78,18 @@ public class User {
     var newRole = new UserRole(this);
     newRole.setRole(role);
     this.userRoles.add(newRole);
+  }
+
+  public void removeRole(Role role) {
+    Optional<UserRole> removed = this.userRoles.stream().
+        filter(r -> r.getRole().equals(role)).findFirst();
+    if (removed.isPresent()) {
+      UserRole toRemove = removed.get();
+      this.userRoles.remove(toRemove);
+    }
+    if (this.userRoles.size() == 0) {
+      this.userRoles.add(new UserRole(this));
+    }
   }
 
   public Long getId() {

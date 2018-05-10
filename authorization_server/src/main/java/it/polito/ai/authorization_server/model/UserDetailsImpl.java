@@ -1,4 +1,4 @@
-package it.polito.ai.authorization_server;
+package it.polito.ai.authorization_server.model;
 
 import it.polito.ai.authorization_server.model.User;
 import it.polito.ai.authorization_server.model.UserStatus;

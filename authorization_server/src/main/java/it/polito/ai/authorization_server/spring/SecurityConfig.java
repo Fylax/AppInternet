@@ -1,4 +1,4 @@
-package it.polito.ai.authorization_server;
+package it.polito.ai.authorization_server.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

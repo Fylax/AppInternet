@@ -1,6 +1,6 @@
 package it.polito.ai.authorization_server;
 import it.polito.ai.authorization_server.model.User;
-import it.polito.ai.authorization_server.model.UserRepository;
+import it.polito.ai.authorization_server.model.repository.UserRepository;
 import it.polito.ai.authorization_server.model.UserStatus;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

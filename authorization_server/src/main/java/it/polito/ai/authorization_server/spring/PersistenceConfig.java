@@ -1,4 +1,4 @@
-package it.polito.ai.authorization_server;
+package it.polito.ai.authorization_server.spring;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,11 @@
 package it.polito.ai.springserver.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        indexes = {@Index(name = "username_index", columnList = "username", unique = true)})
 public class User {
 
   @Id
@@ -15,7 +14,7 @@ public class User {
   @Column(name = "user_id", columnDefinition = "BIGSERIAL", updatable = false, nullable = false)
   private Long id;
 
-  @Column(nullable = false)
+  @Column(unique = true, nullable = false)
   private String username;
 
   @Column(nullable = false)
@@ -27,10 +26,9 @@ public class User {
   @Column(name = "status", nullable = false)
   private UserStatus userStatus;
 
-
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  @Column(name = "role_id", nullable = false)
-  private Set<UserRole> userRoles;
+  @Column(nullable = false)
+  @ElementCollection
+  private List<Role> userRoles;
 
   public User() {
 
@@ -41,8 +39,8 @@ public class User {
     this.password = password;
     this.email = email;
     this.userStatus = userStatus;
-    this.userRoles = new HashSet<>();
-    this.userRoles.add(new UserRole(this));
+    this.userRoles = new ArrayList<>();
+    this.userRoles.add(Role.USER);
   }
 
   public String getUsername() {
@@ -69,28 +67,16 @@ public class User {
     this.userStatus = userStatus;
   }
 
-  public Set<Role> getRoles() {
-    Set<Role> roles = new HashSet<>();
-    this.userRoles.forEach(r -> roles.add(r.getRole()));
-    return roles;
+  public List<Role> getRoles() {
+    return this.userRoles;
   }
 
   public void addRole(Role role) {
-    var newRole = new UserRole(this);
-    newRole.setRole(role);
-    this.userRoles.add(newRole);
+    this.userRoles.add(role);
   }
 
   public void removeRole(Role role) {
-    Optional<UserRole> removed = this.userRoles.stream().
-        filter(r -> r.getRole().equals(role)).findFirst();
-    if (removed.isPresent()) {
-      UserRole toRemove = removed.get();
-      this.userRoles.remove(toRemove);
-    }
-    if (this.userRoles.size() == 0) {
-      this.userRoles.add(new UserRole(this));
-    }
+    this.userRoles.remove(role);
   }
 
   public Long getId() {

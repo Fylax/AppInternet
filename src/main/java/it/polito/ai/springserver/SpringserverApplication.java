@@ -42,6 +42,10 @@ public class SpringserverApplication {
 
         u1.addRole(Role.ADMIN);
         userRepository.save(u1);
+
+        for(Role r : u1.getRoles()){
+          System.out.println(r.getAuthority());
+        }
       }
     };
   }

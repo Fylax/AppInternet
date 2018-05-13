@@ -4,6 +4,12 @@ import it.polito.ai.springserver.authorization.model.Role;
 import it.polito.ai.springserver.authorization.model.User;
 import it.polito.ai.springserver.authorization.model.UserStatus;
 import it.polito.ai.springserver.authorization.model.repository.UserRepository;
+import it.polito.ai.springserver.authorization.model.Role;
+import it.polito.ai.springserver.authorization.model.User;
+import it.polito.ai.springserver.authorization.model.UserStatus;
+import it.polito.ai.springserver.authorization.model.repository.UserRepository;
+import it.polito.ai.springserver.resource.model.Position;
+import it.polito.ai.springserver.resource.model.repository.PositionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +22,7 @@ public class SpringserverApplication {
     SpringApplication.run(SpringserverApplication.class, args);
   }
 
+  /*
   @Bean
   CommandLineRunner init (UserRepository userRepository){
     return new CommandLineRunner() {
@@ -46,6 +53,16 @@ public class SpringserverApplication {
         for(Role r : u1.getRoles()){
           System.out.println(r.getAuthority());
         }
+      }
+    };
+  }*/
+
+  @Bean
+  CommandLineRunner init(PositionRepository positionRepository) {
+    return new CommandLineRunner() {
+      @Override
+      public void run(String... args) throws Exception {
+        positionRepository.save(new Position(1, 10, 15.3, 7.14));
       }
     };
   }

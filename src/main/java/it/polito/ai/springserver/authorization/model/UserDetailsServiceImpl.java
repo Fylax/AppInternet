@@ -1,6 +1,6 @@
-package it.polito.ai.springserver.model;
+package it.polito.ai.springserver.authorization.model;
 
-import it.polito.ai.springserver.model.repository.UserRepository;
+import it.polito.ai.springserver.authorization.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

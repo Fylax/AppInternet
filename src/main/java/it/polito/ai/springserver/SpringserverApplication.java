@@ -1,9 +1,9 @@
 package it.polito.ai.springserver;
 
-import it.polito.ai.springserver.model.Role;
-import it.polito.ai.springserver.model.User;
-import it.polito.ai.springserver.model.UserStatus;
-import it.polito.ai.springserver.model.repository.UserRepository;
+import it.polito.ai.springserver.authorization.model.Role;
+import it.polito.ai.springserver.authorization.model.User;
+import it.polito.ai.springserver.authorization.model.UserStatus;
+import it.polito.ai.springserver.authorization.model.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

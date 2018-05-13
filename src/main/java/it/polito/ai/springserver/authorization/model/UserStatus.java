@@ -1,4 +1,4 @@
-package it.polito.ai.springserver.model;
+package it.polito.ai.springserver.authorization.model;
 
 public enum UserStatus {
   APPROVED, AWAITING, BANNED

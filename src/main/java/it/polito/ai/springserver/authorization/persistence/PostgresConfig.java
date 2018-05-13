@@ -1,10 +1,9 @@
-package it.polito.ai.springserver.persistence;
+package it.polito.ai.springserver.authorization.persistence;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -22,9 +21,9 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:postgres.properties")
-@EntityScan("it.polito.ai.springserver.model.*")
-@EnableJpaRepositories(basePackages = "it.polito.ai.springserver.model.repository")
+@PropertySource("classpath:authorization/postgres.properties")
+@EntityScan("it.polito.ai.springserver.authorization.model")
+@EnableJpaRepositories(basePackages = "it.polito.ai.springserver.authorization.model.repository")
 public class PostgresConfig {
 
   @Autowired
@@ -34,7 +33,7 @@ public class PostgresConfig {
   public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
     final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(restDataSource());
-    em.setPackagesToScan("it.polito.ai.springserver.model");
+    em.setPackagesToScan("it.polito.ai.springserver.authorization.model");
     final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     vendorAdapter.setDatabase(Database.POSTGRESQL);
     vendorAdapter.setGenerateDdl(true);

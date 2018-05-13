@@ -1,4 +1,4 @@
-package it.polito.ai.springserver.model;
+package it.polito.ai.springserver.authorization.model;
 
 import org.springframework.security.core.GrantedAuthority;
 

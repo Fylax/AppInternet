@@ -1,11 +1,11 @@
-package it.polito.ai.springserver.model;
+package it.polito.ai.springserver.authorization.model;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "users",
-        indexes = {@Index(name = "username_index", columnList = "username", unique = true)})
+        indexes = @Index(name = "username_index", columnList = "username", unique = true))
 public class User {
 
   @Id
@@ -26,8 +26,15 @@ public class User {
   @Column(name = "status", nullable = false)
   private UserStatus userStatus;
 
-  @Column(nullable = false)
-  @ElementCollection
+  //for default the fetch type is lazy, but this cause problem when retrieve the roles
+  //to create the JWT. I think we can use the EAGER fetch type because at most the user has three roles
+  //so performance are almost the same
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(
+          name="roles",
+          joinColumns=@JoinColumn(name="user_id")
+  )
+  @Column(name = "user_role", nullable = false)
   private List<Role> userRoles;
 
   public User() {

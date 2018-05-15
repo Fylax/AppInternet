@@ -47,7 +47,7 @@ public class PositionsController {
         try {
             CustomerRequest myCust = objectMapper.readValue(geoJson, CustomerRequest.class);
             myCust.setUserid(user_id);
-            listPos = positionRepository.findByPositionWithin(myCust.getPolygon());
+            listPos = positionRepository.findPositionsByPositionWithin(myCust.getPolygon());
         //System.out.println(myCust.getPolygon().toString());
         }catch (Exception e){ e.printStackTrace(); }
 

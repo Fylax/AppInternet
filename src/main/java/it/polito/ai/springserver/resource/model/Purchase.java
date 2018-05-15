@@ -4,21 +4,23 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.AbstractMap;
+
 @Document
 public class Purchase {
 
   @Id
   private String id;
-  private long userid;
+  private long customerid;
   private long timestamp;
   private GeoJsonPolygon area;
+  private AbstractMap.SimpleImmutableEntry<Long,Long> temporal_range;
 
-  // TODO decidere granularità aquisto: sempre? giorno specifico? fino a timestamp? range temporale?
-
-  public Purchase(long userid, long timestamp, GeoJsonPolygon polygon) {
-    this.userid = userid;
+  public Purchase(long customerid, long timestamp, GeoJsonPolygon polygon, long start, long end) {
+    this.customerid = customerid;
     this.timestamp = timestamp;
     this.area = polygon;
+    this.temporal_range = new AbstractMap.SimpleImmutableEntry(start, end);
   }
 
 }

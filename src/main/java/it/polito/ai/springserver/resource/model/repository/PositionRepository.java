@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface PositionRepository extends MongoRepository<Position, String> {
   List<Position> findByUseridAndTimestampBetween(long userid, long start, long end);
-  long countPositionByPositionIsWithin(Polygon polygon);
-  List<Position> findPositionsByPositionWithin(Polygon polygon);
+  long countPositionByPositionIsWithinAnAndTimestampBetween(Polygon polygon, long start, long end);
+  List<Position> findByPositionWithinAndTimestampBetween(Polygon polygon, long start, long end);
 }

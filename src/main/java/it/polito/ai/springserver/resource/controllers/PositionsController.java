@@ -1,72 +1,58 @@
 package it.polito.ai.springserver.resource.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import it.polito.ai.springserver.authorization.model.UserDetailsImpl;
-import it.polito.ai.springserver.resource.model.CustomerRequest;
-import it.polito.ai.springserver.resource.model.Position;
+import com.mongodb.client.model.geojson.Geometry;
 import it.polito.ai.springserver.resource.model.repository.PositionRepository;
+import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import com.mongodb.client.model.geojson.Polygon;
+import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.security.Security;
-import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping(value = "/positions")
 public class PositionsController {
 
-  @Autowired
-  private TokenStore tokenStore;
+    @Autowired
+    private AuthorizationServerTokenServices tokenServices;
 
-  @Autowired
-  private PositionRepository positionRepository;
+    @Autowired
+    private PositionRepository positionRepository;
 
-  @GetMapping
-  @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-  public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String geoJson) {
-
-    //Extracting user_id from JWT... was it put???
-    OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
-    OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
-    Map<String, Object> claims = accessToken.getAdditionalInformation();
-    //long user_id = (long) additionalInformation.get("user_id");
-    System.out.println(claims.get("user_id"));
-    List<Position> listPos = null;
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      //CustomerRequest myCust = objectMapper.readValue(geoJson, CustomerRequest.class);
-      //myCust.setUserid(user_id);
-      //listPos = positionRepository.findByPositionWithinAndTimestampBetween(myCust.getPolygon());
-      //System.out.println(myCust.getPolygon().toString());
-    } catch (Exception e) {
-      e.printStackTrace();
+    @GetMapping
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
+    public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String geoJson){
+                                      //@RequestParam(value = "start", required = false) long start,
+                                      //@RequestParam(value = "end", required = false) long end){
+        long countPoisitions = 0;
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                //System.out.println(geoJson);
+                Geometry currPolygon = objectMapper.readValue((new String(Base64.decode(geoJson))), Geometry.class);
+                //countPoisitions = positionRepository.countPositionByPositionIsWithinAndTimestampBetween(currPolygon,0L,0L);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        return String.valueOf(countPoisitions);
     }
 
-    return null;
-  }
-
-  @PostMapping
-  //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  public String bookPositions() {
-    return "addPositionsController";
-  }
-
+    @PostMapping
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public String bookPositions(){ return "addPositionsController"; }
 
 }
+/*
+        //Extracting user_id from JWT... was it put???
+        Map<String, Object> additionalInformation = tokenServices.getAccessToken(authentication).getAdditionalInformation();
+        long user_id = (long) additionalInformation.get("user_id");
+
+        Long listPos = null;
+        //System.out.println(myCust.getPolygon().toString());
+
+ */

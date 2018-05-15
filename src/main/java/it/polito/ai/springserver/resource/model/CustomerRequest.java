@@ -3,7 +3,7 @@ package it.polito.ai.springserver.resource.model;
 import com.mongodb.client.model.geojson.Polygon;
 
 public class CustomerRequest {
-    private long userid;
+    private long id;
     private long start;
     private long end;
     private Polygon polygon;
@@ -14,12 +14,12 @@ public class CustomerRequest {
         this.polygon = polygon;
     }
 
-    public void setUserid(long userid) {
-        this.userid = userid;
+    public void setUserid(long id) {
+        this.id = id;
     }
 
     public long getUserid() {
-        return userid;
+        return id;
     }
 
     public long getStart() {

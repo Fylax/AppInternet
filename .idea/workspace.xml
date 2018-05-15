@@ -6,12 +6,18 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88c9bb33-f323-4835-a83d-d64704b71320" name="Default" comment="">
+    <list default="true" id="88c9bb33-f323-4835-a83d-d64704b71320" name="Default" comment="Tipo timestamp impostato a long anche nel db.">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/Positions.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PostgresPositionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PostgresPositionDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/Server/target/" />
     <ignored path="$PROJECT_DIR$/Client/target/" />
@@ -26,29 +32,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/pom.xml">
+      <file leaf-file-name="AuthorizationServerConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-321">
-              <caret line="10" column="18" selection-start-line="10" selection-end-line="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CreateDb.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerContextListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="181">
+              <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -56,79 +44,107 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PostgresPositionDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PostgresPositionDAO.java">
+      <file leaf-file-name="security.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/authorization/security.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-138">
-              <caret line="52" selection-start-line="52" selection-end-line="52" />
+            <state relative-caret-position="140">
+              <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PositionsController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="86">
+              <caret line="29" column="103" selection-start-line="29" selection-start-column="96" selection-end-line="29" selection-end-column="103" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1939#1940#0" expanded="true" />
-                <element signature="e#1966#1967#0" expanded="true" />
-                <element signature="e#2055#2056#0" expanded="true" />
-                <element signature="e#2082#2083#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PositionsDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionsDAO.java">
+      <file leaf-file-name="UserRepository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/repository/UserRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
+            <state relative-caret-position="80">
+              <caret line="5" column="67" selection-start-line="5" selection-start-column="67" selection-end-line="5" selection-end-column="67" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java">
+      <file leaf-file-name="ResourceServerConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="46" selection-start-line="46" selection-end-line="46" />
+            <state relative-caret-position="119">
+              <caret line="23" column="85" selection-start-line="23" selection-start-column="85" selection-end-line="23" selection-end-column="85" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainServlet.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/MainServlet.java">
+      <file leaf-file-name="CustomerRequest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
+            <state relative-caret-position="40">
+              <caret line="2" column="13" selection-start-line="2" selection-end-line="3" />
+              <folding>
+                <element signature="e#537#538#0" expanded="true" />
+                <element signature="e#565#566#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SessionFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/SessionFilter.java">
+      <file leaf-file-name="PositionRepository.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TypeFilter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/TypeFilter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PositionManager.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="53" column="67" selection-start-line="53" selection-start-column="67" selection-end-line="53" selection-end-column="67" />
+            <state relative-caret-position="140">
+              <caret line="11" column="56" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="56" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>authorization_code</find>
+      <find>import</find>
+      <find>read</find>
+      <find>vendorAdapter</find>
+      <find>additionalProperties</find>
+      <find>findBy</find>
+      <find>username_index</find>
+      <find>positionRepository</find>
+      <find>repo</find>
+      <find>role</find>
+      <find>oauth</find>
+      <find>pol</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="MERGE" />
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -141,6 +157,22 @@
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionsDAO.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PostgresPositionDAO.java" />
         <option value="$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/security/AuthorizationServerConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/persistence/PostgresConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/model/repository/UserRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/repository/UserRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/PositionsController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/Position.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java" />
       </list>
     </option>
   </component>
@@ -170,142 +202,203 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="85" />
-    <option name="y" value="25" />
-    <option name="width" value="1750" />
-    <option name="height" value="970" />
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1920" />
+    <option name="height" value="1200" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="clientDb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="clientDb" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="clientDb" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="clientDb" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="clientDb" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="clientDb" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="authorization" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="authorization" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="authorization" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Es1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AppInternet" type="462c0819:PsiDirectoryNode" />
-              <item name="Server" type="462c0819:PsiDirectoryNode" />
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="authorization" type="462c0819:PsiDirectoryNode" />
+              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="authorization" type="462c0819:PsiDirectoryNode" />
+              <item name="security" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
+              <item name="persistence" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="springserver" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
+              <item name="security" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="authorization" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Es3_v2" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Es3_v2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="resource" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelOrder2" value="2" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -313,6 +406,17 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.14941406" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="it.polito.ai.springserver.authorization.security" />
+      <recent name="it.polito.ai.springserver.resource.model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/resource" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -326,7 +430,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Server">
+  <component name="RunManager" selected="Spring Boot.SpringserverApplication">
     <configuration name="ClientDb" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="it.polito.clientDb.CreateDb" />
       <module name="clientDb" />
@@ -350,6 +454,10 @@
         <value defaultName="singleModule" />
       </option>
       <patterns />
+    </configuration>
+    <configuration name="SpringserverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="Es3_v2" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="it.polito.ai.springserver.SpringserverApplication" />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -447,6 +555,7 @@
     <list>
       <item itemvalue="Application.ClientDb" />
       <item itemvalue="Tomcat Server.Server" />
+      <item itemvalue="Spring Boot.SpringserverApplication" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -461,6 +570,12 @@
       <updated>1523887864642</updated>
       <workItem from="1523887878699" duration="2474000" />
       <workItem from="1523892832849" duration="10951000" />
+      <workItem from="1526129439588" duration="1737000" />
+      <workItem from="1526235828909" duration="7734000" />
+      <workItem from="1526284551580" duration="18043000" />
+      <workItem from="1526397678583" duration="3418000" />
+      <workItem from="1526402492366" duration="4259000" />
+      <workItem from="1526415653491" duration="4572000" />
     </task>
     <task id="LOCAL-00001" summary="Tipo timestamp impostato a long anche nel db.">
       <created>1523898502619</created>
@@ -469,18 +584,25 @@
       <option name="project" value="LOCAL" />
       <updated>1523898502619</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Tipo timestamp impostato a long anche nel db.">
+      <created>1526326034923</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1526326034924</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13425000" />
+    <option name="totallyTimeSpent" value="53188000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.5006418" side_tool="true" weight="0.3272727" />
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.32838285" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.32980332" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
@@ -492,24 +614,27 @@
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39933994" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.32838285" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.32711112" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info id="Image Layers" order="3" />
-      <window_info anchor="bottom" id="Java Enterprise" order="10" />
+      <window_info anchor="bottom" id="Java Enterprise" order="10" weight="0.32977778" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32838285" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32838285" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4987715" visible="true" weight="0.25340393" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32977778" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49935815" visible="true" weight="0.4471111" />
+      <window_info anchor="bottom" id="Spring" order="14" weight="0.32977778" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.328" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4987715" visible="true" weight="0.19275825" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
       <window_info id="Web" order="6" sideWeight="0.5012285" side_tool="true" weight="0.24962178" />
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" x="0" y="0" width="350" height="700" id="Documentation" order="10" side_tool="true" weight="0.32991013" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" sideWeight="0.49935815" visible="true" weight="0.2678788" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -548,102 +673,277 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Server/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="18" selection-start-line="10" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-321">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="1520">
+          <caret line="103" column="41" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-321">
-          <caret line="10" column="18" selection-start-line="10" selection-end-line="11" />
+        <state relative-caret-position="260">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/MainServlet.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/SessionFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/TypeFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionsDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PostgresPositionDAO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="52" selection-start-line="52" selection-end-line="52" />
+        <state relative-caret-position="720">
+          <caret line="58" column="22" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1939#1940#0" expanded="true" />
-            <element signature="e#1966#1967#0" expanded="true" />
-            <element signature="e#2055#2056#0" expanded="true" />
-            <element signature="e#2082#2083#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionManager.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/UserDetailsServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="53" column="67" selection-start-line="53" selection-start-column="67" selection-end-line="53" selection-end-column="67" />
+        <state relative-caret-position="140">
+          <caret line="12" selection-start-line="12" selection-end-line="13" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/persistence/PostgresConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="54" column="52" selection-start-line="54" selection-start-column="52" selection-end-line="54" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/Position.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="14" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="23" column="52" selection-start-line="23" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="12" column="15" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/persistence/MongoConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/pom.xml" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/webapp/WEB-INF/web.xml" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/LoginServlet.java" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/ServerContextListener.java" />
+    <entry file="file://$PROJECT_DIR$/Server/pom.xml" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/MainServlet.java" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/SessionFilter.java" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/controller/TypeFilter.java" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/User.java" />
+    <entry file="file://$PROJECT_DIR$/clientDb/src/main/java/it/polito/clientDb/CreateDb.java" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionsDAO.java" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PostgresPositionDAO.java" />
+    <entry file="file://$PROJECT_DIR$/Server/src/main/java/it/polito/server/model/PositionManager.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/security/AuthorizationServerConfig.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/model/UserDetailsImpl.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/security/WebSecurityConfig.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/model/UserDetailsServiceImpl.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/model/repository/UserRepository.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/persistence/PostgresConfig.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/Role.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/resource/security.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/persistence/MongoConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/Position.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="21" selection-start-line="21" selection-end-line="25" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="113" column="21" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/tomcat-dbcp/7.0.55/tomcat-dbcp-7.0.55-sources.jar!/org/apache/tomcat/dbcp/dbcp/BasicDataSource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9">
+          <caret line="1548" selection-start-line="1548" selection-end-line="1548" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/persistence/PostgresConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/UserDetailsServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="12" selection-start-line="12" selection-end-line="13" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/UserDetailsImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="732">
+          <caret line="55" column="6" lean-forward="true" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="28" column="85" selection-start-line="28" selection-start-column="81" selection-end-line="28" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="11" column="56" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="13" selection-start-line="2" selection-end-line="3" />
+          <folding>
+            <element signature="e#537#538#0" expanded="true" />
+            <element signature="e#565#566#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/repository/UserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="5" column="67" selection-start-line="5" selection-start-column="67" selection-end-line="5" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="23" column="85" selection-start-line="23" selection-start-column="85" selection-end-line="23" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/authorization/postgres.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/authorization/security.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="29" column="103" selection-start-line="29" selection-start-column="96" selection-end-line="29" selection-end-column="103" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -714,7 +1014,7 @@
       </state>
       <state key="ProjectJDKs.UI">
         <settings>
-          <last-edited>java-10</last-edited>
+          <last-edited>10</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

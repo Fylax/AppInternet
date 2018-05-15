@@ -24,7 +24,7 @@ public class SpringserverApplication {
 
 
   @Bean
-  CommandLineRunner init (UserRepository userRepository){
+  CommandLineRunner init (UserRepository userRepository, PositionRepository positionRepository){
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
@@ -47,22 +47,20 @@ public class SpringserverApplication {
                         "paperino@gmail.com",
                         UserStatus.APPROVED));
 
-        u1.addRole(Role.ROLE_ADMIN);
+        u1.addRole(Role.ADMIN);
         userRepository.save(u1);
 
-        for(Role r : u1.getRoles()){
-          System.out.println(r.getAuthority());
-        }
+        positionRepository.save(new Position(1, 10, 15.3, 7.14));
+
       }
     };
   }
 
-  /*@Bean
+ /* @Bean
   CommandLineRunner init(PositionRepository positionRepository) {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
-        positionRepository.save(new Position(1, 10, 15.3, 7.14));
       }
     };
   }*/

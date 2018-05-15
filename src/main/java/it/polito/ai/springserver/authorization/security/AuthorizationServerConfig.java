@@ -17,11 +17,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,13 +75,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-    TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-    tokenEnhancerChain.setTokenEnhancers(
-            Arrays.asList(tokenEnhancer(), accessTokenConverter()));
 
     endpoints
             .tokenStore(tokenStore())
-            .tokenEnhancer(tokenEnhancerChain)
+            .tokenEnhancer(accessTokenConverter())
             .authenticationManager(authenticationManager)
             .userDetailsService(userDetailsService); //this include automatically the authorities claim in JWT
     //moreover a refresh token grant will contain a check on the user details,
@@ -103,9 +102,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
   @Bean
   @Primary
-  public AuthorizationServerTokenServices tokenServices() {
+  public DefaultTokenServices tokenServices() {
     DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
     defaultTokenServices.setTokenStore(tokenStore());
+    //defaultTokenServices.setTokenEnhancer(tokenEnhancer());
     defaultTokenServices.setSupportRefreshToken(true);
     return defaultTokenServices;
   }

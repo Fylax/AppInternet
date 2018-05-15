@@ -21,47 +21,29 @@ import java.util.Map;
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@PropertySource("classpath:resource/security.properties")
+@PropertySource("classpath:authorization/security.properties")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private TokenStore tokenStore;
 
     @Autowired
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-
-    @Autowired
-    private AuthorizationServerTokenServices defaultTokenServices;
+    private AuthorizationServerTokenServices tokenServices;
 
     @Value("${spring.key}")
     private String key;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.requestMatchers()
-                .and()
+        http
+                .requestMatchers()
+                  .antMatchers("/**").and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/positions/**").authenticated();
+                  .antMatchers("/positions/**").authenticated();
     }
 
     @Override
     public void configure(ResourceServerSecurityConfigurer config) {
-        config.tokenServices((ResourceServerTokenServices) defaultTokenServices);
-    }
-
-    public static class JwtConverter extends DefaultAccessTokenConverter implements JwtAccessTokenConverterConfigurer {
-
-        @Override
-        public void configure(JwtAccessTokenConverter converter) {
-            converter.setAccessTokenConverter(this);
-        }
-
-        @Override
-        public OAuth2Authentication extractAuthentication(Map<String, ?> map) {
-            OAuth2Authentication auth = super.extractAuthentication(map);
-            auth.setDetails(map); //this will get spring to copy JWT content into Authentication
-            return auth;
-        }
+      config.tokenServices((ResourceServerTokenServices) tokenServices).tokenStore(tokenStore);
     }
 }

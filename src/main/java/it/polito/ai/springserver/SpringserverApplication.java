@@ -22,7 +22,7 @@ public class SpringserverApplication {
     SpringApplication.run(SpringserverApplication.class, args);
   }
 
-  /*
+
   @Bean
   CommandLineRunner init (UserRepository userRepository){
     return new CommandLineRunner() {
@@ -47,7 +47,7 @@ public class SpringserverApplication {
                         "paperino@gmail.com",
                         UserStatus.APPROVED));
 
-        u1.addRole(Role.ADMIN);
+        u1.addRole(Role.ROLE_ADMIN);
         userRepository.save(u1);
 
         for(Role r : u1.getRoles()){
@@ -55,9 +55,9 @@ public class SpringserverApplication {
         }
       }
     };
-  }*/
+  }
 
-  @Bean
+  /*@Bean
   CommandLineRunner init(PositionRepository positionRepository) {
     return new CommandLineRunner() {
       @Override
@@ -65,5 +65,5 @@ public class SpringserverApplication {
         positionRepository.save(new Position(1, 10, 15.3, 7.14));
       }
     };
-  }
+  }*/
 }

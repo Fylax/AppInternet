@@ -47,7 +47,7 @@ public class User {
     this.email = email;
     this.userStatus = userStatus;
     this.userRoles = new ArrayList<>();
-    this.userRoles.add(Role.USER);
+    this.userRoles.add(Role.ROLE_USER);
   }
 
   public String getUsername() {

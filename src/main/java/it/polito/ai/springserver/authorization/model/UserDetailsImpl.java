@@ -49,4 +49,8 @@ public class UserDetailsImpl implements UserDetails {
   public boolean isEnabled() {
     return (user.getUserStatus() == UserStatus.APPROVED);
   }
+
+  public Long getUserId(){
+    return this.user.getId();
+  }
 }

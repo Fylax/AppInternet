@@ -19,10 +19,12 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.security.Security;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +33,7 @@ import java.util.Map;
 public class PositionsController {
 
   @Autowired
-  private AuthorizationServerTokenServices tokenServices;
+  private TokenStore tokenStore;
 
   @Autowired
   private PositionRepository positionRepository;
@@ -41,10 +43,11 @@ public class PositionsController {
   public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String geoJson) {
 
     //Extracting user_id from JWT... was it put???
-    //Map<String, Object> additionalInformation = tokenServices.getAccessToken(authentication).getAdditionalInformation();
+    OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
+    OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
+    Map<String, Object> claims = accessToken.getAdditionalInformation();
     //long user_id = (long) additionalInformation.get("user_id");
-    String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    System.out.println(username);
+    System.out.println(claims.get("user_id"));
     List<Position> listPos = null;
     ObjectMapper objectMapper = new ObjectMapper();
     try {

@@ -7,17 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88c9bb33-f323-4835-a83d-d64704b71320" name="Default" comment="Tipo timestamp impostato a long anche nel db.">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/Server/target/" />
     <ignored path="$PROJECT_DIR$/Client/target/" />
@@ -35,7 +30,7 @@
       <file leaf-file-name="AuthorizationServerConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
+            <state relative-caret-position="120">
               <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -44,29 +39,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="security.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/authorization/security.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="WebSecurityConfig.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
-              <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+              <caret line="28" column="42" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PositionsController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PositionsController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="86">
-              <caret line="29" column="103" selection-start-line="29" selection-start-column="96" selection-end-line="29" selection-end-column="103" />
+            <state relative-caret-position="-11">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -74,35 +60,40 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/repository/UserRepository.java">
+      <file leaf-file-name="ObjectCodec.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.8.11/jackson-core-2.8.11-sources.jar!/com/fasterxml/jackson/core/ObjectCodec.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="5" column="67" selection-start-line="5" selection-start-column="67" selection-end-line="5" selection-end-column="67" />
+            <state relative-caret-position="380">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResourceServerConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="23" column="85" selection-start-line="23" selection-start-column="85" selection-end-line="23" selection-end-column="85" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CustomerRequest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CustomerRequest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="2" column="13" selection-start-line="2" selection-end-line="3" />
+            <state relative-caret-position="300">
+              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
               <folding>
-                <element signature="e#537#538#0" expanded="true" />
-                <element signature="e#565#566#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#445#446#0" expanded="true" />
+                <element signature="e#473#474#0" expanded="true" />
+                <element signature="e#501#502#0" expanded="true" />
+                <element signature="e#527#528#0" expanded="true" />
+                <element signature="e#562#563#0" expanded="true" />
+                <element signature="e#589#590#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PolygonDeserializer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/PolygonDeserializer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,7 +103,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="140">
-              <caret line="11" column="56" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="56" />
+              <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -164,14 +155,15 @@
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/PositionsController.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/Position.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/PolygonDeserializer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java" />
       </list>
     </option>
@@ -217,8 +209,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -390,6 +380,8 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -410,12 +402,12 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="it.polito.ai.springserver.authorization.security" />
-      <recent name="it.polito.ai.springserver.resource.model" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/resource" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="it.polito.ai.springserver.resource.model" />
+      <recent name="it.polito.ai.springserver.authorization.security" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -575,7 +567,8 @@
       <workItem from="1526284551580" duration="18043000" />
       <workItem from="1526397678583" duration="3418000" />
       <workItem from="1526402492366" duration="4259000" />
-      <workItem from="1526415653491" duration="4572000" />
+      <workItem from="1526415653491" duration="4898000" />
+      <workItem from="1526475018122" duration="3961000" />
     </task>
     <task id="LOCAL-00001" summary="Tipo timestamp impostato a long anche nel db.">
       <created>1523898502619</created>
@@ -595,14 +588,14 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53188000" />
+    <option name="totallyTimeSpent" value="57475000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.5006418" side_tool="true" weight="0.3272727" />
+      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50106496" side_tool="true" weight="0.4471111" />
       <window_info anchor="bottom" id="Application Servers" order="7" weight="0.32838285" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.32980332" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
@@ -612,7 +605,7 @@
       <window_info id="Structure" order="1" sideWeight="0.5012285" side_tool="true" weight="0.24962178" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39933994" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39911112" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.32711112" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
@@ -620,10 +613,10 @@
       <window_info anchor="bottom" id="Java Enterprise" order="10" weight="0.32977778" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32977778" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49935815" visible="true" weight="0.4471111" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49893504" visible="true" weight="0.288" />
       <window_info anchor="bottom" id="Spring" order="14" weight="0.32977778" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.328" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4987715" visible="true" weight="0.19275825" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4987715" visible="true" weight="0.19488817" />
       <window_info anchor="right" id="Bean Validation" order="9" />
       <window_info id="Web" order="6" sideWeight="0.5012285" side_tool="true" weight="0.24962178" />
       <window_info anchor="right" id="Theme Preview" order="7" />
@@ -668,38 +661,23 @@
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java</url>
+          <line>13</line>
+          <properties />
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="20" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1520">
-          <caret line="103" column="41" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/CustomTokenEnhancer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="58" column="22" selection-start-line="58" selection-start-column="22" selection-end-line="58" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/UserDetailsServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -784,13 +762,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/model/UserDetailsServiceImpl.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/model/repository/UserRepository.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/persistence/PostgresConfig.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/Role.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/resource/security.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -809,13 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="21" selection-start-line="21" selection-end-line="25" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="113" column="21" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -854,16 +818,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="732">
-          <caret line="55" column="6" lean-forward="true" selection-start-line="55" selection-start-column="6" selection-end-line="55" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -871,38 +825,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="11" column="56" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="13" selection-start-line="2" selection-end-line="3" />
-          <folding>
-            <element signature="e#537#538#0" expanded="true" />
-            <element signature="e#565#566#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/repository/UserRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="5" column="67" selection-start-line="5" selection-start-column="67" selection-end-line="5" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="23" column="85" selection-start-line="23" selection-start-column="85" selection-end-line="23" selection-end-column="85" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -915,7 +841,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/AuthorizationServerConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
+        <state relative-caret-position="120">
           <caret line="31" column="30" selection-start-line="31" selection-start-column="30" selection-end-line="31" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -930,19 +856,103 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/model/Role.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/authorization/security/WebSecurityConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
-          <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+          <caret line="28" column="42" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/security/ResourceServerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="23" column="85" selection-start-line="23" selection-start-column="85" selection-end-line="23" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/SpringserverApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="49" column="36" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="119" column="21" selection-start-line="119" selection-start-column="21" selection-end-line="119" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.8.11/jackson-core-2.8.11-sources.jar!/com/fasterxml/jackson/core/ObjectCodec.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.8.11.1/jackson-databind-2.8.11.1-sources.jar!/com/fasterxml/jackson/databind/ObjectMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="476" selection-start-line="476" selection-end-line="476" />
+          <folding>
+            <element signature="e#20085#20086#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/repository/PositionRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="12" column="64" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/PolygonDeserializer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/controllers/PositionsController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="29" column="103" selection-start-line="29" selection-start-column="96" selection-end-line="29" selection-end-column="103" />
+        <state relative-caret-position="-11">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/it/polito/ai/springserver/resource/model/CustomerRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#445#446#0" expanded="true" />
+            <element signature="e#473#474#0" expanded="true" />
+            <element signature="e#501#502#0" expanded="true" />
+            <element signature="e#527#528#0" expanded="true" />
+            <element signature="e#562#563#0" expanded="true" />
+            <element signature="e#589#590#0" expanded="true" />
           </folding>
         </state>
       </provider>

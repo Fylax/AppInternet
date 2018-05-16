@@ -47,7 +47,7 @@ public class SpringserverApplication {
                         "paperino@gmail.com",
                         UserStatus.APPROVED));
 
-        u1.addRole(Role.ADMIN);
+        u1.addRole(Role.ROLE_ADMIN);
         userRepository.save(u1);
 
         positionRepository.save(new Position(1, 10, 15.3, 7.14));

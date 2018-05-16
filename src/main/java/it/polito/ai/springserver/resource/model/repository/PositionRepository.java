@@ -2,6 +2,7 @@ package it.polito.ai.springserver.resource.model.repository;
 
 import com.mongodb.client.model.geojson.Polygon;
 import it.polito.ai.springserver.resource.model.Position;
+import org.geojson.GeoJsonObject;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

@@ -2,6 +2,7 @@ package it.polito.ai.springserver.resource.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.model.geojson.Geometry;
+import it.polito.ai.springserver.resource.model.CustomerRequest;
 import it.polito.ai.springserver.resource.model.repository.PositionRepository;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +28,18 @@ public class PositionsController {
 
     @GetMapping
     //@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-    public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String geoJson){
-                                      //@RequestParam(value = "start", required = false) long start,
-                                      //@RequestParam(value = "end", required = false) long end){
+    public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params){
+
         long countPoisitions = 0;
+        CustomerRequest currRequest = null;
             try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                //System.out.println(geoJson);
-                Geometry currPolygon = objectMapper.readValue((new String(Base64.decode(geoJson))), Geometry.class);
-                //countPoisitions = positionRepository.countPositionByPositionIsWithinAndTimestampBetween(currPolygon,0L,0L);
+                currRequest = (new ObjectMapper()).readValue((new String(Base64.decode(params))), CustomerRequest.class);
+                countPoisitions = positionRepository.countPositionByPositionIsWithinAndTimestampBetween(currRequest.getPolygon(),0L,0L);
+                System.out.println("*** " +currRequest.getStart());
             }catch (Exception e){
                 e.printStackTrace();
             }
+            System.out.println(currRequest.getPolygon().toString() + " - Start: " + currRequest.getStart() + " - End: " + currRequest.getEnd());
         return String.valueOf(countPoisitions);
     }
 

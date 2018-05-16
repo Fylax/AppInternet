@@ -1,27 +1,21 @@
 package it.polito.ai.springserver.resource.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.mongodb.client.model.geojson.Polygon;
 
 public class CustomerRequest {
-    private long id;
     private long start;
     private long end;
-    private Polygon polygon;
+    @JsonDeserialize(contentUsing = PolygonDeserializer.class)
+    private Polygon area;
 
-    public CustomerRequest(long start, long end, Polygon polygon) {
+
+    public CustomerRequest(long start, long end, Polygon area) {
         this.start = start;
         this.end = end;
-        this.polygon = polygon;
-    }
+        this.area = area;
 
-    public void setUserid(long id) {
-        this.id = id;
-    }
-
-    public long getUserid() {
-        return id;
-    }
-
+        }
     public long getStart() {
         return start;
     }
@@ -31,6 +25,7 @@ public class CustomerRequest {
     }
 
     public Polygon getPolygon() {
-        return polygon;
+        return area;
     }
+
 }

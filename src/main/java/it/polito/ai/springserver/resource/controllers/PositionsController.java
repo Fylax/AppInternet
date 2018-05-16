@@ -15,37 +15,37 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 @RequestMapping(value = "/positions")
 public class PositionsController {
 
-    @Autowired
-    private AuthorizationServerTokenServices tokenServices;
+  @Autowired
+  private AuthorizationServerTokenServices tokenServices;
 
-    @Autowired
-    private PositionRepository positionRepository;
+  @Autowired
+  private PositionRepository positionRepository;
 
-    @GetMapping
-    //@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-    public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params){
+  @GetMapping
+  //@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
+  public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params) {
 
-        long countPoisitions = 0;
-        CustomerRequest currRequest = null;
-            try {
-                currRequest = (new ObjectMapper()).readValue((new String(Base64.decode(params))), CustomerRequest.class);
-                countPoisitions = positionRepository.countPositionByPositionIsWithinAndTimestampBetween(currRequest.getPolygon(),0L,0L);
-                System.out.println("*** " +currRequest.getStart());
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            System.out.println(currRequest.getPolygon().toString() + " - Start: " + currRequest.getStart() + " - End: " + currRequest.getEnd());
-        return String.valueOf(countPoisitions);
+    long countPositions = 0;
+    CustomerRequest currRequest = null;
+    try {
+      currRequest = (new ObjectMapper()).readValue((new String(Base64.decode(params))), CustomerRequest.class);
+      countPositions = positionRepository.countPositionByPositionIsWithinAndTimestampBetween(
+          currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+    return Long.toString(countPositions);
+  }
 
-    @PostMapping
-    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-    public String bookPositions(){ return "addPositionsController"; }
+  @PostMapping
+  //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+  public String bookPositions() {
+    return "addPositionsController";
+  }
 
 }
 /*

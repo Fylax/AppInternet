@@ -1,31 +1,33 @@
 package it.polito.ai.springserver.resource.model;
 
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.mongodb.client.model.geojson.Polygon;
+import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 
+import java.util.AbstractMap;
+
+@JsonDeserialize(using = CustomerRequestDeserializer.class)
 public class CustomerRequest {
-    private long start;
-    private long end;
-    @JsonDeserialize(contentUsing = PolygonDeserializer.class)
-    private Polygon area;
+  private AbstractMap.SimpleImmutableEntry<Long,Long> temporal_range;
+  private GeoJsonPolygon area;
 
 
-    public CustomerRequest(long start, long end, Polygon area) {
-        this.start = start;
-        this.end = end;
-        this.area = area;
+  public CustomerRequest(long start, long end, GeoJsonPolygon area) {
+    this.temporal_range = new AbstractMap.SimpleImmutableEntry<>(start, end);
+    this.area = area;
 
-        }
-    public long getStart() {
-        return start;
-    }
+  }
 
-    public long getEnd() {
-        return end;
-    }
+  public long getStart() {
+    return this.temporal_range.getKey();
+  }
 
-    public Polygon getPolygon() {
-        return area;
-    }
+  public long getEnd() {
+    return this.temporal_range.getValue();
+  }
+
+  public GeoJsonPolygon getPolygon() {
+    return area;
+  }
 
 }

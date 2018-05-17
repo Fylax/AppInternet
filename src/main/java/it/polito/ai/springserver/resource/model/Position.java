@@ -25,6 +25,10 @@ public class Position {
     this.position = new GeoJsonPoint(longitude, latitude);
   }
 
+  public String getId() {
+    return id;
+  }
+
   public long getUserid() {
     return userid;
   }
@@ -32,4 +36,5 @@ public class Position {
   public long getTimestamp() {
     return timestamp;
   }
+
 }

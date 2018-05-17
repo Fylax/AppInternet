@@ -16,13 +16,19 @@ public class Purchase {
   private String id;
   private long customerid;
   private long timestamp;
-  private AbstractMap.SimpleImmutableEntry<Long,Long> temporal_range;
+  //private AbstractMap.SimpleImmutableEntry<Long,Long> temporal_range;
+  private long start;
+  private long end;
   private List<PurchasedPosition> positions;
+
+  Purchase(){}
+
 
   public Purchase(long customerid, long timestamp, long start, long end, List<Position> positions) {
     this.customerid = customerid;
     this.timestamp = timestamp;
-    this.temporal_range = new AbstractMap.SimpleImmutableEntry<>(start, end);
+    this.start = start;
+    this.end = end;
     this.positions = new ArrayList<>(positions.size());
     positions.forEach(p -> this.positions.add(new PurchasedPosition(p)));
   }
@@ -35,13 +41,13 @@ public class Purchase {
     return timestamp;
   }
 
-  public long getStart() {
-    return this.temporal_range.getKey();
-  }
+  //public long getStart() {
+    //return this.temporal_range.getKey();
+  //}
 
-  public long getEnd() {
-    return this.temporal_range.getValue();
-  }
+//  public long getEnd() {
+ //   return this.temporal_range.getValue();
+  //}
 
   public List<Position> getPositions() {
     var pos = new ArrayList<Position>(this.positions.size());

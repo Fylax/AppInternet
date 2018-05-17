@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 @Document
 @CompoundIndex(def = "{'userid':1, 'timestamp':1}", name = "compound_index_1")
 public class Position {
@@ -17,12 +19,14 @@ public class Position {
   private long timestamp;
 
   @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
-  GeoJsonPoint position;
+  GeoJsonPoint point;
+
+  public Position() {  } //used internally by MongoDb
 
   public Position(long userid, long timestamp, double longitude, double latitude) {
     this.userid = userid;
     this.timestamp = timestamp;
-    this.position = new GeoJsonPoint(longitude, latitude);
+    this.point = new GeoJsonPoint(longitude, latitude);
   }
 
   public String getId() {
@@ -37,4 +41,24 @@ public class Position {
     return timestamp;
   }
 
+  public GeoJsonPoint getPoint() {
+    return point;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Position position = (Position) o;
+    return userid == position.userid &&
+            timestamp == position.timestamp &&
+            Objects.equals(id, position.id) &&
+            Objects.equals(point, position.point);
+  }
+
+  @Override
+  public int hashCode() {
+
+    return Objects.hash(id, userid, timestamp, point);
+  }
 }

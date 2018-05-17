@@ -50,7 +50,13 @@ public class SpringserverApplication {
         u1.addRole(Role.ROLE_ADMIN);
         userRepository.save(u1);
 
-        positionRepository.save(new Position(1, 10, 15.3, 7.14));
+        /*positionRepository.save(new Position(1, 10, 7.68, 45.07));
+        positionRepository.save(new Position(1, 11, 7.68, 45.07));
+        positionRepository.save(new Position(1, 12, 7.68, 45.07));
+        positionRepository.save(new Position(1, 13, 7.68, 45.07));
+        positionRepository.save(new Position(1, 14, 7.68, 45.07));
+        positionRepository.save(new Position(1, 15, 7.68, 45.07));
+*/
 
       }
     };

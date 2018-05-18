@@ -7,6 +7,7 @@ import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.Purchase;
 import it.polito.ai.springserver.resource.model.repository.PositionRepository;
 import it.polito.ai.springserver.resource.model.repository.PurchaseRepository;
+import javassist.tools.web.BadHttpRequest;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.mongodb.client.model.geojson.Polygon;
@@ -14,6 +15,9 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.geo.GeoJsonMultiPoint;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -44,7 +48,7 @@ public class PositionsController {
 
   @GetMapping
   //@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-  public String getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params) {
+  public ResponseEntity<String> getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params) throws BadHttpRequest {
 
     long countPositions = 0;
     CustomerRequest currRequest = null;
@@ -53,14 +57,14 @@ public class PositionsController {
       countPositions = positionRepository.countPositionByPointIsWithinAndTimestampBetween(
           currRequest.getPolygon(), 1, 100);
     } catch (Exception e) {
-      e.printStackTrace();
+      return ResponseEntity.badRequest().build();
     }
-    return Long.toString(countPositions);
+    return new ResponseEntity(Long.toString(countPositions), new HttpHeaders(), HttpStatus.FOUND);
   }
 
   @PostMapping
   //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  public List<Position> bookPositions(@RequestBody CustomerRequest currRequest, OAuth2Authentication authentication) {
+  public ResponseEntity<List<Position>> bookPositions(@RequestBody CustomerRequest currRequest, OAuth2Authentication authentication) {
     OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
     OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
     Map<String, Object> claims = accessToken.getAdditionalInformation();
@@ -81,9 +85,9 @@ public class PositionsController {
       Purchase purchase = new Purchase(user_id, System.currentTimeMillis(), currRequest.getStart(), currRequest.getEnd(), positions);
       purchaseRepository.save(purchase);
     } catch (Exception e) {
-      e.printStackTrace();
+        return ResponseEntity.unprocessableEntity().build();
     }
-    return positions;
+    return new ResponseEntity(positions, new HttpHeaders(), HttpStatus.CREATED);
   }
 
 }

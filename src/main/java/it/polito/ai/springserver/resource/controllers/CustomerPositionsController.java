@@ -6,6 +6,7 @@ import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.Purchase;
 import it.polito.ai.springserver.resource.model.repository.PositionRepository;
 import it.polito.ai.springserver.resource.model.repository.PurchaseRepository;
+import it.polito.ai.springserver.resource.security.UserId;
 import javassist.tools.web.BadHttpRequest;
 import org.bouncycastle.util.encoders.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,11 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping(value = "/positions")
-public class PositionsController {
+@RequestMapping(value = "/positions/customer")
+public class CustomerPositionsController {
 
   @Autowired
-  private TokenStore tokenStore;
+  private UserId userId;
 
   @Autowired
   private PositionRepository positionRepository;
@@ -39,10 +40,8 @@ public class PositionsController {
   @GetMapping
   //@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
   public ResponseEntity<String> getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params) throws BadHttpRequest {
-    OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
-    OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
-    Map<String, Object> claims = accessToken.getAdditionalInformation();
-    long customer_id = Long.valueOf((String) claims.get("user_id"));
+    long customer_id = userId.getUserId();
+
     long countPositions = 0;
     CustomerRequest currRequest = null;
     try {
@@ -61,10 +60,7 @@ public class PositionsController {
   @PostMapping
   //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
   public ResponseEntity<List<Position>> bookPositions(@RequestBody CustomerRequest currRequest) {
-    OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
-    OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
-    Map<String, Object> claims = accessToken.getAdditionalInformation();
-    long customer_id = Long.valueOf((String) claims.get("user_id"));
+    long customer_id = userId.getUserId();
 
     List<Purchase> purchaseList = new ArrayList<>();
     List<Position> positions = new ArrayList<>();

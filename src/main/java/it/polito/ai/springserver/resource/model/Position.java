@@ -29,6 +29,12 @@ public class Position {
     this.point = new GeoJsonPoint(longitude, latitude);
   }
 
+  public Position(long timestamp, double longitude, double latitude) {
+    this.userid = -1;
+    this.timestamp = timestamp;
+    this.point = new GeoJsonPoint(longitude, latitude);
+  }
+
   public String getId() {
     return id;
   }
@@ -43,6 +49,10 @@ public class Position {
 
   public GeoJsonPoint getPoint() {
     return point;
+  }
+
+  public void setUserid(long userid) {
+    this.userid = userid;
   }
 
   @Override

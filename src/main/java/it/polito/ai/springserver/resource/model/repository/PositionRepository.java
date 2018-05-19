@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface PositionRepository extends MongoRepository<Position, String>,
-    LatestUserPositionRepository {
+    LatestUserPositionRepositoryCustom {
   List<Position> findByUseridAndTimestampBetween(long userid, long start, long end);
   long countPositionByPointIsWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);
   List<Position> findByPointWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);

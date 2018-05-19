@@ -15,6 +15,5 @@ import java.util.List;
 public interface PositionRepository extends MongoRepository<Position, String> {
   List<Position> findByUseridAndTimestampBetween(long userid, long start, long end);
   long countPositionByPointIsWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);
-  List<Position> findByTimestampAfterAndPointNotIn(long start, List<GeoJsonPoint> ex);
   List<Position> findByPointWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);
 }

@@ -2,6 +2,7 @@ package it.polito.ai.springserver.resource.model;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import it.polito.ai.springserver.resource.controller.deserializer.CustomerRequestDeserializer;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 
 import java.util.AbstractMap;

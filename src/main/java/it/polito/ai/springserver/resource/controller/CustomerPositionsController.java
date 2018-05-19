@@ -1,4 +1,4 @@
-package it.polito.ai.springserver.resource.controllers;
+package it.polito.ai.springserver.resource.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polito.ai.springserver.resource.model.CustomerRequest;
@@ -13,15 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @RestController
@@ -39,7 +34,7 @@ public class CustomerPositionsController {
 
   @GetMapping
   //@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-  public ResponseEntity<String> getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params) throws BadHttpRequest {
+  public ResponseEntity getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params) throws BadHttpRequest {
     long customer_id = userId.getUserId();
 
     long countPositions = 0;
@@ -54,12 +49,12 @@ public class CustomerPositionsController {
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
-    return new ResponseEntity(Long.toString(countPositions), new HttpHeaders(), HttpStatus.FOUND);
+    return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.FOUND);
   }
 
   @PostMapping
   //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
-  public ResponseEntity<List<Position>> bookPositions(@RequestBody CustomerRequest currRequest) {
+  public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) {
     long customer_id = userId.getUserId();
 
     List<Purchase> purchaseList = new ArrayList<>();
@@ -77,7 +72,7 @@ public class CustomerPositionsController {
     } catch (Exception e) {
       return ResponseEntity.unprocessableEntity().build();
     }
-    return new ResponseEntity(positions, new HttpHeaders(), HttpStatus.CREATED);
+    return new ResponseEntity<>(positions, new HttpHeaders(), HttpStatus.CREATED);
   }
 
   private long countPositions(List<Position> positionsInPolygon, List<Purchase> purchaseList) {

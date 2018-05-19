@@ -2,7 +2,7 @@ package it.polito.ai.springserver.resource.controller;
 
 import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.PositionManager;
-import it.polito.ai.springserver.resource.model.repository.PositionRepository;
+import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +18,7 @@ import java.util.List;
 public class UserPositionsController {
 
   @Autowired
-  private PositionRepository positionRepository;
+  private PositionRepositoryInterface positionRepositoryInterface;
 
   @Autowired
   private UserId userId;
@@ -28,7 +28,7 @@ public class UserPositionsController {
   public ResponseEntity<List<Position>> getPositions(
       @PathVariable(value = "id") long userId, @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") long start,
       @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") long end) {
-    List<Position> list = positionRepository.findByUseridAndTimestampBetween(userId, start, end);
+    List<Position> list = positionRepositoryInterface.findByUseridAndTimestampBetween(userId, start, end);
     return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
   }
 
@@ -38,7 +38,7 @@ public class UserPositionsController {
                                                      @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") long end) {
     long user_id = userId.getUserId();
 
-    List<Position> list = positionRepository.findByUseridAndTimestampBetween(user_id, start, end);
+    List<Position> list = positionRepositoryInterface.findByUseridAndTimestampBetween(user_id, start, end);
     return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
   }
 
@@ -48,7 +48,7 @@ public class UserPositionsController {
   public ResponseEntity addPositions(@RequestBody List<Position> positions) {
     long user_id = userId.getUserId();
     try {
-      var positionManager = new PositionManager(user_id, positionRepository);
+      var positionManager = new PositionManager(user_id, positionRepositoryInterface);
       for (Position position : positions) {
         position.setUserid(user_id);
         if (!positionManager.checkPositionValidity(position)) {
@@ -56,7 +56,7 @@ public class UserPositionsController {
         }
       }
       for (Position position : positions) {
-        positionRepository.save(position);
+        positionRepositoryInterface.save(position);
       }
     } catch (Exception e) {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

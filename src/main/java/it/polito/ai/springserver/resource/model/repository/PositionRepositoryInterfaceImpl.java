@@ -9,14 +9,15 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import it.polito.ai.springserver.resource.model.Position;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 //@Repository("LatestUserPositionRepositoryImpl")
-public class LatestUserPositionRepositoryImpl implements LatestUserPositionRepositoryCustom {
+public class PositionRepositoryInterfaceImpl implements PositionRepositoryInterfaceCustom {
 
-  @Autowired
-  private MongoOperations operations;
+    @Autowired
+    MongoTemplate mongoTemplate;
 
   @Override
   public Position getUserLatestPosition(long userid) {
@@ -26,6 +27,6 @@ public class LatestUserPositionRepositoryImpl implements LatestUserPositionRepos
     query.with(new Sort(Sort.Direction.DESC, "timestamp"));
     query.addCriteria(c);
 
-    return operations.findOne(query, Position.class);
+    return mongoTemplate.findOne(query, Position.class);
   }
 }

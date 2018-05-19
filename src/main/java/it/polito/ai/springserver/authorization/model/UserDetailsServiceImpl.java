@@ -1,6 +1,6 @@
 package it.polito.ai.springserver.authorization.model;
 
-import it.polito.ai.springserver.authorization.model.repository.UserRepository;
+import it.polito.ai.springserver.authorization.model.repository.UserRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Autowired
-  private UserRepository userRepository;
+  private UserRepositoryInterface userRepositoryInterface;
 
   @Override
   public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(s);
+    User user = userRepositoryInterface.findByUsername(s);
     if(user == null)
       throw new UsernameNotFoundException(s + " doesn't exist.");
     return new UserDetailsImpl(user);

@@ -1,13 +1,13 @@
 package it.polito.ai.springserver.resource.model;
 
-import it.polito.ai.springserver.resource.model.repository.LatestUserPositionRepositoryCustom;
+import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterfaceCustom;
 
 public class PositionManager {
 
   private Position cachedPosition;
   private final HaversineDistance distance;
 
-  public PositionManager(long userId, LatestUserPositionRepositoryCustom repo) {
+  public PositionManager(long userId, PositionRepositoryInterfaceCustom repo) {
     this.distance = new HaversineDistance();
     this.cachedPosition = repo.getUserLatestPosition(userId);
   }

@@ -35,7 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .requestMatchers()
             .antMatchers("/**").and()
             .authorizeRequests()
-            .antMatchers("/positions/**").permitAll();
+            .antMatchers("/positions/**").authenticated();
   }
 
   @Override

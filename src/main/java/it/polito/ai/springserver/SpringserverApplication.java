@@ -48,7 +48,7 @@ public class SpringserverApplication {
           userRepository.save(u1);
           userRepository.save(u2);
 
-        positionRepositoryInterface.save(new Position(1, 10, 15.3, 7.14));
+        //positionRepositoryInterface.save(new Position(1, 10, 15.3, 7.14));
         /*positionRepository.save(new Position(1, 11, 7.68, 45.07));
         positionRepository.save(new Position(1, 12, 7.68, 45.07));
         positionRepository.save(new Position(1, 13, 7.68, 45.07));

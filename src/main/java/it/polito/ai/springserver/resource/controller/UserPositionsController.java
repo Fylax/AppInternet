@@ -2,6 +2,7 @@ package it.polito.ai.springserver.resource.controller;
 
 import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.PositionManager;
+import it.polito.ai.springserver.resource.model.Positions;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,19 +46,17 @@ public class UserPositionsController {
   //this method does't work, maybe is necessary a deserializer
   @PostMapping
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity addPositions(@RequestBody List<Position> positions) {
+  public ResponseEntity addPositions(@RequestBody Positions positions) {
     long user_id = userId.getUserId();
     try {
       var positionManager = new PositionManager(user_id, positionRepositoryInterface);
-      for (Position position : positions) {
+      for (Position position : positions.getPositionList()) {
         position.setUserid(user_id);
         if (!positionManager.checkPositionValidity(position)) {
           return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
       }
-      for (Position position : positions) {
-        positionRepositoryInterface.save(position);
-      }
+      positionRepositoryInterface.save(positions.getPositionList());
     } catch (Exception e) {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 

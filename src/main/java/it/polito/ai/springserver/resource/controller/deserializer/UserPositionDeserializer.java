@@ -9,13 +9,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import it.polito.ai.springserver.resource.exception.PositionException;
 import it.polito.ai.springserver.resource.model.Position;
+import it.polito.ai.springserver.resource.model.Positions;
 import org.geojson.Point;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UserPositionDeserializer extends StdDeserializer<List<Position>> {
+public class UserPositionDeserializer extends StdDeserializer<Positions> {
 
   public UserPositionDeserializer() {
     this(null);
@@ -35,23 +36,22 @@ public class UserPositionDeserializer extends StdDeserializer<List<Position>> {
   }
 
   @Override
-  public List<Position> deserialize(JsonParser jp, DeserializationContext dc)
+  public Positions deserialize(JsonParser jp, DeserializationContext dc)
       throws IOException {
     JsonNode positionNode = jp.getCodec().readTree(jp);
 
     var om = new ObjectMapper();
-    List<Position> output = new LinkedList<>();
     try {
       if (positionNode.isArray()) {
+        List<Position> output = new LinkedList<>();
         for (final JsonNode jposition : positionNode) {
           output.add(this.parsePosition(om, jposition));
         }
-      } else {
-        output.add(this.parsePosition(om, positionNode));
+        return new Positions(output);
       }
+      return new Positions(this.parsePosition(om, positionNode));
     } catch (PositionException e) {
       throw new JsonParseException(jp, e.getMessage());
     }
-    return output;
   }
 }

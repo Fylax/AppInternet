@@ -13,9 +13,10 @@ public class PositionManager {
   }
 
   public boolean checkPositionValidity(Position position) {
-    boolean valid = position.getTimestamp() > cachedPosition.getTimestamp() &&
+    boolean valid = cachedPosition == null ||
+                    (position.getTimestamp() > cachedPosition.getTimestamp() &&
                     ((distance.getDistance(position, cachedPosition)) /
-                     (position.getTimestamp() - cachedPosition.getTimestamp())) < 100;
+                     (position.getTimestamp() - cachedPosition.getTimestamp())) < 100);
     if (valid) {
       cachedPosition = position;
     }

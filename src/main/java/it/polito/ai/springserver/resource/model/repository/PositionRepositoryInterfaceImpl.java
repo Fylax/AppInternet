@@ -21,11 +21,10 @@ public class PositionRepositoryInterfaceImpl implements PositionRepositoryInterf
 
   @Override
   public Position getUserLatestPosition(long userid) {
-    Criteria c = Criteria.where("userid");
     Query query = new Query();
     query.limit(10);
     query.with(new Sort(Sort.Direction.DESC, "timestamp"));
-    query.addCriteria(c);
+    query.addCriteria(Criteria.where("userid").is(userid));
 
     return mongoTemplate.findOne(query, Position.class);
   }

@@ -23,7 +23,7 @@ public class Position {
   private long timestamp;
 
   @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
-  GeoJsonPoint point;
+  private GeoJsonPoint point;
 
   public Position() {
   } //used internally by MongoDb

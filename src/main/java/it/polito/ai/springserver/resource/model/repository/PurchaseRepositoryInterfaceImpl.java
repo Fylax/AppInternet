@@ -23,7 +23,7 @@ public class PurchaseRepositoryInterfaceImpl implements PurchaseRepositoryInterf
     Query purchasableQuery = new Query();
     purchasableQuery.addCriteria(Criteria.where("timestamp").gte(start).
         andOperator(Criteria.where("timestamp").lte(end)));
-    purchasableQuery.addCriteria(Criteria.where("position").within(polygon));
+    purchasableQuery.addCriteria(Criteria.where("point").within(polygon));
     for (var purchase : purchased) {
       for (var position : purchase.getPositions()) {
         purchasableQuery.addCriteria(Criteria.where("_id").ne(position.getId()));

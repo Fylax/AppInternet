@@ -41,12 +41,6 @@ public class CustomerPositionsController {
       long customer_id = userId.getUserId();
       CustomerRequest currRequest = (new ObjectMapper()).
           readValue((new String(Base64.decode(params))), CustomerRequest.class);
-      //List<Position> positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
-      //currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
-      //List<Purchase> purchaseList = purchaseRepositoryInterface.
-      //findByCustomeridAndStartBeforeAndEndAfter(customer_id,
-      //                                        currRequest.getEnd(), currRequest.getStart());
-      //long countPositions = countPositions(positions, purchaseList);
       long countPositions = purchaseRepositoryInterface.
           countPurchasable(customer_id, currRequest.getPolygon(),
                            currRequest.getStart(), currRequest.getEnd());
@@ -59,15 +53,8 @@ public class CustomerPositionsController {
   @PostMapping
   public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) {
 
-    //List<Purchase> purchaseList;
-    //List<Position> positions;
     try {
       long customer_id = userId.getUserId();
-      //positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
-      // currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
-      //purchaseList = purchaseRepositoryInterface.findByCustomeridAndStartBeforeAndEndAfter(customer_id,
-      //                                 currRequest.getEnd(), currRequest.getStart());
-      //positions = getPositionsToBuy(positions, purchaseList);
       var positions = purchaseRepositoryInterface.
           findPurchasable(customer_id, currRequest.getPolygon(),
                           currRequest.getStart(), currRequest.getEnd());

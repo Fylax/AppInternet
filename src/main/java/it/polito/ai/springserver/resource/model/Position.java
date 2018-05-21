@@ -1,5 +1,6 @@
 package it.polito.ai.springserver.resource.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.polito.ai.springserver.resource.controller.deserializer.UserPositionDeserializer;
 import it.polito.ai.springserver.resource.exception.PositionException;
@@ -48,6 +49,7 @@ public class Position {
     this.point = new GeoJsonPoint(longitude, latitude);
   }
 
+  @JsonIgnore
   public ObjectId getId() {
     return id;
   }

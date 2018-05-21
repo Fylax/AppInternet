@@ -1,5 +1,6 @@
 package it.polito.ai.springserver.resource.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
@@ -33,6 +34,7 @@ public class PurchaseDetailed extends Purchase {
     return pos;
   }
 
+  @JsonIgnore
   public PurchaseSummary getSummary() {
     return new PurchaseSummary(super.customerid, super.timestamp, super.start, super.end,
                                this.positions.size());

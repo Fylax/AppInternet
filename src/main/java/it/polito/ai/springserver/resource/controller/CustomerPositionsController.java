@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -71,13 +70,22 @@ public class CustomerPositionsController {
   public ResponseEntity<List<PurchaseSummary>> getPurchases(
           @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") long start,
           @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") long end) {
-
     long customer_id = userId.getUserId();
     List<PurchaseDetailed> purchaseList = purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(
             customer_id, start, end);
     List<PurchaseSummary> summaries = new ArrayList<>(purchaseList.size());
     purchaseList.forEach(p -> summaries.add(p.getSummary()));
     return new ResponseEntity<>(summaries, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/purchase/{id}", method = RequestMethod.GET )
+  public ResponseEntity getPurchase(@PathVariable String id) {
+    long customer_id = userId.getUserId();
+    PurchaseDetailed purchase = purchaseRepositoryInterface.findOne(id);
+    if (customer_id == purchase.getCustomerid()) {
+      return new ResponseEntity<>(purchase, HttpStatus.OK);
+    }
+    return new ResponseEntity(HttpStatus.FORBIDDEN);
   }
 
   @Async

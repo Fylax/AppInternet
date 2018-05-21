@@ -1,6 +1,7 @@
 package it.polito.ai.springserver.resource.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.polito.ai.springserver.resource.model.Base64CustomerRequest;
 import it.polito.ai.springserver.resource.model.CustomerRequest;
 import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.Purchase;
@@ -36,18 +37,13 @@ public class CustomerPositionsController {
   private PurchaseRepositoryInterface purchaseRepositoryInterface;
 
   @GetMapping
-  public ResponseEntity getPolygonPositions(@RequestParam(value = "request") String params) {
-    try {
-      long customer_id = userId.getUserId();
-      CustomerRequest currRequest = (new ObjectMapper()).
-          readValue((new String(Base64.decode(params))), CustomerRequest.class);
-      long countPositions = purchaseRepositoryInterface.
-          countPurchasable(customer_id, currRequest.getPolygon(),
-                           currRequest.getStart(), currRequest.getEnd());
-      return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.OK);
-    } catch (IOException e) {
-      return new ResponseEntity(HttpStatus.BAD_REQUEST);
-    }
+  public ResponseEntity getPolygonPositions(@RequestParam(value = "request") Base64CustomerRequest request) {
+    long customer_id = userId.getUserId();
+    CustomerRequest currRequest = request.getCr();
+    long countPositions = purchaseRepositoryInterface.
+            countPurchasable(customer_id, currRequest.getPolygon(),
+                    currRequest.getStart(), currRequest.getEnd());
+    return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.OK);
   }
 
   @PostMapping
@@ -56,8 +52,8 @@ public class CustomerPositionsController {
     try {
       long customer_id = userId.getUserId();
       var positions = purchaseRepositoryInterface.
-          findPurchasable(customer_id, currRequest.getPolygon(),
-                          currRequest.getStart(), currRequest.getEnd());
+              findPurchasable(customer_id, currRequest.getPolygon(),
+                      currRequest.getStart(), currRequest.getEnd());
       if (positions.size() != 0) {
         Purchase purchase = new Purchase(customer_id, System.currentTimeMillis(), currRequest.getStart(), currRequest.getEnd(), positions);
         purchaseRepositoryInterface.save(purchase);

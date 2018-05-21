@@ -50,7 +50,7 @@ public class UserPositionDeserializer extends StdDeserializer<Positions> {
         return new Positions(output);
       }
       return new Positions(this.parsePosition(om, positionNode));
-    } catch (PositionException e) {
+    } catch (PositionException | NullPointerException e) {
       throw new JsonParseException(jp, e.getMessage());
     }
   }

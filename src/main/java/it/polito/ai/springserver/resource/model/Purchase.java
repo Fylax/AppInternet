@@ -13,10 +13,10 @@ public class Purchase {
   private String id;
   private long customerid;
   private long timestamp;
-  //private AbstractMap.SimpleImmutableEntry<Long,Long> temporal_range;
   private long start;
   private long end;
   private List<PurchasedPosition> positions;
+  private double amount;
 
   Purchase(){}
 
@@ -37,14 +37,6 @@ public class Purchase {
   public long getTimestamp() {
     return timestamp;
   }
-
-  //public long getStart() {
-    //return this.temporal_range.getKey();
-  //}
-
-//  public long getEnd() {
- //   return this.temporal_range.getValue();
-  //}
 
   public List<Position> getPositions() {
     var pos = new ArrayList<Position>(this.positions.size());

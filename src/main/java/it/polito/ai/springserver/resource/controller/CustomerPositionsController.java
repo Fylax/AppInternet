@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,44 +36,50 @@ public class CustomerPositionsController {
   private PurchaseRepositoryInterface purchaseRepositoryInterface;
 
   @GetMapping
-  public ResponseEntity getPolygonPositions(@RequestParam(value = "geoJson", required = false) String params) throws BadHttpRequest {
-    long customer_id = userId.getUserId();
-
-    long countPositions = 0;
-    CustomerRequest currRequest = null;
+  public ResponseEntity getPolygonPositions(@RequestParam(value = "request") String params) {
     try {
-      currRequest = (new ObjectMapper()).readValue((new String(Base64.decode(params))), CustomerRequest.class);
-      List<Position> positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
-              currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
-      List<Purchase> purchaseList = purchaseRepositoryInterface.findByCustomeridAndStartBeforeAndEndAfter(customer_id,
-              currRequest.getEnd(), currRequest.getStart());
-      countPositions = countPositions(positions, purchaseList);
-    } catch (Exception e) {
-      return ResponseEntity.badRequest().build();
+      long customer_id = userId.getUserId();
+      CustomerRequest currRequest = (new ObjectMapper()).
+          readValue((new String(Base64.decode(params))), CustomerRequest.class);
+      //List<Position> positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
+      //currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
+      //List<Purchase> purchaseList = purchaseRepositoryInterface.
+      //findByCustomeridAndStartBeforeAndEndAfter(customer_id,
+      //                                        currRequest.getEnd(), currRequest.getStart());
+      //long countPositions = countPositions(positions, purchaseList);
+      long countPositions = purchaseRepositoryInterface.
+          countPurchasable(customer_id, currRequest.getPolygon(),
+                           currRequest.getStart(), currRequest.getEnd());
+      return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.OK);
+    } catch (IOException e) {
+      return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-    return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.FOUND);
   }
 
   @PostMapping
   public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) {
-    long customer_id = userId.getUserId();
 
-    List<Purchase> purchaseList = new ArrayList<>();
-    List<Position> positions = new ArrayList<>();
+    //List<Purchase> purchaseList;
+    //List<Position> positions;
     try {
-      positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
-              currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
-      purchaseList = purchaseRepositoryInterface.findByCustomeridAndStartBeforeAndEndAfter(customer_id,
-              currRequest.getEnd(), currRequest.getStart());
-      positions = getPositionsToBuy(positions, purchaseList);
-      if(positions.size() != 0) {
+      long customer_id = userId.getUserId();
+      //positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
+      // currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
+      //purchaseList = purchaseRepositoryInterface.findByCustomeridAndStartBeforeAndEndAfter(customer_id,
+      //                                 currRequest.getEnd(), currRequest.getStart());
+      //positions = getPositionsToBuy(positions, purchaseList);
+      var positions = purchaseRepositoryInterface.
+          findPurchasable(customer_id, currRequest.getPolygon(),
+                          currRequest.getStart(), currRequest.getEnd());
+      if (positions.size() != 0) {
         Purchase purchase = new Purchase(customer_id, System.currentTimeMillis(), currRequest.getStart(), currRequest.getEnd(), positions);
-          purchaseRepositoryInterface.save(purchase);
+        purchaseRepositoryInterface.save(purchase);
+        return new ResponseEntity<>(positions, new HttpHeaders(), HttpStatus.CREATED); // TODO remove body, add location header
       }
+      return new ResponseEntity(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       return ResponseEntity.unprocessableEntity().build();
     }
-    return new ResponseEntity<>(positions, new HttpHeaders(), HttpStatus.CREATED);
   }
 
   private long countPositions(List<Position> positionsInPolygon, List<Purchase> purchaseList) {

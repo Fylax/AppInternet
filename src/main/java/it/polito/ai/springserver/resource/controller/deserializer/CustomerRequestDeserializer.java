@@ -1,5 +1,6 @@
 package it.polito.ai.springserver.resource.controller.deserializer;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -28,6 +29,7 @@ public class CustomerRequestDeserializer extends StdDeserializer<CustomerRequest
   @Override
   public CustomerRequest deserialize(JsonParser jp, DeserializationContext dc)
       throws IOException, JsonProcessingException {
+    try {
     JsonNode requestNode = jp.getCodec().readTree(jp);
 
     var area = requestNode.get("area");
@@ -46,6 +48,9 @@ public class CustomerRequestDeserializer extends StdDeserializer<CustomerRequest
     }
     long start = requestNode.get("start").longValue();
     long end = requestNode.get("end").longValue();
-    return new CustomerRequest(start, end, new GeoJsonPolygon(points));
+    return new CustomerRequest(start, end, new GeoJsonPolygon(points)); }
+    catch (NullPointerException e) {
+      throw new JsonParseException(jp, e.getMessage());
+    }
   }
 }

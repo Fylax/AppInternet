@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 
@@ -43,4 +44,6 @@ public class PurchaseRepositoryInterfaceImpl implements PurchaseRepositoryInterf
     var purchasableQuery = this.getQuery(customerid, polygon, start, end);
     return mongoTemplate.find(purchasableQuery, Position.class);
   }
+
+
 }

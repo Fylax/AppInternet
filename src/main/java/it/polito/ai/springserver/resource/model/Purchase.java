@@ -18,7 +18,7 @@ public class Purchase {
   private long timestamp;
   private long start;
   private long end;
-  private String status;
+  private TransactionStatus status;
   private List<PurchasedPosition> positions;
   private double amount;
   @Transient
@@ -26,13 +26,12 @@ public class Purchase {
 
   Purchase(){}
 
-
   public Purchase(long customerid, long timestamp, long start, long end, List<Position> positions) {
     this.customerid = customerid;
     this.timestamp = timestamp;
     this.start = start;
     this.end = end;
-    this.status = "pending";
+    this.status = TransactionStatus.PENDING;
     this.positions = new ArrayList<>(positions.size());
     positions.forEach(p -> this.positions.add(new PurchasedPosition(p)));
     this.amount = this.positions.size()*1d;              //fittiziamente costo unitario!
@@ -46,9 +45,9 @@ public class Purchase {
     this.timestamp = timestamp;
     this.start = start;
     this.end = end;
-    this.status = "pending";
+    this.status = TransactionStatus.PENDING;
     this.positions = positions;
-    this.amount = amount;              //fittiziamente costo unitario!
+    this.amount = amount;
     this.countPosition = this.positions.size();
   }
   public long getCustomerid() {
@@ -77,7 +76,7 @@ public class Purchase {
     return end;
   }
 
-  public String getStatus() {
+  public TransactionStatus getStatus() {
     return status;
   }
 
@@ -87,5 +86,13 @@ public class Purchase {
 
   public int getCountPosition() {
     return countPosition;
+  }
+
+  public void setStatus(TransactionStatus status) {
+    this.status = status;
+  }
+
+  public void setAmount(double amount) {
+    this.amount = amount;
   }
 }

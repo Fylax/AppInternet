@@ -1,7 +1,9 @@
 package it.polito.ai.springserver.resource.model.repository;
 
 import it.polito.ai.springserver.resource.model.Position;
+import it.polito.ai.springserver.resource.model.Purchase;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.List;
 

@@ -69,6 +69,17 @@ public class CustomerPositionsController {
     }
   }
 
+  @RequestMapping(value = "/purchase", method = RequestMethod.GET )
+  public ResponseEntity<List<Purchase>> getPurchases(
+          @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") long start,
+          @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") long end) {
+
+    long customer_id = userId.getUserId();
+    List<Purchase> purchaseList= purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(
+            customer_id, start, end);
+    return new ResponseEntity<>(purchaseList, HttpStatus.OK);
+  }
+
   private long countPositions(List<Position> positionsInPolygon, List<Purchase> purchaseList) {
     for (Purchase p : purchaseList) {
       if (positionsInPolygon.size() != 0) {

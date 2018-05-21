@@ -8,5 +8,5 @@ import java.util.List;
 public interface PurchaseRepositoryInterface extends MongoRepository<Purchase, String>,
     PurchaseRepositoryInterfaceCustom {
   //with this query only if there is a temporal intersection retrieve the purchased positions
-  //List<Purchase> findByCustomeridPurchasable(long customerid, long end, long start);
+  List<Purchase> findByCustomeridAndTimestampBetween(long customerid, long start, long end);
 }

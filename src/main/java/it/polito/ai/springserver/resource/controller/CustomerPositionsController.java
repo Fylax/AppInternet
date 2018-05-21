@@ -74,6 +74,7 @@ public class CustomerPositionsController {
     long customer_id = userId.getUserId();
     List<Purchase> purchaseList= purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(
             customer_id, start, end);
+    purchaseList.forEach(p -> p.clearPurchasedPositions());
     return new ResponseEntity<>(purchaseList, HttpStatus.OK);
   }
 

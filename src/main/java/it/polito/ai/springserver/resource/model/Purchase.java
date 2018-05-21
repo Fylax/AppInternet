@@ -1,5 +1,6 @@
 package it.polito.ai.springserver.resource.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.annotation.Transient;
@@ -12,7 +13,7 @@ import java.util.List;
 public class Purchase {
 
   @Id
-  private String id;
+  private ObjectId id;
   private long customerid;
   private long timestamp;
   private long start;
@@ -25,7 +26,7 @@ public class Purchase {
 
   Purchase(){}
 
-  @PersistenceConstructor
+
   public Purchase(long customerid, long timestamp, long start, long end, List<Position> positions) {
     this.customerid = customerid;
     this.timestamp = timestamp;
@@ -33,11 +34,23 @@ public class Purchase {
     this.end = end;
     this.status = "pending";
     this.positions = new ArrayList<>(positions.size());
-    this.amount = this.positions.size()*1;              //fittiziamente costo unitario!
-    this.countPosition = this.positions.size();
     positions.forEach(p -> this.positions.add(new PurchasedPosition(p)));
+    this.amount = this.positions.size()*1d;              //fittiziamente costo unitario!
+    this.countPosition = this.positions.size();
   }
 
+  @PersistenceConstructor
+  public Purchase(ObjectId id, long customerid, long timestamp, long start, long end, double amount, List<PurchasedPosition> positions) {
+    this.id = id;
+    this.customerid = customerid;
+    this.timestamp = timestamp;
+    this.start = start;
+    this.end = end;
+    this.status = "pending";
+    this.positions = positions;
+    this.amount = amount;              //fittiziamente costo unitario!
+    this.countPosition = this.positions.size();
+  }
   public long getCustomerid() {
     return customerid;
   }
@@ -52,9 +65,27 @@ public class Purchase {
     return pos;
   }
 
-  List<String> getPositionIds() {
-    var ids = new ArrayList<String>(this.positions.size());
-    this.positions.forEach(p -> ids.add(p.getPosition().getId()));
-    return ids;
+  public void clearPurchasedPositions(){
+    this.positions.clear();
+  }
+
+  public long getStart() {
+    return start;
+  }
+
+  public long getEnd() {
+    return end;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public double getAmount() {
+    return amount;
+  }
+
+  public int getCountPosition() {
+    return countPosition;
   }
 }

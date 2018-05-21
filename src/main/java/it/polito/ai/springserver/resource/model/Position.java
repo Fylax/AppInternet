@@ -3,6 +3,7 @@ package it.polito.ai.springserver.resource.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import it.polito.ai.springserver.resource.controller.deserializer.UserPositionDeserializer;
 import it.polito.ai.springserver.resource.exception.PositionException;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -18,7 +19,7 @@ import java.util.Objects;
 public class Position {
 
   @Id
-  private String id;
+  private ObjectId id;
   private long userid;
   private long timestamp;
 
@@ -47,7 +48,7 @@ public class Position {
     this.point = new GeoJsonPoint(longitude, latitude);
   }
 
-  public String getId() {
+  public ObjectId getId() {
     return id;
   }
 

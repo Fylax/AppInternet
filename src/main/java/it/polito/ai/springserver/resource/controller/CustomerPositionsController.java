@@ -1,9 +1,6 @@
 package it.polito.ai.springserver.resource.controller;
 
-import it.polito.ai.springserver.resource.model.Base64CustomerRequest;
-import it.polito.ai.springserver.resource.model.CustomerRequest;
-import it.polito.ai.springserver.resource.model.Purchase;
-import it.polito.ai.springserver.resource.model.TransactionManagerComponent;
+import it.polito.ai.springserver.resource.model.*;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.PurchaseRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
@@ -15,6 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
@@ -56,7 +54,8 @@ public class CustomerPositionsController {
               findPurchasable(customer_id, currRequest.getPolygon(),
                       currRequest.getStart(), currRequest.getEnd());
       if (positions.size() != 0) {
-        Purchase purchase = new Purchase(customer_id, System.currentTimeMillis(), currRequest.getStart(), currRequest.getEnd(), positions);
+        PurchaseDetailed purchase = new PurchaseDetailed(customer_id, System.currentTimeMillis(),
+                                                         currRequest.getStart(), currRequest.getEnd(), positions);
         var currPurchase = purchaseRepositoryInterface.save(purchase);
         transactionManagerComponent.asyncTransactionManager(currPurchase);
 
@@ -69,15 +68,16 @@ public class CustomerPositionsController {
   }
 
   @RequestMapping(value = "/purchase", method = RequestMethod.GET )
-  public ResponseEntity<List<Purchase>> getPurchases(
+  public ResponseEntity<List<PurchaseSummary>> getPurchases(
           @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") long start,
           @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") long end) {
 
     long customer_id = userId.getUserId();
-    List<Purchase> purchaseList= purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(
+    List<PurchaseDetailed> purchaseList = purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(
             customer_id, start, end);
-    purchaseList.forEach(p -> p.clearPurchasedPositions());
-    return new ResponseEntity<>(purchaseList, HttpStatus.OK);
+    List<PurchaseSummary> summaries = new ArrayList<>(purchaseList.size());
+    purchaseList.forEach(p -> summaries.add(p.getSummary()));
+    return new ResponseEntity<>(summaries, HttpStatus.OK);
   }
 
   @Async

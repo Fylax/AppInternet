@@ -16,11 +16,11 @@ public class TransactionManagerComponent {
   private PurchaseRepositoryInterface purchaseRepositoryInterface;
 
   @Async
-  public void asyncTransactionManager(Purchase currPurchase) {
+  public void asyncTransactionManager(PurchaseDetailed currPurchase) {
     try {
       if (asyncMethodWithReturnType().get()) {
         currPurchase.setStatus(TransactionStatus.COMPLETED);
-        currPurchase.setAmount(currPurchase.getCountPosition() /** *IOTA_UNIT_VALUE **/);
+        /** *IOTA_UNIT_VALUE **/
         purchaseRepositoryInterface.save(currPurchase);
       }//else{...}
     } catch (InterruptedException | ExecutionException e) {

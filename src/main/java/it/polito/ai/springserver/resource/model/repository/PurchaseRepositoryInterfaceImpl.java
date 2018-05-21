@@ -2,6 +2,7 @@ package it.polito.ai.springserver.resource.model.repository;
 
 import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.Purchase;
+import it.polito.ai.springserver.resource.model.PurchaseDetailed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,7 +20,7 @@ public class PurchaseRepositoryInterfaceImpl implements PurchaseRepositoryInterf
   private Query getQuery(long customerid, GeoJsonPolygon polygon, long start, long end) {
     Query purchasedQuery = new Query();
     purchasedQuery.addCriteria(Criteria.where("customerid").is(customerid));
-    List<Purchase> purchased = mongoTemplate.find(purchasedQuery, Purchase.class);
+    List<PurchaseDetailed> purchased = mongoTemplate.find(purchasedQuery, PurchaseDetailed.class);
 
     Query purchasableQuery = new Query();
     purchasableQuery.addCriteria(Criteria.where("timestamp").gte(start).

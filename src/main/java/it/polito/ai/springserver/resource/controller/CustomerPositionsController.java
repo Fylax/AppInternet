@@ -57,6 +57,7 @@ public class CustomerPositionsController {
       if (positions.size() != 0) {
         Purchase purchase = new Purchase(customer_id, System.currentTimeMillis(), currRequest.getStart(), currRequest.getEnd(), positions);
         purchaseRepositoryInterface.save(purchase);
+
         return new ResponseEntity<>(positions, new HttpHeaders(), HttpStatus.CREATED); // TODO remove body, add location header
       }
       return new ResponseEntity(HttpStatus.NO_CONTENT);

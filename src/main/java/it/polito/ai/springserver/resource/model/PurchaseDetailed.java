@@ -34,6 +34,10 @@ public class PurchaseDetailed extends Purchase {
     return pos;
   }
 
+  public String getId() {
+    return String.valueOf(id);
+  }
+
   @JsonIgnore
   public PurchaseSummary getSummary() {
     return new PurchaseSummary(super.customerid, super.timestamp, super.start, super.end,

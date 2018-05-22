@@ -3,6 +3,7 @@ package it.polito.ai.springserver.resource.model.repository;
 import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.Purchase;
 import it.polito.ai.springserver.resource.model.PurchaseDetailed;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,6 +11,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.scheduling.annotation.Async;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PurchaseRepositoryInterfaceImpl implements PurchaseRepositoryInterfaceCustom {
@@ -26,11 +29,13 @@ public class PurchaseRepositoryInterfaceImpl implements PurchaseRepositoryInterf
     purchasableQuery.addCriteria(Criteria.where("timestamp").gte(start).
         andOperator(Criteria.where("timestamp").lte(end)));
     purchasableQuery.addCriteria(Criteria.where("point").within(polygon));
+    Collection<ObjectId> positions = new LinkedList<>();
     for (var purchase : purchased) {
       for (var position : purchase.getPositions()) {
-        purchasableQuery.addCriteria(Criteria.where("_id").ne(position.getId()));
+        positions.add(position.getId());
       }
     }
+    purchasableQuery.addCriteria(Criteria.where("_id").nin(positions));
     return purchasableQuery;
   }
 

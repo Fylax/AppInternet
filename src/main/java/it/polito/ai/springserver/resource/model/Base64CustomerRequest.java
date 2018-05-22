@@ -1,14 +1,17 @@
 package it.polito.ai.springserver.resource.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import it.polito.ai.springserver.resource.controller.deserializer.Base64CustomerRequestDeserializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bouncycastle.util.encoders.Base64;
 
-@JsonDeserialize(using = Base64CustomerRequestDeserializer.class)
+import java.io.IOException;
+
 public class Base64CustomerRequest {
   private CustomerRequest cr;
 
-  public Base64CustomerRequest(CustomerRequest cr) {
-    this.cr = cr;
+  public Base64CustomerRequest(String json) throws IOException {
+    this.cr = (new ObjectMapper()).
+            readValue((new String(Base64.decode(json))), CustomerRequest.class);
+
   }
 
   public CustomerRequest getCr() {

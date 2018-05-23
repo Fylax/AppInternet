@@ -18,6 +18,6 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(RuntimeException.class)
   public ResponseEntity runtimeExceptionHandler(Exception e){
-    return new ResponseEntity("Maybe there is an errror in server. Try again", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity("Maybe there is an error in server. Try again", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

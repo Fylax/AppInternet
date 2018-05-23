@@ -48,17 +48,13 @@ public class SpringserverApplication {
                         UserStatus.APPROVED));
 
         u1.addRole(Role.ROLE_ADMIN);
-        u2.addRole(Role.ROLE_CUSTOMER);
+        u1.addRole(Role.ROLE_CUSTOMER);
         userRepository.save(u1);
         userRepository.save(u2);
 
         //positionRepositoryInterface.save(new Position(1, 10, 15.3, 7.14));
         positionRepository.save(new Position(1, 110, 7.68, 45.07));
-        positionRepository.save(new Position(1, 120, 7.68, 45.07));
-        positionRepository.save(new Position(1, 130, 7.68, 45.07));
-        positionRepository.save(new Position(1, 140, 7.68, 45.07));
-        positionRepository.save(new Position(1, 150, 7.68, 45.07));
-
+        positionRepository.save(new Position(1, 120, 7.78, 45.17));
 
         //async test
         /***

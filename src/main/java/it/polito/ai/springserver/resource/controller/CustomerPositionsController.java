@@ -53,8 +53,7 @@ public class CustomerPositionsController {
 
     long customer_id = userId.getUserId();
     var positions = purchaseRepositoryInterface.
-            findPurchasable(customer_id, currRequest.getPolygon(),
-                    currRequest.getStart(), currRequest.getEnd());
+            findPurchasable(customer_id, currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
     if (positions.size() != 0) {
       PurchaseDetailed purchase = new PurchaseDetailed(customer_id, System.currentTimeMillis(),
               currRequest.getStart(), currRequest.getEnd(), positions);
@@ -79,7 +78,7 @@ public class CustomerPositionsController {
     List<PurchaseDetailed> purchaseList = purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(
             customerId, start, end);
     List<Resource<PurchaseSummary>> resourceList = new ArrayList<>(purchaseList.size());
-    for(PurchaseDetailed pd : purchaseList){
+    for (PurchaseDetailed pd : purchaseList) {
       Resource<PurchaseSummary> resource = new Resource<>(pd.getSummary());
       Link link = linkTo(methodOn(this.getClass())
               .getCustomerPurchase(customerId, pd.getId()))
@@ -106,10 +105,9 @@ public class CustomerPositionsController {
           @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") Long start,
           @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") Long end) {
     long customer_id = userId.getUserId();
-    List<PurchaseDetailed> purchaseList = purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(
-            customer_id, start, end);
+    List<PurchaseDetailed> purchaseList = purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(customer_id, start, end);
     List<Resource<PurchaseSummary>> resourceList = new ArrayList<>(purchaseList.size());
-    for(PurchaseDetailed pd : purchaseList){
+    for (PurchaseDetailed pd : purchaseList) {
       Resource<PurchaseSummary> resource = new Resource<>(pd.getSummary());
       Link link = linkTo(methodOn(this.getClass()).getPurchase(pd.getId())).withSelfRel();
       resource.add(link);

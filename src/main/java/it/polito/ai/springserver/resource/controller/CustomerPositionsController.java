@@ -49,7 +49,7 @@ public class CustomerPositionsController {
 
   @PostMapping
   @PreAuthorize("hasRole('CUSTOMER')")
-  public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) {
+  public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) throws InterruptedException {
 
     long customer_id = userId.getUserId();
     var positions = purchaseRepositoryInterface.
@@ -129,15 +129,4 @@ public class CustomerPositionsController {
     return new ResponseEntity(HttpStatus.FORBIDDEN);
   }
 
-  @Async
-  public CompletableFuture<Boolean> veryLongMethod() throws InterruptedException  {
-
-    try {
-      Thread.sleep(2000L);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-    return CompletableFuture.completedFuture(true);
-  }
 }

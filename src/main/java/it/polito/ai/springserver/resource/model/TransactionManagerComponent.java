@@ -16,7 +16,8 @@ public class TransactionManagerComponent {
   private PurchaseRepositoryInterface purchaseRepositoryInterface;
 
   @Async
-  public void asyncTransactionManager(PurchaseDetailed currPurchase) {
+  public void asyncTransactionManager(PurchaseDetailed currPurchase) throws InterruptedException {
+    //Thread.sleep(3000);
     try {
       if (asyncMethodWithReturnType().get()) {
         currPurchase.setStatus(TransactionStatus.COMPLETED);

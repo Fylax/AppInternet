@@ -31,9 +31,6 @@ public class CustomerPositionsController {
   private UserId userId;
 
   @Autowired
-  private PositionRepositoryInterface positionRepositoryInterface;
-
-  @Autowired
   private PurchaseRepositoryInterface purchaseRepositoryInterface;
 
   @Autowired
@@ -54,27 +51,23 @@ public class CustomerPositionsController {
   @PreAuthorize("hasRole('CUSTOMER')")
   public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) {
 
-    try {
-      long customer_id = userId.getUserId();
-      var positions = purchaseRepositoryInterface.
-              findPurchasable(customer_id, currRequest.getPolygon(),
-                      currRequest.getStart(), currRequest.getEnd());
-      if (positions.size() != 0) {
-        PurchaseDetailed purchase = new PurchaseDetailed(customer_id, System.currentTimeMillis(),
-                                                         currRequest.getStart(), currRequest.getEnd(), positions);
-        var currPurchase = purchaseRepositoryInterface.save(purchase);
-        transactionManagerComponent.asyncTransactionManager(currPurchase);
+    long customer_id = userId.getUserId();
+    var positions = purchaseRepositoryInterface.
+            findPurchasable(customer_id, currRequest.getPolygon(),
+                    currRequest.getStart(), currRequest.getEnd());
+    if (positions.size() != 0) {
+      PurchaseDetailed purchase = new PurchaseDetailed(customer_id, System.currentTimeMillis(),
+              currRequest.getStart(), currRequest.getEnd(), positions);
+      var currPurchase = purchaseRepositoryInterface.save(purchase);
+      transactionManagerComponent.asyncTransactionManager(currPurchase);
 
-        Link link = linkTo(methodOn(this.getClass()).getPurchase(currPurchase.getId())).withSelfRel();
-        HttpHeaders header = new HttpHeaders();
-        header.setLocation(URI.create(link.getHref()));
+      Link link = linkTo(methodOn(this.getClass()).getPurchase(currPurchase.getId())).withSelfRel();
+      HttpHeaders header = new HttpHeaders();
+      header.setLocation(URI.create(link.getHref()));
 
-        return new ResponseEntity<>(header, HttpStatus.CREATED);
-      }
-      return new ResponseEntity(HttpStatus.NO_CONTENT);
-    } catch (Exception e) {
-      return ResponseEntity.unprocessableEntity().build();
+      return new ResponseEntity<>(header, HttpStatus.CREATED);
     }
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
 
   @GetMapping(value = "{id}/purchase")

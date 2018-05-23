@@ -1,4 +1,5 @@
 FROM openjdk:10
-ADD out/artifacts/es3_v2_jar/Es3_v2.jar es3_v2.jar
-EXPOSE 8085
-ENTRYPOINT ["java", "-jar", "es3_v2.jar"]
+VOLUME /tmp
+ADD target/lab3.jar app.jar
+EXPOSE 8080
+ENTRYPOINT exec java $JAVA_OPTS -Dspring.profiles.active=prod -jar /app.jar

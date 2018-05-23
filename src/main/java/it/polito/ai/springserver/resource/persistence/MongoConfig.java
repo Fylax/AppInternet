@@ -36,9 +36,8 @@ public class MongoConfig extends AbstractMongoConfiguration {
         env.getProperty("mongo.dbname"),
         env.getProperty("mongo.password").toCharArray()));*/
     final var serverAddress = new ServerAddress(
-        env.getProperty("mongo.address"),
-        Integer.parseInt(env.getProperty("mongo.port")));
-
+        System.getProperty("mongo.address" , env.getProperty("mongo.address")),
+        Integer.parseInt(System.getProperty("mongo.port", env.getProperty("mongo.port"))));
     return new MongoClient(serverAddress, credentials);
   }
 

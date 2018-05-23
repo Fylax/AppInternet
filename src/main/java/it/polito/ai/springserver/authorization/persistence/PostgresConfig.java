@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 @Configuration
 @EnableTransactionManagement
@@ -48,9 +49,9 @@ public class PostgresConfig {
   public DataSource restDataSource() {
     final BasicDataSource dataSource = new BasicDataSource();
     dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-    dataSource.setUrl(env.getProperty("jdbc.url"));
-    dataSource.setUsername(env.getProperty("jdbc.username"));
-    dataSource.setPassword(env.getProperty("jdbc.password"));
+    dataSource.setUrl(System.getProperty("jdbc.url", env.getProperty("jdbc.url")));
+    dataSource.setUsername(System.getProperty("jdbc.username", env.getProperty("jdbc.username")));
+    dataSource.setPassword(System.getProperty("jdbc.password", env.getProperty("jdbc.password")));
     dataSource.setMaxActive(Integer.valueOf(env.getProperty("jdbc.maxTotal")));
     dataSource.setMaxIdle(Integer.valueOf(env.getProperty("jdbc.maxIdle")));
     dataSource.setMaxWait(Integer.valueOf(env.getProperty("jdbc.maxWaitMillis")));

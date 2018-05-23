@@ -1,0 +1,45 @@
+version: '3'
+services:
+    server:
+        container_name: server
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: ai:lab3
+        depends_on:
+            - postgres
+            - mongo
+        expose:
+            - 8080
+        ports:
+            - 8080:8080
+        networks:
+            - pos-network
+        environment:
+            - JAVA_OPTS=-Djdbc.username=root -Djdbc.password=pass -Djdbc.url=jdbc:postgresql://postgres:5432/db -Dmongo.address=mongo -Dmongo.port=27017 -Dmongo.dbname=positions
+    postgres:
+        image: "kartoza/postgis"
+        environment:
+            - POSTGRES_USER=root
+            - POSTGRES_PASS=pass
+            - POSTGRES_DBNAME=db
+        volumes:
+            - pgsql:/var/lib/postgresql
+        expose:
+            - "5432"
+        networks:
+            - pos-network
+    mongo:
+        image: "mongo:latest"
+        volumes:
+            - mongov:/data/db
+        expose:
+            - "27017"
+        networks:
+            - pos-network
+networks:
+    pos-network:
+        driver: bridge
+volumes:
+    pgsql:
+    mongov:

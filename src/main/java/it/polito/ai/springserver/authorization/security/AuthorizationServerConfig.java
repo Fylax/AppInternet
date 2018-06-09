@@ -9,14 +9,11 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -39,7 +36,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Value("${spring.client_secret}")
   private String client_secret;
 
-  @Value("${spring.granted_types}")
+  @Value("#{'${spring.granted_types}'.split(',')}")
   private String[] granted_types;
 
   @Value("${spring.accessTokenValiditySecond}")
@@ -57,6 +54,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
   @Override
   public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+    security.allowFormAuthenticationForClients();
     security.tokenKeyAccess("permitAll()");
   }
 
@@ -97,9 +95,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     converter.setSigningKey(key);
     return converter;
   }
-
-  //public DefaultTokenServices tokenServices() {
-  // Ho modificato il tipo ed aggiunto il setTokenEnhancer(tokenEnhancer()), con l'opportuno metodo.
 
   @Bean
   @Primary

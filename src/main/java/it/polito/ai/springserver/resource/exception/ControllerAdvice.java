@@ -15,9 +15,4 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
   public ResponseEntity jsonParserExceptionHandler (Exception e, WebRequest request){
     return new ResponseEntity("The json associated is invalid", new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
-
-  @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity runtimeExceptionHandler(Exception e){
-    return new ResponseEntity("Maybe there is an error in server. Try again", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-  }
 }

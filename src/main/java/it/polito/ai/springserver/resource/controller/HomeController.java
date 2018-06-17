@@ -27,26 +27,23 @@ public class HomeController {
   @GetMapping
   public ResponseEntity<ResourceSupport> getHome(@RequestHeader(value = "Authorization", required = false) String bearerToken){
     ResourceSupport resource = new ResourceSupport();
-    Link linkSelf = linkTo(this.getClass()).withSelfRel();
-    resource.add(linkSelf);
-    if(bearerToken == null) {
-      Link authLink = linkTo(this.getClass()).slash("/oauth/token").withRel("oauth");
-      resource.add(authLink);
-      return new ResponseEntity<>(resource, HttpStatus.OK);
-    }
+    Link authLink = linkTo(this.getClass()).slash("/oauth/token").withRel("oauth");
+    resource.add(authLink);
     // it is the only way that I've found to check the roles
     Collection<? extends GrantedAuthority> userAuthorities=  SecurityContextHolder.getContext().getAuthentication().getAuthorities();
     List<String> userRoles = new ArrayList<>();
     userAuthorities.forEach(r -> userRoles.add(r.getAuthority()));
     if(userRoles.contains(Role.ROLE_USER.getAuthority())){
-      Link linkPositions = linkTo(UserPositionsController.class).withRel("positions");
+      Link linkPositions = linkTo(UserPositionsController.class).withRel("userPositions");
       resource.add(linkPositions);
     }
     if(userRoles.contains(Role.ROLE_CUSTOMER.getAuthority())){
-      Link linkPositions = linkTo(CustomerPositionsController.class).withRel("positions");
+      Link linkPositions = linkTo(CustomerPositionsController.class).withRel("customerPositions");
       Link linkPurchase = linkTo(methodOn(CustomerPositionsController.class)
               .getPurchases(null, null)).withRel("purchases");
-      resource.add(linkPositions, linkPurchase);
+      Link linkPurchaseDetails = linkTo(methodOn(CustomerPositionsController.class)
+              .getPurchase(null)).withRel("purchaseDetails");
+      resource.add(linkPositions, linkPurchase, linkPurchaseDetails);
     }
     if(userRoles.contains(Role.ROLE_ADMIN.getAuthority())){
       Link linkuser = linkTo(methodOn(AdminController.class).getUsers(null, null)).withRel("users");

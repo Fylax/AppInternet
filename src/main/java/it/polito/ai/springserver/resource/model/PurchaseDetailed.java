@@ -40,6 +40,6 @@ public class PurchaseDetailed extends Purchase {
 
   @JsonIgnore
   public PurchaseSummary getSummary() {
-    return new PurchaseSummary(super.customerid, super.timestamp, super.start, super.end, this.positions.size(), super.status);
+    return new PurchaseSummary(this.id, super.customerid, super.timestamp, super.start, super.end, this.positions.size(), super.status);
   }
 }

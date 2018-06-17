@@ -65,7 +65,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .cors().and()
         .authorizeRequests()
-        .antMatchers("/oauth/token").permitAll().and()
+        .antMatchers("/", "/oauth/token").permitAll().and()
         .authorizeRequests()
         .anyRequest().authenticated();
   }

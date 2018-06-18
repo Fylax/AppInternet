@@ -3,6 +3,7 @@ package it.polito.ai.springserver.resource.controller;
 import it.polito.ai.springserver.authorization.model.Role;
 import it.polito.ai.springserver.authorization.model.User;
 import it.polito.ai.springserver.authorization.model.repository.UserRepositoryInterface;
+import it.polito.ai.springserver.resource.model.PaginationSupportClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -30,50 +31,60 @@ public class AdminController {
   private UserRepositoryInterface userRepositoryInterface;
 
   @GetMapping("/users")
-  public ResponseEntity<ResourceSupport> getUsers(
+  public ResponseEntity<PaginationSupportClass> getUsers(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
           @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
+    page = page < 1 ? 1 : page;
+    limit = limit < 1 ? 1 : limit;
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "id");
     List<User> users = userRepositoryInterface.findAllByUserRolesContaining(Role.ROLE_USER, pageRequest);
     if (users.size() == 0)
-      return new ResponseEntity<>(new ResourceSupport(), HttpStatus.NOT_FOUND);
-    ResourceSupport resource = new ResourceSupport();
+      return new ResponseEntity<>(new PaginationSupportClass(), HttpStatus.NOT_FOUND);
+    int totalElements = userRepositoryInterface.countAllByUserRolesContaining(Role.ROLE_USER);
+    List<Resource> resourceList = new ArrayList<>();
     for (User u : users) {
-      Link link = linkTo(methodOn(UserPositionsController.class)
+      Resource<Link> resource = new Resource<>(linkTo(methodOn(UserPositionsController.class)
               .getPositions(u.getId(), null, null))
-              .withRel("user" + u.getId());
-      resource.add(link);
+              .withRel("user" + u.getId()));
+      resourceList.add(resource);
     }
+    List<Link> links = new ArrayList<>();
     Link next = linkTo(methodOn(this.getClass()).getUsers(page + 1, limit)).withRel("next");
-    resource.add(next);
+    links.add(next);
     if (page != 1) {
       Link prev = linkTo(methodOn(this.getClass()).getUsers(page + 1, limit)).withRel("prev");
-      resource.add(prev);
+      links.add(prev);
     }
-    return new ResponseEntity<>(resource, HttpStatus.OK);
+    PaginationSupportClass pg = new PaginationSupportClass(resourceList, totalElements, links);
+    return new ResponseEntity<>(pg, HttpStatus.OK);
   }
 
   @GetMapping("/customers")
-  public ResponseEntity<ResourceSupport> getCustomers(
+  public ResponseEntity<PaginationSupportClass> getCustomers(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
           @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
+    page = page < 1 ? 1 : page;
+    limit = limit < 1 ? 1 : limit;
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "id");
     List<User> users = userRepositoryInterface.findAllByUserRolesContaining(Role.ROLE_CUSTOMER, pageRequest);
     if (users.size() == 0)
-      return new ResponseEntity<>(new ResourceSupport(), HttpStatus.NOT_FOUND);
-    ResourceSupport resource = new ResourceSupport();
+      return new ResponseEntity<>(new PaginationSupportClass(), HttpStatus.NOT_FOUND);
+    int totalElements = userRepositoryInterface.countAllByUserRolesContaining(Role.ROLE_USER);
+    List<Resource> resourceList = new ArrayList<>();
     for (User u : users) {
-      Link link = linkTo(methodOn(CustomerPositionsController.class)
-              .getCustomerPurchases(u.getId(), null, null))
-              .withRel("customer" + u.getId());
-      resource.add(link);
+      Resource<Link> resource = new Resource<>(linkTo(methodOn(UserPositionsController.class)
+              .getPositions(u.getId(), null, null))
+              .withRel("customer" + u.getId()));
+      resourceList.add(resource);
     }
+    List<Link> links = new ArrayList<>();
     Link next = linkTo(methodOn(this.getClass()).getCustomers(page + 1, limit)).withRel("next");
-    resource.add(next);
+    links.add(next);
     if (page != 1) {
-      Link prev = linkTo(methodOn(this.getClass()).getCustomers(page - 1, limit)).withRel("prev");
-      resource.add(prev);
+      Link prev = linkTo(methodOn(this.getClass()).getCustomers(page + 1, limit)).withRel("prev");
+      links.add(prev);
     }
-    return new ResponseEntity<>(resource, HttpStatus.OK);
+    PaginationSupportClass pg = new PaginationSupportClass(resourceList, totalElements, links);
+    return new ResponseEntity<>(pg, HttpStatus.OK);
   }
 }

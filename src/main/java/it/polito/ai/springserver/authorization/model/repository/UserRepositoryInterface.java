@@ -10,4 +10,5 @@ import java.util.List;
 public interface UserRepositoryInterface extends JpaRepository<User, Long> {
   User findByUsername(String username);
   List<User> findAllByUserRolesContaining(Role role, Pageable pageable);
+  int countAllByUserRolesContaining(Role role);
 }

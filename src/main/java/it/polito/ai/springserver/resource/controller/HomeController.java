@@ -40,7 +40,7 @@ public class HomeController {
     if(userRoles.contains(Role.ROLE_CUSTOMER.getAuthority())){
       Link linkPositions = linkTo(CustomerPositionsController.class).withRel("customerPositions");
       Link linkPurchase = linkTo(methodOn(CustomerPositionsController.class)
-              .getPurchases(null, null)).withRel("purchases");
+              .getPurchases(null, null, null, null)).withRel("purchases");
       Link linkPurchaseDetails = linkTo(methodOn(CustomerPositionsController.class)
               .getPurchase(null)).withRel("purchaseDetails");
       resource.add(linkPositions, linkPurchase, linkPurchaseDetails);

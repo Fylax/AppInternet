@@ -69,7 +69,7 @@ public class AdminController {
     List<User> users = userRepositoryInterface.findAllByUserRolesContaining(Role.ROLE_CUSTOMER, pageRequest);
     if (users.size() == 0)
       return new ResponseEntity<>(new PaginationSupportClass(), HttpStatus.NOT_FOUND);
-    int totalElements = userRepositoryInterface.countAllByUserRolesContaining(Role.ROLE_USER);
+    int totalElements = userRepositoryInterface.countAllByUserRolesContaining(Role.ROLE_CUSTOMER);
     List<Resource> resourceList = new ArrayList<>();
     for (User u : users) {
       Resource<Link> resource = new Resource<>(linkTo(methodOn(UserPositionsController.class)

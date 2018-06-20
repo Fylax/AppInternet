@@ -110,7 +110,7 @@ public class CustomerPositionsController {
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity getCustomerPurchase(@PathVariable("id") Long customerId, @PathVariable("purchaseId") String purchaseId) {
     PurchaseDetailed purchase = purchaseRepositoryInterface.findOne(purchaseId);
-    if (customerId != null && customerId == purchase.getCustomerid()) {
+    if (customerId != null && purchase != null && customerId == purchase.getCustomerid()) {
       return new ResponseEntity<>(purchase, HttpStatus.OK);
     }
     return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -152,7 +152,7 @@ public class CustomerPositionsController {
   public ResponseEntity getPurchase(@PathVariable String id) {
     long customer_id = userId.getUserId();
     PurchaseDetailed purchase = purchaseRepositoryInterface.findOne(id);
-    if (customer_id == purchase.getCustomerid()) {
+    if (purchase != null && customer_id == purchase.getCustomerid()) {
       return new ResponseEntity<>(purchase, HttpStatus.OK);
     }
     return new ResponseEntity(HttpStatus.FORBIDDEN);

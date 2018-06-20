@@ -45,7 +45,7 @@ public class AdminController {
     for (User u : users) {
       Resource<Link> resource = new Resource<>(linkTo(methodOn(UserPositionsController.class)
               .getPositions(u.getId(), null, null))
-              .withRel("user" + u.getId()));
+              .withRel(u.getId().toString()));
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
@@ -74,7 +74,7 @@ public class AdminController {
     for (User u : users) {
       Resource<Link> resource = new Resource<>(linkTo(methodOn(CustomerPositionsController.class)
               .getCustomerPurchases(u.getId(), null, null, null, null))
-              .withRel("customer" + u.getId()));
+              .withRel(u.getId().toString()));
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();

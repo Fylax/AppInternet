@@ -48,7 +48,7 @@ public class SpringserverApplication {
                         UserStatus.APPROVED));
 
         u1.addRole(Role.ROLE_ADMIN);
-        u1.addRole(Role.ROLE_CUSTOMER);
+        u2.addRole(Role.ROLE_CUSTOMER);
         userRepository.save(u1);
         userRepository.save(u2);
 

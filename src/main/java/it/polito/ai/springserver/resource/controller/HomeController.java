@@ -6,8 +6,10 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,30 +27,43 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class HomeController {
 
   @GetMapping
-  public ResponseEntity<ResourceSupport> getHome(@RequestHeader(value = "Authorization", required = false) String bearerToken){
+  public ResponseEntity<ResourceSupport> getHome(){
     ResourceSupport resource = new ResourceSupport();
     Link authLink = linkTo(this.getClass()).slash("/oauth/token").withRel("oauth");
     resource.add(authLink);
-    // it is the only way that I've found to check the roles
-    Collection<? extends GrantedAuthority> userAuthorities=  SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-    List<String> userRoles = new ArrayList<>();
-    userAuthorities.forEach(r -> userRoles.add(r.getAuthority()));
-    if(userRoles.contains(Role.ROLE_USER.getAuthority())){
-      Link linkPositions = linkTo(UserPositionsController.class).withRel("userPositions");
-      resource.add(linkPositions);
-    }
-    if(userRoles.contains(Role.ROLE_CUSTOMER.getAuthority())){
-      Link linkPositions = linkTo(CustomerPositionsController.class).withRel("customerPositions");
-      Link linkPurchase = linkTo(methodOn(CustomerPositionsController.class)
-              .getPurchases(null, null, null, null)).withRel("purchases");
-      Link linkPurchaseDetails = linkTo(methodOn(CustomerPositionsController.class)
-              .getPurchase(null)).withRel("purchaseDetails");
-      resource.add(linkPositions, linkPurchase, linkPurchaseDetails);
-    }
-    if(userRoles.contains(Role.ROLE_ADMIN.getAuthority())){
-      Link linkuser = linkTo(methodOn(AdminController.class).getUsers(null, null)).withRel("users");
-      Link linkCustomer = linkTo(methodOn(AdminController.class).getCustomers(null, null)).withRel("customers");
-      resource.add(linkuser, linkCustomer);
+    if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+      Collection<? extends GrantedAuthority> userAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+      for(var ga : userAuthorities) {
+        Role role = Role.valueOf(ga.getAuthority());
+        Link linkPositions;
+        switch(role) {
+          case ROLE_USER:
+            linkPositions = linkTo(UserPositionsController.class).withRel("userPositions");
+            resource.add(linkPositions);
+            break;
+          case ROLE_CUSTOMER:
+            linkPositions = linkTo(CustomerPositionsController.class).withRel("customerPositions");
+            Link linkPurchase = linkTo(methodOn(CustomerPositionsController.class)
+                    .getPurchases(null, null, null, null)).withRel("customerPurchases");
+            Link linkPurchaseDetails = linkTo(methodOn(CustomerPositionsController.class)
+                    .getPurchase(null)).withRel("customerPurchaseDetails");
+            resource.add(linkPositions, linkPurchase, linkPurchaseDetails);
+            break;
+          case ROLE_ADMIN:
+            Link linkuser = linkTo(methodOn(AdminController.class).getUsers(null, null)).withRel("adminUsers");
+            Link linkCustomer = linkTo(methodOn(AdminController.class).getCustomers(null, null)).withRel("adminCustomers");
+            Link linkCustomerPurchases = linkTo(methodOn(CustomerPositionsController.class)
+                    .getCustomerPurchases(null, null, null, null, null))
+                    .withRel("adminCustomerPurchases");
+            Link linkCustomerPurchase = linkTo(methodOn(CustomerPositionsController.class)
+                    .getCustomerPurchase(null, null))
+                    .withRel("adminCustomerPurchase");
+            Link linkUserPositions = linkTo(methodOn(UserPositionsController.class)
+                    .getPositions(null, null, null)).withRel("adminUserPositions");
+            resource.add(linkuser, linkCustomer, linkCustomerPurchases, linkCustomerPurchase, linkUserPositions);
+            break;
+        }
+      }
     }
     return new ResponseEntity<>(resource, HttpStatus.OK);
   }

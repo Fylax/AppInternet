@@ -72,8 +72,8 @@ public class AdminController {
     int totalElements = userRepositoryInterface.countAllByUserRolesContaining(Role.ROLE_CUSTOMER);
     List<Resource> resourceList = new ArrayList<>();
     for (User u : users) {
-      Resource<Link> resource = new Resource<>(linkTo(methodOn(UserPositionsController.class)
-              .getPositions(u.getId(), null, null))
+      Resource<Link> resource = new Resource<>(linkTo(methodOn(CustomerPositionsController.class)
+              .getCustomerPurchases(u.getId(), null, null, null, null))
               .withRel("customer" + u.getId()));
       resourceList.add(resource);
     }

@@ -22,4 +22,10 @@ public class UserId {
     return Long.valueOf((String) claims.get("user_id"));
   }
 
+  public String getUsername(){
+    OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
+    OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
+    Map<String, Object> claims = accessToken.getAdditionalInformation();
+    return (String) claims.get("user_name");
+  }
 }

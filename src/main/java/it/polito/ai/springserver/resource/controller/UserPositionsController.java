@@ -1,8 +1,8 @@
 package it.polito.ai.springserver.resource.controller;
 
-import it.polito.ai.springserver.resource.model.Position;
-import it.polito.ai.springserver.resource.model.PositionManager;
-import it.polito.ai.springserver.resource.model.Positions;
+import it.polito.ai.springserver.resource.model.*;
+import it.polito.ai.springserver.resource.model.repository.ApproximateArchiveRepositoryInterface;
+import it.polito.ai.springserver.resource.model.repository.ArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,12 @@ public class UserPositionsController {
 
   @Autowired
   private PositionRepositoryInterface positionRepositoryInterface;
+
+  @Autowired
+  private ArchiveRepositoryInterface archiveRepositoryInterface;
+
+  @Autowired
+  private ApproximateArchiveRepositoryInterface approximateArchiveRepositoryInterface;
 
   @Autowired
   private UserId userId;
@@ -66,14 +72,22 @@ public class UserPositionsController {
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity addPositions(@RequestBody Positions positions) {
     long user_id = userId.getUserId();
+    String user_name = userId.getUsername();
     try {
+      Archive archive = new Archive(user_name, true, (System.currentTimeMillis()/1000), 0);
+      archive = archiveRepositoryInterface.save(archive);
       var positionManager = new PositionManager(user_id, positionRepositoryInterface);
       for (Position position : positions.getPositionList()) {
         position.setUserid(user_id);
+        position.setUsername(user_name);
+        position.setArchiveId(archive.getArchiveId());
         if (!positionManager.checkPositionValidity(position)) {
+          archiveRepositoryInterface.delete(archive);
           return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
       }
+      approximateArchiveRepositoryInterface.save(
+              new ApproximatedArchive(archive.getArchiveId(), user_name, positions.getPositionList()));
       positionRepositoryInterface.save(positions.getPositionList());
     } catch (Exception e) {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

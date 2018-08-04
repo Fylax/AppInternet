@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PositionRepositoryInterface extends MongoRepository<Position, String>, PositionRepositoryInterfaceCustom{
+public interface PositionRepositoryInterface extends MongoRepository<Position, String>,
+        PositionRepositoryInterfaceCustom{
   List<Position> findByUseridAndTimestampBetween(long userid, long start, long end);
   long countPositionByPointIsWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);
   List<Position> findByPointWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);

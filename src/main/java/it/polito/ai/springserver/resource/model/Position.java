@@ -22,7 +22,9 @@ public class Position {
   @Id
   private ObjectId id;
   private long userid;
+  private String username;
   private long timestamp;
+  private ObjectId archiveId;
 
   @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
   private GeoJsonPoint point;
@@ -30,19 +32,21 @@ public class Position {
   public Position() {
   } //used internally by MongoDb
 
-  public Position(long userid, long timestamp, double longitude, double latitude) {
+  public Position(long userid, String username, long timestamp, double longitude, double latitude) {
     this.userid = userid;
+    this.username = username;
     this.timestamp = timestamp;
     this.point = new GeoJsonPoint(longitude, latitude);
   }
 
   public Position(long timestamp, double longitude, double latitude) throws PositionException {
     this.userid = -1;
+    this.username = null;
     this.timestamp = timestamp;
     boolean valid = (latitude >= -90) &&
-                    (latitude <= 90) &&
-                    (longitude >= -180) &&
-                    (longitude <= 180);
+            (latitude <= 90) &&
+            (longitude >= -180) &&
+            (longitude <= 180);
     if (!valid) {
       throw new PositionException("Invalid coordinates.");
     }
@@ -74,6 +78,22 @@ public class Position {
     this.userid = userid;
   }
 
+  public ObjectId getArchiveId() {
+    return archiveId;
+  }
+
+  public void setArchiveId(ObjectId archiveId) {
+    this.archiveId = archiveId;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -84,9 +104,9 @@ public class Position {
     }
     Position position = (Position) o;
     return userid == position.userid &&
-           timestamp == position.timestamp &&
-           Objects.equals(id, position.id) &&
-           Objects.equals(point, position.point);
+            timestamp == position.timestamp &&
+            Objects.equals(id, position.id) &&
+            Objects.equals(point, position.point);
   }
 
   @Override

@@ -1,7 +1,6 @@
 package it.polito.ai.springserver.resource.controller;
 
 import it.polito.ai.springserver.resource.model.*;
-import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.PurchaseRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +8,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -35,6 +31,7 @@ public class CustomerPositionsController {
 
   @Autowired
   private PurchaseRepositoryInterface purchaseRepositoryInterface;
+
 
   @Autowired
   private TransactionManagerComponent transactionManagerComponent;
@@ -96,10 +93,12 @@ public class CustomerPositionsController {
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
-    Link next = linkTo(methodOn(this.getClass()).getCustomerPurchases(customerId, start, end, page + 1, limit)).withRel("next");
+    Link next = linkTo(methodOn(this.getClass()).getCustomerPurchases(customerId, start, end, page + 1, limit))
+            .withRel("next");
     links.add(next);
     if (page != 1) {
-      Link prev = linkTo(methodOn(this.getClass()).getCustomerPurchases(customerId, start, end, page - 1, limit)).withRel("prev");
+      Link prev = linkTo(methodOn(this.getClass()).getCustomerPurchases(customerId, start, end, page - 1, limit))
+              .withRel("prev");
       links.add(prev);
     }
     PaginationSupportClass pg = new PaginationSupportClass(resourceList, totalElements, links);
@@ -108,7 +107,8 @@ public class CustomerPositionsController {
 
   @GetMapping(value = "{id}/purchase/{purchaseId}")
   @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity getCustomerPurchase(@PathVariable("id") Long customerId, @PathVariable("purchaseId") String purchaseId) {
+  public ResponseEntity getCustomerPurchase(@PathVariable("id") Long customerId,
+                                            @PathVariable("purchaseId") String purchaseId) {
     PurchaseDetailed purchase = purchaseRepositoryInterface.findOne(purchaseId);
     if (customerId != null && purchase != null && customerId == purchase.getCustomerid()) {
       return new ResponseEntity<>(purchase, HttpStatus.OK);
@@ -127,7 +127,8 @@ public class CustomerPositionsController {
     page = page < 1 ? 1 : page;
     limit = limit < 1 ? 1 : limit;
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
-    List<PurchaseDetailed> purchaseList = purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(customer_id, start, end, pageRequest);
+    List<PurchaseDetailed> purchaseList =
+            purchaseRepositoryInterface.findByCustomeridAndTimestampBetween(customer_id, start, end, pageRequest);
     int totalElements = purchaseRepositoryInterface.countByCustomerid(customer_id);
     List<Resource> resourceList = new ArrayList<>(purchaseList.size());
     for (PurchaseDetailed pd : purchaseList) {

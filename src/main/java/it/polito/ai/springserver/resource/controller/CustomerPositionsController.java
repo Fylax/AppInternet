@@ -1,8 +1,11 @@
 package it.polito.ai.springserver.resource.controller;
 
 import it.polito.ai.springserver.resource.model.*;
+import it.polito.ai.springserver.resource.model.repository.ApproximatedArchiveRepositoryInterface;
+import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.PurchaseRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -32,19 +37,37 @@ public class CustomerPositionsController {
   @Autowired
   private PurchaseRepositoryInterface purchaseRepositoryInterface;
 
+  @Autowired
+  private PositionRepositoryInterface positionRepositoryInterface;
+
+  @Autowired
+  private ApproximatedArchiveRepositoryInterface approximatedArchiveRepositoryInterface;
 
   @Autowired
   private TransactionManagerComponent transactionManagerComponent;
 
   @GetMapping
   @PreAuthorize("hasRole('CUSTOMER')")
-  public ResponseEntity getPolygonPositions(@RequestParam(value = "request") Base64CustomerRequest request) {
-    long customer_id = userId.getUserId();
+  public ResponseEntity<List<ApproximatedArchive>> getPolygonPositions(@RequestParam(value = "request") Base64CustomerRequest request) {
+//    long customer_id = userId.getUserId();
     CustomerRequest currRequest = request.getCr();
-    long countPositions = purchaseRepositoryInterface.
-            countPurchasable(customer_id, currRequest.getPolygon(),
-                    currRequest.getStart(), currRequest.getEnd());
-    return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.OK);
+    List<Position> positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
+            currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
+    Set<ObjectId> archiveIds = new HashSet<>();
+    for(Position p: positions){
+      archiveIds.add(p.getArchiveId());
+    }
+    List<ApproximatedArchive> approximatedArchives = new ArrayList<>();
+    for(ObjectId id : archiveIds){
+      approximatedArchives.add(
+              approximatedArchiveRepositoryInterface.findByArchiveId(id)
+      );
+    }
+    return new ResponseEntity<>(approximatedArchives, HttpStatus.OK);
+//    long countPositions = purchaseRepositoryInterface.
+//            countPurchasable(customer_id, currRequest.getPolygon(),
+//                    currRequest.getStart(), currRequest.getEnd());
+//    return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.OK);
   }
 
   @PostMapping

@@ -57,14 +57,14 @@ public class SpringserverApplication {
         userRepository.save(u2);
 
 
-        List<Position> l = new ArrayList<>();
-        l.add(new Position(1, "pippo", 1501602952, 7.68965, 45.07254));
-        l.add(new Position(1, "pippo", 1533138953, 6.68965, 45.07254));
-
-        List<Position> l1 = positionRepository.save(l);
-        for (Position p : l1) {
-          System.out.println(p.getId());
-        }
+//        List<Position> l = new ArrayList<>();
+//        l.add(new Position(1, "pippo", 1501602952, 7.68965, 45.07254));
+//        l.add(new Position(1, "pippo", 1533138953, 6.68965, 45.07254));
+//
+//        List<Position> l1 = positionRepository.save(l);
+//        for (Position p : l1) {
+//          System.out.println(p.getId());
+//        }
 
 //        LightPositions lights = new LightPositions(l1);
 //        for(Long time: lights.getTimestampList()){

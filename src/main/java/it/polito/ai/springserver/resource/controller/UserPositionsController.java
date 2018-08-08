@@ -1,10 +1,11 @@
 package it.polito.ai.springserver.resource.controller;
 
 import it.polito.ai.springserver.resource.model.*;
-import it.polito.ai.springserver.resource.model.repository.ApproximateArchiveRepositoryInterface;
+import it.polito.ai.springserver.resource.model.repository.ApproximatedArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.ArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
@@ -30,7 +31,7 @@ public class UserPositionsController {
   private ArchiveRepositoryInterface archiveRepositoryInterface;
 
   @Autowired
-  private ApproximateArchiveRepositoryInterface approximateArchiveRepositoryInterface;
+  private ApproximatedArchiveRepositoryInterface approximatedArchiveRepositoryInterface;
 
   @Autowired
   private UserId userId;
@@ -86,7 +87,7 @@ public class UserPositionsController {
           return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
       }
-      approximateArchiveRepositoryInterface.save(
+      approximatedArchiveRepositoryInterface.save(
               new ApproximatedArchive(archive.getArchiveId(), user_name, positions.getPositionList()));
       positionRepositoryInterface.save(positions.getPositionList());
     } catch (Exception e) {
@@ -94,6 +95,26 @@ public class UserPositionsController {
 
     }
     return new ResponseEntity(HttpStatus.CREATED);
+  }
+
+  @DeleteMapping(value = "/{archiveId}")
+  @PreAuthorize("hasRole('USER')")
+  public ResponseEntity deleteArchive(@PathVariable(value = "archiveId") String archiveId){
+    String user_name = userId.getUsername();
+    try{
+      Archive archive = archiveRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
+      if(!archive.getUserName().equals(user_name)){
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
+      }
+      archive.setAvailableForSale(false);
+      ApproximatedArchive apArchive = approximatedArchiveRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
+      approximatedArchiveRepositoryInterface.delete(apArchive);
+      archiveRepositoryInterface.save(archive);
+    }
+    catch(Exception e){
+      return new ResponseEntity((HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+    return new ResponseEntity(HttpStatus.OK);
   }
 
 

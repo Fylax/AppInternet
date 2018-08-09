@@ -36,8 +36,8 @@ public class Archive {
     this.countSales = countSales;
   }
 
-  public ObjectId getArchiveId() {
-    return archiveId;
+  public String getArchiveId() {
+    return archiveId.toString();
   }
 
 

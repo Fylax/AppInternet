@@ -33,13 +33,12 @@ public class AdminController {
   /*
   This method return the list of users signed to this application and the links to there archives.
   */
-  @GetMapping("/users")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getUsers(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
           @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
     page = page < 1 ? 1 : page;
-    limit = limit < 1 ? 1 : limit;
+    limit = limit < 1 ? 20 : limit;
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "id");
     List<User> users = userRepositoryInterface.findAllByUserRolesContaining(Role.ROLE_USER, pageRequest);
     if (users.size() == 0)
@@ -53,8 +52,10 @@ public class AdminController {
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
-    Link next = linkTo(methodOn(this.getClass()).getUsers(page + 1, limit)).withRel("next");
-    links.add(next);
+    if(resourceList.size() == limit) {
+      Link next = linkTo(methodOn(this.getClass()).getUsers(page + 1, limit)).withRel("next");
+      links.add(next);
+    }
     if (page != 1) {
       Link prev = linkTo(methodOn(this.getClass()).getUsers(page + 1, limit)).withRel("prev");
       links.add(prev);

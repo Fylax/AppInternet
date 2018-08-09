@@ -58,13 +58,16 @@ public class UserArchiveController {
     List<Resource> resourceList = new ArrayList<>(archives.size());
     for (Archive a: archives) {
       Resource<Archive> resource = new Resource<>(a);
-      Link link = linkTo(methodOn(this.getClass()).getUserArchive(user_id, a.getArchiveId().toString())).withSelfRel();
+      Link link = linkTo(methodOn(this.getClass()).getUserArchive(user_id, a.getArchiveId())).
+              withSelfRel();
       resource.add(link);
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
-    Link next = linkTo(methodOn(this.getClass()).getArchives(page + 1, limit)).withRel("next");
-    links.add(next);
+    if(totalElements > limit) {
+      Link next = linkTo(methodOn(this.getClass()).getArchives(page + 1, limit)).withRel("next");
+      links.add(next);
+    }
     if (page != 1) {
       Link prev = linkTo(methodOn(this.getClass()).getArchives(page - 1, limit)).withRel("prev");
       links.add(prev);
@@ -109,13 +112,15 @@ public class UserArchiveController {
     List<Resource> resourceList = new ArrayList<>(archives.size());
     for (Archive a: archives) {
       Resource<Archive> resource = new Resource<>(a);
-      Link link = linkTo(methodOn(this.getClass()).getArchive(a.getArchiveId().toString())).withSelfRel();
+      Link link = linkTo(methodOn(this.getClass()).getArchive(a.getArchiveId())).withSelfRel();
       resource.add(link);
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
-    Link next = linkTo(methodOn(this.getClass()).getArchives(page + 1, limit)).withRel("next");
-    links.add(next);
+    if(totalElements > limit) {
+      Link next = linkTo(methodOn(this.getClass()).getArchives(page + 1, limit)).withRel("next");
+      links.add(next);
+    }
     if (page != 1) {
       Link prev = linkTo(methodOn(this.getClass()).getArchives(page - 1, limit)).withRel("prev");
       links.add(prev);
@@ -141,14 +146,15 @@ public class UserArchiveController {
       for (Position position : positions.getPositionList()) {
         position.setUserid(user_id);
         position.setUsername(user_name);
-        position.setArchiveId(archive.getArchiveId());
+        position.setArchiveId(new ObjectId(archive.getArchiveId()));
         if (!positionManager.checkPositionValidity(position)) {
           archiveRepositoryInterface.delete(archive);
           return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
       }
       approximatedArchiveRepositoryInterface.save(
-              new ApproximatedArchive(archive.getArchiveId(), user_name, positions.getPositionList()));
+              new ApproximatedArchive(new ObjectId(archive.getArchiveId()),
+                      user_name, positions.getPositionList()));
       positionRepositoryInterface.save(positions.getPositionList());
     } catch (Exception e) {
       return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -173,7 +179,8 @@ public class UserArchiveController {
         return new ResponseEntity(HttpStatus.FORBIDDEN);
       }
       archive.setAvailableForSale(false);
-      ApproximatedArchive apArchive = approximatedArchiveRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
+      ApproximatedArchive apArchive = approximatedArchiveRepositoryInterface.findByArchiveId(
+              new ObjectId(archiveId));
       approximatedArchiveRepositoryInterface.delete(apArchive);
       archiveRepositoryInterface.save(archive);
     } catch (Exception e) {

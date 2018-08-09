@@ -29,7 +29,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = "/positions/customer")
-public class CustomerPositionsController {
+public class UserPurchaseController {
 
   @Autowired
   private UserId userId;
@@ -47,10 +47,11 @@ public class CustomerPositionsController {
   private TransactionManagerComponent transactionManagerComponent;
 
   @GetMapping
-  @PreAuthorize("hasRole('CUSTOMER')")
-  public ResponseEntity<List<ApproximatedArchive>> getPolygonPositions(@RequestParam(value = "request") Base64CustomerRequest request) {
-//    long customer_id = userId.getUserId();
+  @PreAuthorize("hasRole('USER')")
+  public ResponseEntity<List<ApproximatedArchive>> getPolygonPositions(
+          @RequestParam(value = "request") Base64CustomerRequest request) {
     CustomerRequest currRequest = request.getCr();
+    String username = userId.getUsername();
     List<Position> positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
             currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
     Set<ObjectId> archiveIds = new HashSet<>();
@@ -59,26 +60,22 @@ public class CustomerPositionsController {
     }
     List<ApproximatedArchive> approximatedArchives = new ArrayList<>();
     for(ObjectId id : archiveIds){
-      approximatedArchives.add(
-              approximatedArchiveRepositoryInterface.findByArchiveId(id)
-      );
+      ApproximatedArchive a = approximatedArchiveRepositoryInterface.findByArchiveIdAndUsernameNot(id, username);
+      if (a != null) {
+        approximatedArchives.add(a);
+      }
     }
     return new ResponseEntity<>(approximatedArchives, HttpStatus.OK);
-//    long countPositions = purchaseRepositoryInterface.
-//            countPurchasable(customer_id, currRequest.getPolygon(),
-//                    currRequest.getStart(), currRequest.getEnd());
-//    return new ResponseEntity<>(Long.toString(countPositions), new HttpHeaders(), HttpStatus.OK);
   }
 
   @PostMapping
   @PreAuthorize("hasRole('CUSTOMER')")
   public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) throws InterruptedException {
-
-    long customer_id = userId.getUserId();
+    long user_id = userId.getUserId();
     var positions = purchaseRepositoryInterface.
-            findPurchasable(customer_id, currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
+            findPurchasable(user_id, currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
     if (positions.size() != 0) {
-      PurchaseDetailed purchase = new PurchaseDetailed(customer_id, System.currentTimeMillis() / 1000,
+      PurchaseDetailed purchase = new PurchaseDetailed(user_id, System.currentTimeMillis() / 1000,
               currRequest.getStart(), currRequest.getEnd(), positions);
       var currPurchase = purchaseRepositoryInterface.save(purchase);
       transactionManagerComponent.asyncTransactionManager(currPurchase);

@@ -7,5 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface ApproximatedArchiveRepositoryInterface extends MongoRepository<ApproximatedArchive, ObjectId> {
+  ApproximatedArchive findByArchiveIdAndUsernameNot(ObjectId archiveId, String username);
   ApproximatedArchive findByArchiveId(ObjectId archiveId);
 }

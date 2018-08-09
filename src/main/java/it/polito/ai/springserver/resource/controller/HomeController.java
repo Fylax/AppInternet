@@ -43,10 +43,10 @@ public class HomeController {
                     .withRel("adminUsers");
             Link linkCustomer = linkTo(methodOn(AdminController.class).getCustomers(null, null))
                     .withRel("adminCustomers");
-            Link linkCustomerPurchases = linkTo(methodOn(CustomerPositionsController.class)
+            Link linkCustomerPurchases = linkTo(methodOn(UserPurchaseController.class)
                     .getCustomerPurchases(null, null, null, null, null))
                     .withRel("adminCustomerPurchases");
-            Link linkCustomerPurchase = linkTo(methodOn(CustomerPositionsController.class)
+            Link linkCustomerPurchase = linkTo(methodOn(UserPurchaseController.class)
                     .getCustomerPurchase(null, null))
                     .withRel("adminCustomerPurchase");
             Link linkUserArchives = linkTo(methodOn(UserArchiveController.class)

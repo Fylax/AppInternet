@@ -9,9 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +30,11 @@ public class AdminController {
   @Autowired
   private UserRepositoryInterface userRepositoryInterface;
 
+  /*
+  This method return the list of users signed to this application and the links to there archives.
+  */
   @GetMapping("/users")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getUsers(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
           @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
@@ -43,8 +47,8 @@ public class AdminController {
     int totalElements = userRepositoryInterface.countAllByUserRolesContaining(Role.ROLE_USER);
     List<Resource> resourceList = new ArrayList<>();
     for (User u : users) {
-      Resource<Link> resource = new Resource<>(linkTo(methodOn(UserPositionsController.class)
-              .getPositions(u.getId(), null, null))
+      Resource<Link> resource = new Resource<>(linkTo(methodOn(UserArchiveController.class)
+              .getUserArchives(u.getId(), null, null))
               .withRel(u.getId().toString()));
       resourceList.add(resource);
     }
@@ -60,6 +64,7 @@ public class AdminController {
   }
 
   @GetMapping("/customers")
+  @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getCustomers(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
           @RequestParam(value = "limit", defaultValue = "20") Integer limit) {

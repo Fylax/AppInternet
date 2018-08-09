@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ArchiveRepositoryInterface extends MongoRepository<Archive, ObjectId> {
   Archive findByArchiveId(ObjectId archiveId);
-  List<Archive> findByUserName(String username, Pageable pageable);
-  int countByUserName(String username);
+  List<Archive> findByUserId(long userId, Pageable pageable);
+  int countByUserId(long userId);
 }

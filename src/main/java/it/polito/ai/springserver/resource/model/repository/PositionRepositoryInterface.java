@@ -15,5 +15,5 @@ public interface PositionRepositoryInterface extends MongoRepository<Position, S
   List<Position> findByUseridAndTimestampBetween(long userid, long start, long end);
   long countPositionByPointIsWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);
   List<Position> findByPointWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);
-  List<Position> findByArchiveId(ObjectId archiveId);
+  List<Position> findByUseridAndArchiveId(long userId, ObjectId archiveId);
 }

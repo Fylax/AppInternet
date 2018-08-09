@@ -11,6 +11,7 @@ public class Archive {
   @Id
   private ObjectId archiveId;
   private String userName;
+  private long userId;
   private boolean availableForSale;
   private long timestamp;
   private long countSales;
@@ -18,16 +19,18 @@ public class Archive {
   public Archive() {
   }
 
-  public Archive(ObjectId archiveId, String userName, boolean availableForSale, long timestamp, long countSales) {
+  public Archive(ObjectId archiveId, String userName, long userId, boolean availableForSale, long timestamp, long countSales) {
     this.archiveId = archiveId;
     this.userName = userName;
+    this.userId = userId;
     this.availableForSale = availableForSale;
     this.timestamp = timestamp;
     this.countSales = countSales;
   }
 
-  public Archive(String userName, boolean availableForSale, long timestamp, long countSales) {
+  public Archive(String userName, long userId, boolean availableForSale, long timestamp, long countSales) {
     this.userName = userName;
+    this.userId = userId;
     this.availableForSale = availableForSale;
     this.timestamp = timestamp;
     this.countSales = countSales;
@@ -42,7 +45,7 @@ public class Archive {
     this.availableForSale = availableForSale;
   }
 
-  public String getUserName() {
-    return userName;
+  public long getUserId() {
+    return userId;
   }
 }

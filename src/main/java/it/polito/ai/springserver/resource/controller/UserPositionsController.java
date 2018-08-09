@@ -7,6 +7,8 @@ import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInt
 import it.polito.ai.springserver.resource.security.UserId;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpHeaders;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -36,46 +39,58 @@ public class UserPositionsController {
   @Autowired
   private UserId userId;
 
-  @GetMapping(value = "/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<Resource<Positions>> getPositions(
-      @PathVariable(value = "id") Long userId,
-      @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") Long start,
-      @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") Long end) {
-    List<Position> list = positionRepositoryInterface.findByUseridAndTimestampBetween(userId, start, end);
-    Positions positions = new Positions(list);
-    Resource<Positions> resource = new Resource<>(positions);
-    Link linkSelf = linkTo(methodOn(UserPositionsController.class).getPositions(userId, start, end)).withSelfRel();
-    Link linkGetAllUserPositions = linkTo(methodOn(UserPositionsController.class)
-            .getPositions(userId, null, null)).withRel("all");
-    resource.add(linkSelf, linkGetAllUserPositions);
-    return new ResponseEntity<>(resource, new HttpHeaders(), HttpStatus.OK);
-  }
+//  @GetMapping(value = "/{id}")
+//  @PreAuthorize("hasRole('ADMIN')")
+//  public ResponseEntity<Resource<Positions>> getPositions(
+//          @PathVariable(value = "id") Long userId,
+//          @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") Long start,
+//          @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") Long end) {
+//    List<Position> list = positionRepositoryInterface.findByUseridAndTimestampBetween(userId, start, end);
+//    Positions positions = new Positions(list);
+//    Resource<Positions> resource = new Resource<>(positions);
+//    Link linkSelf = linkTo(methodOn(UserPositionsController.class).getPositions(userId, start, end)).withSelfRel();
+//    Link linkGetAllUserPositions = linkTo(methodOn(UserPositionsController.class)
+//            .getPositions(userId, null, null)).withRel("all");
+//    resource.add(linkSelf, linkGetAllUserPositions);
+//    return new ResponseEntity<>(resource, new HttpHeaders(), HttpStatus.OK);
+//  }
 
   @GetMapping
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity<Resource<Positions>> getPositions(
-          @RequestParam(value = "start", required = false, defaultValue = Long.MIN_VALUE + "") Long start,
-          @RequestParam(value = "end", required = false, defaultValue = Long.MAX_VALUE + "") Long end) {
-    long user_id = userId.getUserId();
-
-    List<Position> list = positionRepositoryInterface.findByUseridAndTimestampBetween(user_id, start, end);
-    Positions positions = new Positions(list);
-    Resource<Positions> resource = new Resource<>(positions);
-    Link linkSelf = linkTo(methodOn(UserPositionsController.class).getPositions(start, end)).withSelfRel();
-    Link linkGetAll = linkTo(methodOn(UserPositionsController.class)
-            .getPositions(null, null)).withRel("all");
-    resource.add(linkSelf, linkGetAll);
-    return new ResponseEntity<>(resource, new HttpHeaders(), HttpStatus.OK);
+  public ResponseEntity<PaginationSupportClass> getArchives(
+          @RequestParam(value = "page", defaultValue = "1") Integer page,
+          @RequestParam(value = "limit", defaultValue = "5") Integer limit){
+    page = page < 1 ? 1 : page;
+    limit = limit < 1 ? 1 : limit;
+    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
+    String user_name = userId.getUsername();
+    List<Archive> archives = archiveRepositoryInterface.findByUserName(user_name,pageRequest);
+    int totalElements = archiveRepositoryInterface.countByUserName(user_name);
+    List<Resource> resourceList = new ArrayList<>(archives.size());
+    for (Archive a: archives) {
+      Resource<Archive> resource = new Resource<>(a);
+      Link link = linkTo(methodOn(this.getClass()).getArchive(a.getArchiveId().toString())).withSelfRel();
+      resource.add(link);
+      resourceList.add(resource);
+    }
+    List<Link> links = new ArrayList<>();
+    Link next = linkTo(methodOn(this.getClass()).getArchives(page + 1, limit)).withRel("next");
+    links.add(next);
+    if (page != 1) {
+      Link prev = linkTo(methodOn(this.getClass()).getArchives(page - 1, limit)).withRel("prev");
+      links.add(prev);
+    }
+    PaginationSupportClass pg = new PaginationSupportClass(resourceList, totalElements, links);
+    return new ResponseEntity<>(pg, HttpStatus.OK);
   }
 
   @PostMapping
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity addPositions(@RequestBody Positions positions) {
+  public ResponseEntity addArchive(@RequestBody Positions positions) {
     long user_id = userId.getUserId();
     String user_name = userId.getUsername();
     try {
-      Archive archive = new Archive(user_name, true, (System.currentTimeMillis()/1000), 0);
+      Archive archive = new Archive(user_name, true, (System.currentTimeMillis() / 1000), 0);
       archive = archiveRepositoryInterface.save(archive);
       var positionManager = new PositionManager(user_id, positionRepositoryInterface);
       for (Position position : positions.getPositionList()) {
@@ -99,23 +114,30 @@ public class UserPositionsController {
 
   @DeleteMapping(value = "/{archiveId}")
   @PreAuthorize("hasRole('USER')")
-  public ResponseEntity deleteArchive(@PathVariable(value = "archiveId") String archiveId){
+  public ResponseEntity deleteArchive(@PathVariable(value = "archiveId") String archiveId) {
     String user_name = userId.getUsername();
-    try{
+    try {
       Archive archive = archiveRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
-      if(!archive.getUserName().equals(user_name)){
+      if (!archive.getUserName().equals(user_name)) {
         return new ResponseEntity(HttpStatus.FORBIDDEN);
       }
       archive.setAvailableForSale(false);
       ApproximatedArchive apArchive = approximatedArchiveRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
       approximatedArchiveRepositoryInterface.delete(apArchive);
       archiveRepositoryInterface.save(archive);
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       return new ResponseEntity((HttpStatus.INTERNAL_SERVER_ERROR));
     }
     return new ResponseEntity(HttpStatus.OK);
   }
 
-
+  @GetMapping("/{archiveId}")
+  @PreAuthorize("hasRole('USER')")
+  public ResponseEntity<Positions> getArchive(
+          @PathVariable(value = "archiveId") String archiveId) {
+//    String user_name = userId.getUsername();
+    List<Position> positionList = positionRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
+    Positions positions = new Positions(positionList);
+    return new ResponseEntity<>(positions, HttpStatus.OK);
+  }
 }

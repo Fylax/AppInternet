@@ -6,10 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @PropertySource("classpath:authorization/security.properties")
 public class ClientDetailsImpl implements ClientDetails {
@@ -72,7 +69,7 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
-    return null;
+    return new ArrayList<>();
   }
 
   @Override

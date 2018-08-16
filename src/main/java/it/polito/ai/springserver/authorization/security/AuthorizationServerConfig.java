@@ -20,8 +20,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableAuthorizationServer

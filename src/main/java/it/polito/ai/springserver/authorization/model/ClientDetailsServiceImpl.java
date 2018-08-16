@@ -14,12 +14,15 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
   @Autowired
   private OAuth2ClientRepositoryInterface clientRepository;
 
+  @Autowired
+  private ClientConfiguration configuration;
+
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws ClientRegistrationException {
     var client = clientRepository.findByClientId(clientId);
     if (client == null) {
       throw new AuthenticationCredentialsNotFoundException(clientId + " does not exist.");
     }
-    return new ClientDetailsImpl(client);
+    return new ClientDetailsImpl(client, configuration);
   }
 }

@@ -1,30 +1,20 @@
 package it.polito.ai.springserver.authorization.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 import java.util.*;
 
-@PropertySource("classpath:authorization/security.properties")
 public class ClientDetailsImpl implements ClientDetails {
 
   private OAuth2Client client;
-
-  @Value("#{Set.of('${spring.granted_types}'.split(','))}")
-  private Set<String> granted_types;
-
-  @Value("${spring.accessTokenValiditySecond}")
-  private int accessTokenValiditySeconds;
-
-  @Value("${spring.refreshTokenValiditySecond}")
-  private int refreshTokenValiditySeconds;
+  private ClientConfiguration configuration;
 
   @Autowired
-  public ClientDetailsImpl(OAuth2Client client) {
+  public ClientDetailsImpl(OAuth2Client client, ClientConfiguration configuration) {
     this.client = client;
+    this.configuration = configuration;
   }
 
   @Override
@@ -39,7 +29,7 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public boolean isSecretRequired() {
-    return true;
+    return false;
   }
 
   @Override
@@ -54,17 +44,17 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Set<String> getScope() {
-    return new HashSet<>();
+    return Set.of(new String[] {"read", "write"});
   }
 
   @Override
   public Set<String> getAuthorizedGrantTypes() {
-    return granted_types;
+    return configuration.getGrantedTypes();
   }
 
   @Override
   public Set<String> getRegisteredRedirectUri() {
-    return null;
+    return new HashSet<>();
   }
 
   @Override
@@ -74,12 +64,12 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Integer getAccessTokenValiditySeconds() {
-    return accessTokenValiditySeconds;
+    return configuration.getAccessTokenValiditySeconds();
   }
 
   @Override
   public Integer getRefreshTokenValiditySeconds() {
-    return refreshTokenValiditySeconds;
+    return configuration.getRefreshTokenValiditySeconds();
   }
 
   @Override
@@ -89,6 +79,6 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Map<String, Object> getAdditionalInformation() {
-    return null;
+    return new HashMap<>();
   }
 }

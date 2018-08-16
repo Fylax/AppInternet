@@ -1,21 +1,17 @@
 package it.polito.ai.springserver;
 
+import it.polito.ai.springserver.authorization.model.OAuth2Client;
 import it.polito.ai.springserver.authorization.model.Role;
 import it.polito.ai.springserver.authorization.model.User;
 import it.polito.ai.springserver.authorization.model.UserStatus;
+import it.polito.ai.springserver.authorization.model.repository.OAuth2ClientRepositoryInterface;
 import it.polito.ai.springserver.authorization.model.repository.UserRepositoryInterface;
-//import it.polito.ai.springserver.resource.model.LightPositions;
-import it.polito.ai.springserver.resource.model.Position;
 import it.polito.ai.springserver.resource.model.TransactionManagerComponent;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @SpringBootApplication
@@ -28,10 +24,13 @@ public class SpringserverApplication {
 
   @Bean
   CommandLineRunner init(UserRepositoryInterface userRepository,
+                         OAuth2ClientRepositoryInterface clientRepository,
                          PositionRepositoryInterface positionRepository, TransactionManagerComponent tm) {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
+        clientRepository.save(new OAuth2Client("client", "secret"));
+
         var u1 = userRepository.save(
                 new User(
                         "pippo",

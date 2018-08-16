@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -30,24 +31,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   @Value("${spring.key}")
   private String key;
 
-  @Value("${spring.client_id}")
-  private String client_id;
-
-  @Value("${spring.client_secret}")
-  private String client_secret;
-
-  @Value("#{'${spring.granted_types}'.split(',')}")
-  private String[] granted_types;
-
-  @Value("${spring.accessTokenValiditySecond}")
-  private int accessTokenValiditySeconds;
-
-  @Value("${spring.refreshTokenValiditySecond}")
-  private int refreshTokenValiditySeconds;
-
   @Autowired
   @Qualifier("UserDetailsService")
   private UserDetailsService userDetailsService;
+
+  @Autowired
+  @Qualifier("ClientDetailsService")
+  private ClientDetailsService clientDetailsService;
 
   @Autowired
   private AuthenticationManager authenticationManager;
@@ -60,13 +50,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
   @Override
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-    clients.inMemory()
-            .withClient(client_id)
-            .secret(client_secret)
-            .authorizedGrantTypes(granted_types)
-            .scopes("read", "write")
-            .accessTokenValiditySeconds(accessTokenValiditySeconds)
-            .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
+    clients.withClientDetails(clientDetailsService);
   }
 
   @Override

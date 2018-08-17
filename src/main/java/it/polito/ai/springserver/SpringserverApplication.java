@@ -34,24 +34,23 @@ public class SpringserverApplication {
         var u1 = userRepository.save(
                 new User(
                         "pippo",
-                        "$2a$08$OL4g6FUS8taKbWrLXjErrOpk6VJX0mM2S2DIaYmpDIqQDBlM4niXe",
+                        "123456",
                         "pippo@gmail.com",
                         UserStatus.APPROVED));
         var u2 = userRepository.save(
                 new User(
                         "pluto",
-                        "$2a$08$NWWDc6E61T9S5Ohs0NaJ/ujHpnL448Jiokd5LF/v4B.d6xCryOQ5m",
+                        "123456",
                         "pluto@gmail.com",
                         UserStatus.APPROVED));
         userRepository.save(
                 new User(
                         "paperino",
-                        "$2a$08$SdwzOJhH85lidEkozGwTJ.V7Pr.vGu413raF6E1Vzzv45GfMIxMIK",
+                        "123456",
                         "paperino@gmail.com",
                         UserStatus.APPROVED));
 
         u1.addRole(Role.ROLE_ADMIN);
-        u2.addRole(Role.ROLE_CUSTOMER);
         userRepository.save(u1);
         userRepository.save(u2);
 

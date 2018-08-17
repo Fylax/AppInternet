@@ -63,34 +63,4 @@ public class AdminController {
     PaginationSupportClass pg = new PaginationSupportClass(resourceList, totalElements, links);
     return new ResponseEntity<>(pg, HttpStatus.OK);
   }
-
-  @GetMapping("/customers")
-  @PreAuthorize("hasRole('ADMIN')")
-  public ResponseEntity<PaginationSupportClass> getCustomers(
-          @RequestParam(value = "page", defaultValue = "1") Integer page,
-          @RequestParam(value = "limit", defaultValue = "20") Integer limit) {
-    page = page < 1 ? 1 : page;
-    limit = limit < 1 ? 1 : limit;
-    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "id");
-    List<User> users = userRepositoryInterface.findAllByUserRolesContaining(Role.ROLE_CUSTOMER, pageRequest);
-    if (users.size() == 0)
-      return new ResponseEntity<>(new PaginationSupportClass(), HttpStatus.NOT_FOUND);
-    int totalElements = userRepositoryInterface.countAllByUserRolesContaining(Role.ROLE_CUSTOMER);
-    List<Resource> resourceList = new ArrayList<>();
-    for (User u : users) {
-      Resource<Link> resource = new Resource<>(linkTo(methodOn(UserPurchaseController.class)
-              .getCustomerPurchases(u.getId(), null, null, null, null))
-              .withRel(u.getId().toString()));
-      resourceList.add(resource);
-    }
-    List<Link> links = new ArrayList<>();
-    Link next = linkTo(methodOn(this.getClass()).getCustomers(page + 1, limit)).withRel("next");
-    links.add(next);
-    if (page != 1) {
-      Link prev = linkTo(methodOn(this.getClass()).getCustomers(page + 1, limit)).withRel("prev");
-      links.add(prev);
-    }
-    PaginationSupportClass pg = new PaginationSupportClass(resourceList, totalElements, links);
-    return new ResponseEntity<>(pg, HttpStatus.OK);
-  }
 }

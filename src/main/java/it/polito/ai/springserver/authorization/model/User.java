@@ -1,11 +1,15 @@
 package it.polito.ai.springserver.authorization.model;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "users",
-        indexes = @Index(name = "username_index", columnList = "username", unique = true))
+    indexes = {
+        @Index(name = "username_index", columnList = "username", unique = true),
+        @Index(name = "emaiil_index", columnList = "email", unique = true)})
 public class User {
 
   @Id
@@ -20,7 +24,7 @@ public class User {
   @Column(nullable = false)
   private String password;
 
-  @Column(nullable = false)
+  @Column(unique = true, nullable = false)
   private String email;
 
   @Column(name = "status", nullable = false)
@@ -31,8 +35,8 @@ public class User {
   //so performance are almost the same
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
-          name="roles",
-          joinColumns=@JoinColumn(name="user_id")
+      name = "roles",
+      joinColumns = @JoinColumn(name = "user_id")
   )
   @Column(name = "user_role", nullable = false)
   private List<Role> userRoles;
@@ -43,7 +47,7 @@ public class User {
 
   public User(String username, String password, String email, UserStatus userStatus) {
     this.username = username;
-    this.password = password;
+    this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
     this.email = email;
     this.userStatus = userStatus;
     this.userRoles = new ArrayList<>();

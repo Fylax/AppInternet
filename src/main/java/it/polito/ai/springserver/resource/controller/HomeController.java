@@ -26,7 +26,10 @@ public class HomeController {
     ResourceSupport resource = new ResourceSupport();
     Link authLink = linkTo(this.getClass()).slash("/oauth/token").withRel("oauth");
     resource.add(authLink);
-    if(!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+    if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
+      Link regLink = linkTo(this.getClass()).slash("/oauth/register").withRel("register");
+      resource.add(regLink);
+    } else {
       Collection<? extends GrantedAuthority> userAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
       for(var ga : userAuthorities) {
         Role role = Role.valueOf(ga.getAuthority());
@@ -41,8 +44,6 @@ public class HomeController {
           case ROLE_ADMIN:
             Link linkuser = linkTo(methodOn(AdminController.class).getUsers(null, null))
                     .withRel("adminUsers");
-            Link linkCustomer = linkTo(methodOn(AdminController.class).getCustomers(null, null))
-                    .withRel("adminCustomers");
             Link linkCustomerPurchases = linkTo(methodOn(UserPurchaseController.class)
                     .getCustomerPurchases(null, null, null, null, null))
                     .withRel("adminCustomerPurchases");
@@ -53,7 +54,7 @@ public class HomeController {
                     .getUserArchives( null, null, null)).withRel("adminUserArchives");
             Link linkUserArchive = linkTo(methodOn(UserArchiveController.class)
                     .getUserArchive( null, null)).withRel("adminUserArchive");
-            resource.add(linkuser, linkCustomer, linkCustomerPurchases, linkCustomerPurchase,
+            resource.add(linkuser, linkCustomerPurchases, linkCustomerPurchase,
                     linkUserArchive, linkUserArchives);
             break;
         }

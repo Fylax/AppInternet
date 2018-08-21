@@ -26,6 +26,16 @@ public class RegistrationController {
   private final Pattern pwdDigitRegex = Pattern.compile("(\\p{Digit})");
   private final Pattern pwdSymbolRegex = Pattern.compile("[\\p{Print}&&\\P{Alnum}]");
 
+  /**
+   * Method for retrieving if a given value may be used.
+   * @param type The type of the parameter, may be:
+   *             <ul>
+   *               <li>username</li>
+   *               <li>password</li>
+   *             </ul>
+   * @param value Required paramenter.
+   * @return Boolean stating if value is available.
+   */
   @GetMapping(produces = "application/json")
   public boolean usable(@RequestParam("type") String type, @RequestParam("value") String value) {
     if (type.equalsIgnoreCase("username")) {
@@ -36,7 +46,17 @@ public class RegistrationController {
     return true;
   }
 
-  @PostMapping(consumes = "application/x-www-form-urlencoded", produces = "text/plain")
+  /**
+   * Method for registering a new user.
+   * @param data Form collected data containing user:
+   *             <ul>
+   *               <li>username</li>
+   *               <li>email</li>
+   *               <li>password</li>
+   *             </ul>
+   * @return String containing any possible error or success.
+   */
+  @PostMapping(consumes = "application/x-www-form-urlencoded", produces = "application/json")
   public ResponseEntity<String> register(@RequestParam Map<String, String> data) {
     var username = data.get("username");
     var password = data.get("password");
@@ -81,6 +101,6 @@ public class RegistrationController {
     var user = new User(username, password, email, UserStatus.APPROVED);
     userRepository.save(user);
 
-    return ResponseEntity.created(URI.create("/")).body(null);
+    return ResponseEntity.created(URI.create("/oauth/token")).body(null);
   }
 }

@@ -69,7 +69,7 @@ public class UserPurchaseController {
   }
 
   @PostMapping
-  @PreAuthorize("hasRole('CUSTOMER')")
+  @PreAuthorize("hasRole('USER')")
   public ResponseEntity bookPositions(@RequestBody CustomerRequest currRequest) throws InterruptedException {
     long user_id = userId.getUserId();
     var positions = purchaseRepositoryInterface.

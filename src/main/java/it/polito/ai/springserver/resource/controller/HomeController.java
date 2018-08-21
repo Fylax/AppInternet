@@ -30,7 +30,8 @@ public class HomeController {
       Link regLink = linkTo(this.getClass()).slash("/oauth/register").withRel("register");
       resource.add(regLink);
     } else {
-      Collection<? extends GrantedAuthority> userAuthorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+      Collection<? extends GrantedAuthority> userAuthorities = SecurityContextHolder.getContext().getAuthentication().
+              getAuthorities();
       for(var ga : userAuthorities) {
         Role role = Role.valueOf(ga.getAuthority());
         switch(role) {
@@ -39,7 +40,10 @@ public class HomeController {
                     withRel("userArchives");
             Link linkArchive =  linkTo(methodOn(UserArchiveController.class).getArchive(null)).
                     withRel("userArchive");
-            resource.add(linkArchives, linkArchive);
+            Link linkApproximatedArchives =  linkTo(methodOn(UserPurchaseController.class)
+                    .getPolygonPositions(null)).
+                    withRel("userArchiveSearch");
+            resource.add(linkArchives, linkArchive, linkApproximatedArchives);
             break;
           case ROLE_ADMIN:
             Link linkuser = linkTo(methodOn(AdminController.class).getUsers(null, null))

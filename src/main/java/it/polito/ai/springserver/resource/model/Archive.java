@@ -48,4 +48,12 @@ public class Archive {
   public long getUserId() {
     return userId;
   }
+
+  public long getTimestamp() {
+    return timestamp;
+  }
+
+  public long getCountSales() {
+    return countSales;
+  }
 }

@@ -36,8 +36,8 @@ public class ApproximatedArchive {
     this.positions = new TreeSet<>();
     for (Position p : positions) {
       this.timestamps.add(p.getTimestamp() - (p.getTimestamp() % 60));
-      double x = ((double) ((int) (p.getLatitude() * 100))) / 100;
-      double y = ((double) ((int) (p.getLongitude() * 100))) / 100;
+      double x = ((double) ((int) (p.getLongitude() * 100))) / 100;
+      double y = ((double) ((int) (p.getLatitude() * 100))) / 100;
       this.positions.add(new Point(x, y));
     }
   }

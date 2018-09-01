@@ -29,6 +29,9 @@ public class Position {
   @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
   private GeoJsonPoint point;
 
+  @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+  private GeoJsonPoint pointApproximated;
+
   public Position() {
   } //used internally by MongoDb
 
@@ -37,6 +40,9 @@ public class Position {
     this.username = username;
     this.timestamp = timestamp;
     this.point = new GeoJsonPoint(longitude, latitude);
+    double x = ((double) ((int) (longitude * 100))) / 100;
+    double y = ((double) ((int) (latitude * 100))) / 100;
+    this.pointApproximated = new GeoJsonPoint(x, y);
   }
 
   public Position(long timestamp, double longitude, double latitude) throws PositionException {
@@ -51,6 +57,9 @@ public class Position {
       throw new PositionException("Invalid coordinates.");
     }
     this.point = new GeoJsonPoint(longitude, latitude);
+    double x = ((double) ((int) (longitude * 100))) / 100;
+    double y = ((double) ((int) (latitude * 100))) / 100;
+    this.pointApproximated = new GeoJsonPoint(x, y);
   }
 
   @JsonIgnore
@@ -78,6 +87,7 @@ public class Position {
     this.userid = userid;
   }
 
+  @JsonIgnore
   public ObjectId getArchiveId() {
     return archiveId;
   }
@@ -92,6 +102,16 @@ public class Position {
 
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  @JsonIgnore
+  public double getLatApproximated() {
+    return this.pointApproximated.getCoordinates().get(1);
+  }
+
+  @JsonIgnore
+  public double getLonApproximated() {
+    return this.pointApproximated.getCoordinates().get(0);
   }
 
   @Override

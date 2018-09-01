@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +54,9 @@ public class UserArchiveController {
     page = page < 1 ? 1 : page;
     limit = limit < 1 ? 1 : limit;
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
-    List<Archive> archives = archiveRepositoryInterface.findByUserId(user_id,pageRequest);
-    int totalElements = archiveRepositoryInterface.countByUserId(user_id);
+    List<Archive> archives = archiveRepositoryInterface.findByUserIdAndAvailableForSale(user_id,
+            true, pageRequest);
+    int totalElements = archiveRepositoryInterface.countByUserIdAndAvailableForSale(user_id,true);
     List<Resource> resourceList = new ArrayList<>(archives.size());
     for (Archive a: archives) {
       Resource<Archive> resource = new Resource<>(a);
@@ -107,8 +109,10 @@ public class UserArchiveController {
     limit = limit < 1 ? 1 : limit;
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
     long user_id = userId.getUserId();
-    List<Archive> archives = archiveRepositoryInterface.findByUserId(user_id,pageRequest);
-    int totalElements = archiveRepositoryInterface.countByUserId(user_id);
+    List<Archive> archives = archiveRepositoryInterface.findByUserIdAndAvailableForSale(user_id,
+            true, pageRequest);
+    int totalElements = archiveRepositoryInterface.countByUserIdAndAvailableForSale(user_id,
+            true);
     List<Resource> resourceList = new ArrayList<>(archives.size());
     for (Archive a: archives) {
       Resource<Archive> resource = new Resource<>(a);

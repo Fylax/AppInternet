@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface ArchiveRepositoryInterface extends MongoRepository<Archive, ObjectId> {
   Archive findByArchiveId(ObjectId archiveId);
-  List<Archive> findByUserId(long userId, Pageable pageable);
-  int countByUserId(long userId);
+  List<Archive> findByUserIdAndAvailableForSale(long userId, boolean availableForSale, Pageable pageable);
+  int countByUserIdAndAvailableForSale(long userId, boolean availableForSale);
 }

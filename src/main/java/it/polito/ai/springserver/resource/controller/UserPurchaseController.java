@@ -52,7 +52,7 @@ public class UserPurchaseController {
           @RequestParam(value = "request") Base64CustomerRequest request) {
     CustomerRequest currRequest = request.getCr();
     String username = userId.getUsername();
-    List<Position> positions = positionRepositoryInterface.findByPointWithinAndTimestampBetween(
+    List<Position> positions = positionRepositoryInterface.findByPointApproximatedWithinAndTimestampBetween(
             currRequest.getPolygon(), currRequest.getStart(), currRequest.getEnd());
     Set<ObjectId> archiveIds = new HashSet<>();
     for(Position p: positions){

@@ -6,7 +6,6 @@ import it.polito.ai.springserver.authorization.model.User;
 import it.polito.ai.springserver.authorization.model.UserStatus;
 import it.polito.ai.springserver.authorization.model.repository.OAuth2ClientRepositoryInterface;
 import it.polito.ai.springserver.authorization.model.repository.UserRepositoryInterface;
-import it.polito.ai.springserver.resource.model.TransactionManagerComponent;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +24,7 @@ public class SpringserverApplication {
   @Bean
   CommandLineRunner init(UserRepositoryInterface userRepository,
                          OAuth2ClientRepositoryInterface clientRepository,
-                         PositionRepositoryInterface positionRepository, TransactionManagerComponent tm) {
+                         PositionRepositoryInterface positionRepository) {
     return new CommandLineRunner() {
       @Override
       public void run(String... args) throws Exception {
@@ -53,44 +52,7 @@ public class SpringserverApplication {
         u1.addRole(Role.ROLE_ADMIN);
         userRepository.save(u1);
         userRepository.save(u2);
-
-
-//        List<Position> l = new ArrayList<>();
-//        l.add(new Position(1, "pippo", 1501602952, 7.68965, 45.07254));
-//        l.add(new Position(1, "pippo", 1533138953, 6.68965, 45.07254));
-//
-//        List<Position> l1 = positionRepository.save(l);
-//        for (Position p : l1) {
-//          System.out.println(p.getId());
-//        }
-
-//        LightPositions lights = new LightPositions(l1);
-//        for(Long time: lights.getTimestampList()){
-//          System.out.println(time);
-//        }
-//        for(GeoJsonPoint p: lights.getPointList()){
-//          System.out.println(p.getX() + " - " + p.getY());
-//        }
-//        positionRepository.save(new Position(1, 110, 7.68, 45.07));
-//        positionRepository.save(new Position(1, 120, 7.78, 45.17));
-
-        //async test
-        /***
-         System.out.println("BEFORE...");
-         tm.asyncTransactionManager(new PurchaseDetailed(1, 159999, 0, 0, new ArrayList<>()));
-         System.out.println("AFTER...");
-         ***/
-
       }
     };
   }
-
- /* @Bean
-  CommandLineRunner init(PositionRepository positionRepository) {
-    return new CommandLineRunner() {
-      @Override
-      public void run(String... args) throws Exception {
-      }
-    };
-  }*/
 }

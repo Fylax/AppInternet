@@ -4,6 +4,7 @@ import it.polito.ai.springserver.resource.model.*;
 import it.polito.ai.springserver.resource.model.repository.ApproximatedArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.ArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
+import it.polito.ai.springserver.resource.model.repository.PurchasedArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.security.UserId;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +12,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("userArchives")
 public class UserArchiveController {
 
   @Autowired
@@ -40,12 +41,15 @@ public class UserArchiveController {
   @Autowired
   private UserId userId;
 
+  @Autowired
+  private PurchasedArchiveRepositoryInterface purchasedArchiveRepositoryInterface;
+
   /*
   this method is used to manage request from admin. The request presents a path variable, {id}, the userId of interest.
   Return the user archives list. The pagination is available by means of two request params, page and limit
   which specify the page and the number of element per page.
    */
-  @GetMapping(value = "/{id}")
+  @GetMapping(value = "/{id}/archives")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getUserArchives(
           @PathVariable(value = "id") Long user_id,
@@ -56,9 +60,9 @@ public class UserArchiveController {
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
     List<Archive> archives = archiveRepositoryInterface.findByUserIdAndAvailableForSale(user_id,
             true, pageRequest);
-    int totalElements = archiveRepositoryInterface.countByUserIdAndAvailableForSale(user_id,true);
+    int totalElements = archiveRepositoryInterface.countByUserIdAndAvailableForSale(user_id, true);
     List<Resource> resourceList = new ArrayList<>(archives.size());
-    for (Archive a: archives) {
+    for (Archive a : archives) {
       Resource<Archive> resource = new Resource<>(a);
       Link link = linkTo(methodOn(this.getClass()).getUserArchive(user_id, a.getArchiveId())).
               withSelfRel();
@@ -66,7 +70,7 @@ public class UserArchiveController {
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
-    if(totalElements > limit) {
+    if (totalElements > limit) {
       Link next = linkTo(methodOn(this.getClass()).getArchives(page + 1, limit)).withRel("next");
       links.add(next);
     }
@@ -104,7 +108,7 @@ public class UserArchiveController {
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<PaginationSupportClass> getArchives(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
-          @RequestParam(value = "limit", defaultValue = "5") Integer limit){
+          @RequestParam(value = "limit", defaultValue = "5") Integer limit) {
     page = page < 1 ? 1 : page;
     limit = limit < 1 ? 1 : limit;
     PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
@@ -114,14 +118,14 @@ public class UserArchiveController {
     int totalElements = archiveRepositoryInterface.countByUserIdAndAvailableForSale(user_id,
             true);
     List<Resource> resourceList = new ArrayList<>(archives.size());
-    for (Archive a: archives) {
+    for (Archive a : archives) {
       Resource<Archive> resource = new Resource<>(a);
       Link link = linkTo(methodOn(this.getClass()).getArchive(a.getArchiveId())).withSelfRel();
       resource.add(link);
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
-    if(totalElements > limit) {
+    if (totalElements > limit) {
       Link next = linkTo(methodOn(this.getClass()).getArchives(page + 1, limit)).withRel("next");
       links.add(next);
     }
@@ -208,10 +212,43 @@ public class UserArchiveController {
       List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
               user_id, new ObjectId(archiveId));
       positions = new Positions(positionList);
-    }
-    catch(Exception e){
+    } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return new ResponseEntity<>(positions, HttpStatus.OK);
+  }
+
+  @GetMapping("/approximatedArchives")
+  @PreAuthorize("hasRole('USER')")
+  public ResponseEntity<List<ApproximatedArchive>> getApproximatedArchives(
+          @RequestParam(value = "request") Base64CustomerRequest request) {
+    CustomerRequest currRequest = request.getCr();
+    long user_id = userId.getUserId();
+    String username = userId.getUsername();
+    List<Position> positions = positionRepositoryInterface.
+            findByPointApproximatedWithinAndTimestampBetweenAndUseridNot(currRequest.getPolygon(),
+                    currRequest.getStart(), currRequest.getEnd(), user_id);
+    Set<ObjectId> archiveIds = new HashSet<>();
+    for (Position p : positions) {
+      archiveIds.add(p.getArchiveId());
+    }
+    List<ApproximatedArchive> approximatedArchives = new ArrayList<>();
+    List<PurchasedArchive> purchasedArchives =
+            purchasedArchiveRepositoryInterface.findByUserId(user_id);
+    List<ObjectId> purchasedArchivesId = new ArrayList<>();
+    for (PurchasedArchive p : purchasedArchives) {
+      purchasedArchivesId.add(new ObjectId(p.getArchiveId()));
+    }
+    for (ObjectId id : archiveIds) {
+      ApproximatedArchive a = approximatedArchiveRepositoryInterface
+              .findByArchiveIdAndUsernameNot(id, username);
+      if (a != null) {
+        if (purchasedArchivesId.contains(id)) {
+          a.setPurchased(true);
+        }
+        approximatedArchives.add(a);
+      }
+    }
+    return new ResponseEntity<>(approximatedArchives, HttpStatus.OK);
   }
 }

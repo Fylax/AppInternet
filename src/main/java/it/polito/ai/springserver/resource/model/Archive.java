@@ -56,4 +56,9 @@ public class Archive {
   public long getCountSales() {
     return countSales;
   }
+
+  @JsonIgnore
+  public boolean getAvailableForSale(){
+    return this.availableForSale;
+  }
 }

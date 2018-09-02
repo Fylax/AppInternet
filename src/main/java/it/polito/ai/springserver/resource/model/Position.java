@@ -96,6 +96,7 @@ public class Position {
     this.archiveId = archiveId;
   }
 
+  @JsonIgnore
   public String getUsername() {
     return username;
   }

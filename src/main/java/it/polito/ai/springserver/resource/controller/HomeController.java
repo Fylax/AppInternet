@@ -22,43 +22,50 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class HomeController {
 
   @GetMapping
-  public ResponseEntity<ResourceSupport> getHome(){
+  public ResponseEntity<ResourceSupport> getHome() {
     ResourceSupport resource = new ResourceSupport();
     Link authLink = linkTo(this.getClass()).slash("/oauth/token").withRel("oauth");
     resource.add(authLink);
-    if(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
+    if (SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
       Link regLink = linkTo(this.getClass()).slash("/oauth/register").withRel("register");
       resource.add(regLink);
     } else {
       Collection<? extends GrantedAuthority> userAuthorities = SecurityContextHolder.getContext().getAuthentication().
               getAuthorities();
-      for(var ga : userAuthorities) {
+      for (var ga : userAuthorities) {
         Role role = Role.valueOf(ga.getAuthority());
-        switch(role) {
+        switch (role) {
           case ROLE_USER:
             Link linkArchives = linkTo(methodOn(UserArchiveController.class).getArchives(null, null)).
                     withRel("userArchives");
-            Link linkArchive =  linkTo(methodOn(UserArchiveController.class).getArchive(null)).
+            Link linkArchive = linkTo(methodOn(UserArchiveController.class).getArchive(null)).
                     withRel("userArchive");
-            Link linkApproximatedArchives =  linkTo(methodOn(UserPurchaseController.class)
-                    .getPolygonPositions(null)).
+            Link linkApproximatedArchives = linkTo(methodOn(UserArchiveController.class)
+                    .getApproximatedArchives(null)).
                     withRel("userArchiveSearch");
-            resource.add(linkArchives, linkArchive, linkApproximatedArchives);
+            Link linkPurchasedArchives = linkTo((methodOn(UserPurchaseController.class)
+                    .getPurchasedArchives(null, null)))
+                    .withRel("userPurchasedArchives");
+            Link linkPurchasedArchive = linkTo((methodOn(UserPurchaseController.class)
+                    .getPurchasedArchive(null)))
+                    .withRel("userPurchasedArchive");
+            resource.add(linkArchives, linkArchive, linkApproximatedArchives,
+                    linkPurchasedArchives, linkPurchasedArchive);
             break;
           case ROLE_ADMIN:
             Link linkuser = linkTo(methodOn(AdminController.class).getUsers(null, null))
                     .withRel("adminUsers");
-            Link linkCustomerPurchases = linkTo(methodOn(UserPurchaseController.class)
-                    .getCustomerPurchases(null, null, null, null, null))
-                    .withRel("adminCustomerPurchases");
-            Link linkCustomerPurchase = linkTo(methodOn(UserPurchaseController.class)
-                    .getCustomerPurchase(null, null))
-                    .withRel("adminCustomerPurchase");
+            Link linkUserPurchasedArchives = linkTo(methodOn(UserPurchaseController.class)
+                    .getUserPurchasedArchives(null, null, null))
+                    .withRel("adminUserPurchasedArchives");
+            Link linkUserPurchasedArchive = linkTo(methodOn(UserPurchaseController.class)
+                    .getUserPurchasedArchive(null, null))
+                    .withRel("adminUserPurchasedArchive");
             Link linkUserArchives = linkTo(methodOn(UserArchiveController.class)
-                    .getUserArchives( null, null, null)).withRel("adminUserArchives");
+                    .getUserArchives(null, null, null)).withRel("adminUserArchives");
             Link linkUserArchive = linkTo(methodOn(UserArchiveController.class)
-                    .getUserArchive( null, null)).withRel("adminUserArchive");
-            resource.add(linkuser, linkCustomerPurchases, linkCustomerPurchase,
+                    .getUserArchive(null, null)).withRel("adminUserArchive");
+            resource.add(linkuser, linkUserPurchasedArchives, linkUserPurchasedArchive,
                     linkUserArchive, linkUserArchives);
             break;
         }

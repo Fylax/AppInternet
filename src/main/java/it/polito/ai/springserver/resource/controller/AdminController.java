@@ -52,7 +52,7 @@ public class AdminController {
       resourceList.add(resource);
     }
     List<Link> links = new ArrayList<>();
-    if(resourceList.size() == limit) {
+    if (resourceList.size() == limit) {
       Link next = linkTo(methodOn(this.getClass()).getUsers(page + 1, limit)).withRel("next");
       links.add(next);
     }

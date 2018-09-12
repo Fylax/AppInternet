@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import it.polito.ai.springserver.resource.model.CustomerRequest;
+import it.polito.ai.springserver.resource.model.UserRequest;
 import org.geojson.Polygon;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CustomerRequestDeserializer extends StdDeserializer<CustomerRequest> {
+public class CustomerRequestDeserializer extends StdDeserializer<UserRequest> {
 
   public CustomerRequestDeserializer() {
     this(null);
@@ -27,7 +27,7 @@ public class CustomerRequestDeserializer extends StdDeserializer<CustomerRequest
   }
 
   @Override
-  public CustomerRequest deserialize(JsonParser jp, DeserializationContext dc)
+  public UserRequest deserialize(JsonParser jp, DeserializationContext dc)
       throws IOException, JsonProcessingException {
     try {
     JsonNode requestNode = jp.getCodec().readTree(jp);
@@ -48,7 +48,7 @@ public class CustomerRequestDeserializer extends StdDeserializer<CustomerRequest
     }
     long start = requestNode.get("start").longValue();
     long end = requestNode.get("end").longValue();
-    return new CustomerRequest(start, end, new GeoJsonPolygon(points)); }
+    return new UserRequest(start, end, new GeoJsonPolygon(points)); }
     catch (NullPointerException e) {
       throw new JsonParseException(jp, e.getMessage());
     }

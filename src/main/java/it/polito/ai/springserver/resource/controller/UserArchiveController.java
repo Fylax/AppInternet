@@ -44,10 +44,15 @@ public class UserArchiveController {
   @Autowired
   private PurchasedArchiveRepositoryInterface purchasedArchiveRepositoryInterface;
 
-  /*
-  this method is used to manage request from admin. The request presents a path variable, {id}, the userId of interest.
-  Return the user archives list. The pagination is available by means of two request params, page and limit
-  which specify the page and the number of element per page.
+  /**
+   * Admin method for retrieving the list of archives for a particular user.
+   * @param user_id Path variable showing the userId of interest
+   * @param page Page number to be retrieved on the db (optional)
+   * @param limit The number of element to be retrieved (optional)
+   * @return PaginationSupportClass object containing:
+   *        items: list of user archives.
+   *        totalElements: total number of archives uploaded by the user of interest
+   *        links: links to prev and next page
    */
   @GetMapping(value = "/{id}/archives")
   @PreAuthorize("hasRole('ADMIN')")
@@ -82,10 +87,11 @@ public class UserArchiveController {
     return new ResponseEntity<>(pg, HttpStatus.OK);
   }
 
-  /*
-  this method is used to manage request from admin. The request presents two path variable, {id} and {archiveId},
-  respectively the userId and the archiveId of interest.
-  Return the user archive.
+  /**
+   * Admin method for retrieving a particular archive for a particular user.
+   * @param user_id Path variable showing the userId of interest
+   * @param archiveId Archive to be retrieved
+   * @return The list of positions in the archive.
    */
   @GetMapping(value = "/{id}/archives/{archiveId}")
   @PreAuthorize("hasRole('ADMIN')")
@@ -98,12 +104,15 @@ public class UserArchiveController {
     return new ResponseEntity<>(positions, HttpStatus.OK);
   }
 
-  /*
-  this method is used to manage request from user.
-  Return the user archives list (the userId is take from the token).
-  The pagination is available by means of two request params, page and limit
-  which specify the page and the number of element per page.
-  */
+  /**
+   * Method for retrieving the list of user archives
+   * @param page Page number to be retrieved on the db (optional)
+   * @param limit The number of element to be retrieved (optional)
+   * @return PaginationSupportClass object containing:
+   *        items: list of user archives.
+   *        totalElements: total number of archives uploaded by the user
+   *        links: links to prev and next page
+   */
   @GetMapping("/archives")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<PaginationSupportClass> getArchives(
@@ -137,10 +146,14 @@ public class UserArchiveController {
     return new ResponseEntity<>(pg, HttpStatus.OK);
   }
 
-  /*
-   this method is used to manage request from user.
-   It saves the archive uploaded by user if all data are good or return a badRequest.
-  */
+  /**
+   * Method for load an archive in db.
+   * @param positions the list of positions in the archive
+   * @return ResponseEntity object containing the properly HTTP status code:
+   *        201: if the operation terminate successfully
+   *        400: if data uploaded are not good
+   *        500: if an error occurs
+   */
   @PostMapping("/archives")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity addArchive(@RequestBody Positions positions) {
@@ -171,12 +184,15 @@ public class UserArchiveController {
     return new ResponseEntity(HttpStatus.CREATED);
   }
 
-  /*
-   this method is used to manage request from user. The request presents a path variable, {ArchiveId},
-   the archiveId of interest.
-   It deletes the specified archive, deleting the approximatedArchive
-   (the archive is still available for who have booked it).
-  */
+  /**
+   * Method for deleting a user archive. the method deletes the corresponding approximatedArchive, the original archive
+   * is still available for all users have booked it
+   * @param archiveId Archive to be deleted
+   * @return ResponseEntity object containing the properly HTTP status code:
+   *        200: if the operation terminate successfully
+   *        403: if the user is not the archive owner
+   *        500: if an error occurs
+   */
   @DeleteMapping(value = "archives/{archiveId}")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity deleteArchive(@PathVariable(value = "archiveId") String archiveId) {
@@ -197,11 +213,13 @@ public class UserArchiveController {
     return new ResponseEntity(HttpStatus.OK);
   }
 
-  /*
-   this method is used to manage request from user. The request presents a path variable, {archiveId},
-   the archiveId of interest.
-   Return the user archive.
-  */
+  /**
+   * Method for retrieving a user archive.
+   * @param archiveId the archive to be downloaded.
+   * @return ResponseEntity object containing the user archive and the properly HTTP status code:
+   *        200: if the operation terminate successfully
+   *        500: if an error occurs
+   */
   @GetMapping("archives/{archiveId}")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<Positions> getArchive(
@@ -218,11 +236,16 @@ public class UserArchiveController {
     return new ResponseEntity<>(positions, HttpStatus.OK);
   }
 
+  /**
+   * Method for retrieving the approximated representations of archives satisfying the request
+   * @param request UserRequest, encoded in base64, containing a temporal range and polygon vertices
+   * @return ResponseEntity object containing the list of approximated archives
+   */
   @GetMapping("/approximatedArchives")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<List<ApproximatedArchive>> getApproximatedArchives(
-          @RequestParam(value = "request") Base64CustomerRequest request) {
-    CustomerRequest currRequest = request.getCr();
+          @RequestParam(value = "request") Base64UserRequest request) {
+    UserRequest currRequest = request.getCr();
     long user_id = userId.getUserId();
     String username = userId.getUsername();
     List<Position> positions = positionRepositoryInterface.

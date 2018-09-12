@@ -40,6 +40,13 @@ public class UserPurchaseController {
   private ArchiveRepositoryInterface archiveRepositoryInterface;
 
 
+  /**
+   * Method for book a list of archives.
+   * @param archives The list of approximated archives to book
+   * @return ResponseEntity object containing the properly HTTP status code:
+   *        201: if the operation terminate successfully
+   *        500: if an error occurs
+   */
   @PostMapping("purchasedArchives")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity bookPositions(@RequestBody List<ApproximatedArchive> archives) {
@@ -53,6 +60,16 @@ public class UserPurchaseController {
     return new ResponseEntity(HttpStatus.CREATED);
   }
 
+  /**
+   * Admin method for retrieving the list of purchased archives for a particular user.
+   * @param user_id Path variable showing the userId of interest
+   * @param page Page number to be retrieved on the db (optional)
+   * @param limit The number of element to be retrieved (optional)
+   * @return PaginationSupportClass object containing:
+   *        items: list of user purchased archives.
+   *        totalElements: total number of archives booked by the user of interest
+   *        links: links to prev and next page
+   */
   @GetMapping(value = "{id}/purchasedArchives")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getUserPurchasedArchives(
@@ -88,6 +105,15 @@ public class UserPurchaseController {
   }
 
 
+  /**
+   * Method for retrieving the list of user purchased archives
+   * @param page Page number to be retrieved on the db (optional)
+   * @param limit The number of element to be retrieved (optional)
+   * @return PaginationSupportClass object containing:
+   *        items: list of user  purchased archives.
+   *        totalElements: total number of archives booked by the user
+   *        links: links to prev and next page
+   */
   @GetMapping("purchasedArchives")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<PaginationSupportClass> getPurchasedArchives(
@@ -120,6 +146,12 @@ public class UserPurchaseController {
 
   }
 
+  /**
+   * Admin method for retrieving a particular purchased archive for a particular user.
+   * @param user_id Path variable showing the userId of interest
+   * @param archiveId Archive to be retrieved
+   * @return The list of positions in the archive.
+   */
   @GetMapping("{id}/purchasedArchives/{archiveId}")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Positions> getUserPurchasedArchive(
@@ -136,11 +168,13 @@ public class UserPurchaseController {
     return new ResponseEntity<>(positions, HttpStatus.OK);
   }
 
-  /*
-   this method is used to manage request from user. The request presents a path variable, {archiveId},
-   the archiveId of interest.
-   Return the user archive.
-  */
+  /**
+   * Method for retrieving a user purchased archive.
+   * @param archiveId the archive to be downloaded.
+   * @return ResponseEntity object containing the user purchased archive and the properly HTTP status code:
+   *        200: if the operation terminate successfully
+   *        500: if an error occurs
+   */
   @GetMapping("purchasedArchives/{archiveId}")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<Positions> getPurchasedArchive(

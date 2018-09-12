@@ -6,6 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Represents a purchased archive by a user. Each purchasedArchive is linked to the user who buy the archive.
+ */
 @Document
 public class PurchasedArchive {
 

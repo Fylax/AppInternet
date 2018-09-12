@@ -12,8 +12,6 @@ import java.util.List;
 @Repository
 public interface PositionRepositoryInterface extends MongoRepository<Position, String>,
         PositionRepositoryInterfaceCustom {
-  List<Position> findByPointApproximatedWithinAndTimestampBetween(GeoJsonPolygon polygon, long start, long end);
-
   List<Position> findByPointApproximatedWithinAndTimestampBetweenAndUseridNot(GeoJsonPolygon polygon,
                                                                               long start, long end, long userId);
 

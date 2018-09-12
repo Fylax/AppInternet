@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(JsonParseException.class)
-  public ResponseEntity jsonParserExceptionHandler (Exception e, WebRequest request){
-    return new ResponseEntity("The json associated is invalid", new HttpHeaders(), HttpStatus.BAD_REQUEST);
+  public ResponseEntity<String> jsonParserExceptionHandler (Exception e, WebRequest request){
+    return new ResponseEntity<>("The json associated is invalid", new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
 }

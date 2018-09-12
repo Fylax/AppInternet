@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+
+/**
+ * Represent the approximated archive representation. It is related to the corresponding archive
+ * by archiveId attribute.
+ */
 @Document
 public class ApproximatedArchive {
 

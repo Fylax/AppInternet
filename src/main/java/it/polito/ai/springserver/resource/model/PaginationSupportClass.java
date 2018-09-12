@@ -5,6 +5,9 @@ import org.springframework.hateoas.Resource;
 
 import java.util.List;
 
+/**
+ * This class is used to paginate the result and avoid to send all data to client in a single request
+ */
 public class PaginationSupportClass {
 
   private List<Resource> items;

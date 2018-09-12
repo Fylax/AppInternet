@@ -21,6 +21,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RequestMapping(value = "/")
 public class HomeController {
 
+  /**
+   * Method for retrieving the list of links reachable for the user
+   * @return ResourceSupport object containing the list of links reachable.
+   */
   @GetMapping
   public ResponseEntity<ResourceSupport> getHome() {
     ResourceSupport resource = new ResourceSupport();

@@ -2,6 +2,9 @@ package it.polito.ai.springserver.resource.model;
 
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterfaceCustom;
 
+/**
+ * This class contains method to check validity of new positions
+ */
 public class PositionManager {
 
   private Position cachedPosition;

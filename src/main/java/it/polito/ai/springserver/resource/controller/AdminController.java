@@ -30,9 +30,15 @@ public class AdminController {
   @Autowired
   private UserRepositoryInterface userRepositoryInterface;
 
-  /*
-  This method return the list of users signed to this application and the links to there archives.
-  */
+  /**
+   * Method for retrieving the list of users signed to this application and the links to there archives
+   * @param page Page number to be retrieved on the db
+   * @param limit The number of element to be retrieved
+   * @return PaginationSupportClass object containing:
+   *         items: list of users with their links.
+   *         totalElements: total number of users signed
+   *         links: links to prev and next page
+   */
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getUsers(
           @RequestParam(value = "page", defaultValue = "1") Integer page,

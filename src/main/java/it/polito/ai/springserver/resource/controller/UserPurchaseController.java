@@ -1,5 +1,8 @@
 package it.polito.ai.springserver.resource.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import it.polito.ai.springserver.resource.model.*;
 import it.polito.ai.springserver.resource.model.repository.ArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.PositionRepositoryInterface;
@@ -47,7 +50,13 @@ public class UserPurchaseController {
    *        201: if the operation terminate successfully
    *        500: if an error occurs
    */
-  @PostMapping("purchasedArchives")
+  @ApiOperation(value="Book a list of archives")
+  @ApiResponses(value = {
+          @ApiResponse(code = 201, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @PostMapping(value = "purchasedArchives", consumes = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity bookPositions(@RequestBody List<ApproximatedArchive> archives) {
     long user_id = userId.getUserId();
@@ -70,7 +79,14 @@ public class UserPurchaseController {
    *        totalElements: total number of archives booked by the user of interest
    *        links: links to prev and next page
    */
-  @GetMapping(value = "{id}/purchasedArchives")
+  @ApiOperation(value="Admin endpoint for retrieving the list of purchased archives for a particular user")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 404, message = "User not found"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "{id}/purchasedArchives", produces = "application/json")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getUserPurchasedArchives(
           @PathVariable("id") Long user_id,
@@ -114,7 +130,13 @@ public class UserPurchaseController {
    *        totalElements: total number of archives booked by the user
    *        links: links to prev and next page
    */
-  @GetMapping("purchasedArchives")
+  @ApiOperation(value="Endpoint for retrieving the list of user purchased archives")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value="purchasedArchives", produces = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<PaginationSupportClass> getPurchasedArchives(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -152,7 +174,14 @@ public class UserPurchaseController {
    * @param archiveId Archive to be retrieved
    * @return The list of positions in the archive.
    */
-  @GetMapping("{id}/purchasedArchives/{archiveId}")
+  @ApiOperation(value="Admin endpoint for retrieving a particular purchased archive for a particular user")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 404, message = "User or archive not found"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "{id}/purchasedArchives/{archiveId}", produces = "application/json")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Positions> getUserPurchasedArchive(
           @PathVariable("id") Long user_id,
@@ -161,6 +190,9 @@ public class UserPurchaseController {
     try {
       List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
               user_id, new ObjectId(archiveId));
+      if (positionList == null){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
       positions = new Positions(positionList);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -175,7 +207,15 @@ public class UserPurchaseController {
    *        200: if the operation terminate successfully
    *        500: if an error occurs
    */
-  @GetMapping("purchasedArchives/{archiveId}")
+  @ApiOperation(value="Endpoint for retrieving a user purchased archive")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code=403, message= "You can't access this resource"),
+          @ApiResponse(code = 404, message = "Archive not found"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "purchasedArchives/{archiveId}", produces = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<Positions> getPurchasedArchive(
           @PathVariable(value = "archiveId") String archiveId) {
@@ -185,6 +225,9 @@ public class UserPurchaseController {
       try {
         List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
                 user_id, new ObjectId(archiveId));
+        if (positionList == null){
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         positions = new Positions(positionList);
       } catch (Exception e) {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

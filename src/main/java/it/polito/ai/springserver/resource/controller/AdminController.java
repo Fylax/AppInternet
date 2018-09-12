@@ -1,5 +1,8 @@
 package it.polito.ai.springserver.resource.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import it.polito.ai.springserver.authorization.model.Role;
 import it.polito.ai.springserver.authorization.model.User;
 import it.polito.ai.springserver.authorization.model.repository.UserRepositoryInterface;
@@ -39,7 +42,15 @@ public class AdminController {
    *         totalElements: total number of users signed
    *         links: links to prev and next page
    */
+  @ApiOperation(
+          value="Admin endpoint to retrieve the list of users signed to this application and the links to there archives")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code= 401, message="User unauthorized"),
+          @ApiResponse(code= 500, message = "An error occur on server. Try again")
+  })
   @PreAuthorize("hasRole('ADMIN')")
+  @GetMapping(produces = "application/json")
   public ResponseEntity<PaginationSupportClass> getUsers(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
           @RequestParam(value = "limit", defaultValue = "20") Integer limit) {

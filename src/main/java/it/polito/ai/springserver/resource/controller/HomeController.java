@@ -1,5 +1,8 @@
 package it.polito.ai.springserver.resource.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import it.polito.ai.springserver.authorization.model.Role;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
@@ -22,10 +25,16 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class HomeController {
 
   /**
-   * Method for retrieving the list of links reachable for the user
+   * Method for retrieving the list of resources reachable by the user
    * @return ResourceSupport object containing the list of links reachable.
    */
-  @GetMapping
+  @ApiOperation(value="Endpoint to retrieve the list of resources reachable by the user")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code= 401, message="User unauthorized"),
+          @ApiResponse(code= 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(produces = "application/json")
   public ResponseEntity<ResourceSupport> getHome() {
     ResourceSupport resource = new ResourceSupport();
     Link authLink = linkTo(this.getClass()).slash("/oauth/token").withRel("oauth");

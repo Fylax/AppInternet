@@ -1,5 +1,9 @@
 package it.polito.ai.springserver.resource.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import it.polito.ai.springserver.resource.model.*;
 import it.polito.ai.springserver.resource.model.repository.ApproximatedArchiveRepositoryInterface;
 import it.polito.ai.springserver.resource.model.repository.ArchiveRepositoryInterface;
@@ -46,15 +50,23 @@ public class UserArchiveController {
 
   /**
    * Admin method for retrieving the list of archives for a particular user.
+   *
    * @param user_id Path variable showing the userId of interest
-   * @param page Page number to be retrieved on the db (optional)
-   * @param limit The number of element to be retrieved (optional)
+   * @param page    Page number to be retrieved on the db (optional)
+   * @param limit   The number of element to be retrieved (optional)
    * @return PaginationSupportClass object containing:
-   *        items: list of user archives.
-   *        totalElements: total number of archives uploaded by the user of interest
-   *        links: links to prev and next page
+   * items: list of user archives.
+   * totalElements: total number of archives uploaded by the user of interest
+   * links: links to prev and next page
    */
-  @GetMapping(value = "/{id}/archives")
+  @ApiOperation(value = "Admin endpoint to retrieve the list of archives for a particular user.")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 404, message = "User not found"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "/{id}/archives", produces = "application/json")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<PaginationSupportClass> getUserArchives(
           @PathVariable(value = "id") Long user_id,
@@ -89,31 +101,49 @@ public class UserArchiveController {
 
   /**
    * Admin method for retrieving a particular archive for a particular user.
-   * @param user_id Path variable showing the userId of interest
+   *
+   * @param user_id   Path variable showing the userId of interest
    * @param archiveId Archive to be retrieved
    * @return The list of positions in the archive.
    */
-  @GetMapping(value = "/{id}/archives/{archiveId}")
+  @ApiOperation(value = "Admin endpoint for retrieving a particular archive for a particular user")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 404, message = "User or archive not found"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "/{id}/archives/{archiveId}", produces = "application/json")
   @PreAuthorize("hasRole('ADMIN')")
   public ResponseEntity<Positions> getUserArchive(
           @PathVariable(value = "id") Long user_id,
           @PathVariable String archiveId) {
     List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
             user_id, new ObjectId(archiveId));
+    if (positionList == null) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
     Positions positions = new Positions(positionList);
     return new ResponseEntity<>(positions, HttpStatus.OK);
   }
 
   /**
    * Method for retrieving the list of user archives
-   * @param page Page number to be retrieved on the db (optional)
+   *
+   * @param page  Page number to be retrieved on the db (optional)
    * @param limit The number of element to be retrieved (optional)
    * @return PaginationSupportClass object containing:
-   *        items: list of user archives.
-   *        totalElements: total number of archives uploaded by the user
-   *        links: links to prev and next page
+   * items: list of user archives.
+   * totalElements: total number of archives uploaded by the user
+   * links: links to prev and next page
    */
-  @GetMapping("/archives")
+  @ApiOperation(value = "Endpoint for retrieving the list of user archives")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "/archives", produces = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<PaginationSupportClass> getArchives(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -148,13 +178,21 @@ public class UserArchiveController {
 
   /**
    * Method for load an archive in db.
+   *
    * @param positions the list of positions in the archive
    * @return ResponseEntity object containing the properly HTTP status code:
-   *        201: if the operation terminate successfully
-   *        400: if data uploaded are not good
-   *        500: if an error occurs
+   * 201: if the operation terminate successfully
+   * 400: if data uploaded are not good
+   * 500: if an error occurs
    */
-  @PostMapping("/archives")
+  @ApiOperation(value = "Endpoint for load an archive")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 400, message = "The request does not respect constraints"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @PostMapping(value = "/archives", consumes = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity addArchive(@RequestBody Positions positions) {
     long user_id = userId.getUserId();
@@ -187,18 +225,30 @@ public class UserArchiveController {
   /**
    * Method for deleting a user archive. the method deletes the corresponding approximatedArchive, the original archive
    * is still available for all users have booked it
+   *
    * @param archiveId Archive to be deleted
    * @return ResponseEntity object containing the properly HTTP status code:
-   *        200: if the operation terminate successfully
-   *        403: if the user is not the archive owner
-   *        500: if an error occurs
+   * 200: if the operation terminate successfully
+   * 403: if the user is not the archive owner
+   * 500: if an error occurs
    */
+  @ApiOperation(value = "Endpoint for deleting a user archive")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 403, message = "You can not delete this archive"),
+          @ApiResponse(code = 404, message = "Archive not found"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
   @DeleteMapping(value = "archives/{archiveId}")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity deleteArchive(@PathVariable(value = "archiveId") String archiveId) {
     long user_id = userId.getUserId();
     try {
       Archive archive = archiveRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
+      if (archive == null) {
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+      }
       if (archive.getUserId() != user_id) {
         return new ResponseEntity(HttpStatus.FORBIDDEN);
       }
@@ -215,12 +265,20 @@ public class UserArchiveController {
 
   /**
    * Method for retrieving a user archive.
+   *
    * @param archiveId the archive to be downloaded.
    * @return ResponseEntity object containing the user archive and the properly HTTP status code:
-   *        200: if the operation terminate successfully
-   *        500: if an error occurs
+   * 200: if the operation terminate successfully
+   * 500: if an error occurs
    */
-  @GetMapping("archives/{archiveId}")
+  @ApiOperation(value = "Endpoint for retrieving a user archive.")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 404, message = "Archive not found"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "archives/{archiveId}", produces = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<Positions> getArchive(
           @PathVariable(value = "archiveId") String archiveId) {
@@ -229,6 +287,9 @@ public class UserArchiveController {
     try {
       List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
               user_id, new ObjectId(archiveId));
+      if (positionList == null){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
       positions = new Positions(positionList);
     } catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -238,10 +299,18 @@ public class UserArchiveController {
 
   /**
    * Method for retrieving the approximated representations of archives satisfying the request
+   *
    * @param request UserRequest, encoded in base64, containing a temporal range and polygon vertices
    * @return ResponseEntity object containing the list of approximated archives
    */
-  @GetMapping("/approximatedArchives")
+  @ApiOperation(value = "Admin endpoint for retrieving a particular archive for a particular user")
+  @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "Operation terminated successfully"),
+          @ApiResponse(code=400, message="The request is not correctly formatted"),
+          @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 500, message = "An error occur on server. Try again")
+  })
+  @GetMapping(value = "/approximatedArchives", produces = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<List<ApproximatedArchive>> getApproximatedArchives(
           @RequestParam(value = "request") Base64UserRequest request) {

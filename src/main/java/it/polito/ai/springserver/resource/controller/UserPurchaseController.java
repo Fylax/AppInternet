@@ -45,15 +45,17 @@ public class UserPurchaseController {
 
   /**
    * Method for book a list of archives.
+   *
    * @param archives The list of approximated archives to book
    * @return ResponseEntity object containing the properly HTTP status code:
-   *        201: if the operation terminate successfully
-   *        500: if an error occurs
+   * 201: if the operation terminate successfully
+   * 500: if an error occurs
    */
-  @ApiOperation(value="Book a list of archives")
+  @ApiOperation(value = "Book a list of archives")
   @ApiResponses(value = {
           @ApiResponse(code = 201, message = "Operation terminated successfully"),
           @ApiResponse(code = 401, message = "User unauthorized"),
+          @ApiResponse(code = 404, message = "Archives not found"),
           @ApiResponse(code = 500, message = "An error occur on server. Try again")
   })
   @PostMapping(value = "purchasedArchives", consumes = "application/json")
@@ -61,8 +63,13 @@ public class UserPurchaseController {
   public ResponseEntity bookPositions(@RequestBody List<ApproximatedArchive> archives) {
     long user_id = userId.getUserId();
     for (ApproximatedArchive a : archives) {
-      if (archiveRepositoryInterface.findByArchiveId(
-              new ObjectId(a.getArchiveId())).getAvailableForSale()) {
+      if (!archiveRepositoryInterface.existsArchiveByArchiveId(new ObjectId(a.getArchiveId()))) {
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+      }
+    }
+    for (ApproximatedArchive a : archives) {
+      if (archiveRepositoryInterface.findByArchiveId(new ObjectId(a.getArchiveId()))
+              .getAvailableForSale()) {
         purchasedArchiveRepositoryInterface.save(new PurchasedArchive(a, user_id));
       }
     }
@@ -71,15 +78,16 @@ public class UserPurchaseController {
 
   /**
    * Admin method for retrieving the list of purchased archives for a particular user.
+   *
    * @param user_id Path variable showing the userId of interest
-   * @param page Page number to be retrieved on the db (optional)
-   * @param limit The number of element to be retrieved (optional)
+   * @param page    Page number to be retrieved on the db (optional)
+   * @param limit   The number of element to be retrieved (optional)
    * @return PaginationSupportClass object containing:
-   *        items: list of user purchased archives.
-   *        totalElements: total number of archives booked by the user of interest
-   *        links: links to prev and next page
+   * items: list of user purchased archives.
+   * totalElements: total number of archives booked by the user of interest
+   * links: links to prev and next page
    */
-  @ApiOperation(value="Admin endpoint for retrieving the list of purchased archives for a particular user")
+  @ApiOperation(value = "Admin endpoint for retrieving the list of purchased archives for a particular user")
   @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Operation terminated successfully"),
           @ApiResponse(code = 401, message = "User unauthorized"),
@@ -123,20 +131,21 @@ public class UserPurchaseController {
 
   /**
    * Method for retrieving the list of user purchased archives
-   * @param page Page number to be retrieved on the db (optional)
+   *
+   * @param page  Page number to be retrieved on the db (optional)
    * @param limit The number of element to be retrieved (optional)
    * @return PaginationSupportClass object containing:
-   *        items: list of user  purchased archives.
-   *        totalElements: total number of archives booked by the user
-   *        links: links to prev and next page
+   * items: list of user  purchased archives.
+   * totalElements: total number of archives booked by the user
+   * links: links to prev and next page
    */
-  @ApiOperation(value="Endpoint for retrieving the list of user purchased archives")
+  @ApiOperation(value = "Endpoint for retrieving the list of user purchased archives")
   @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Operation terminated successfully"),
           @ApiResponse(code = 401, message = "User unauthorized"),
           @ApiResponse(code = 500, message = "An error occur on server. Try again")
   })
-  @GetMapping(value="purchasedArchives", produces = "application/json")
+  @GetMapping(value = "purchasedArchives", produces = "application/json")
   @PreAuthorize("hasRole('USER')")
   public ResponseEntity<PaginationSupportClass> getPurchasedArchives(
           @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -170,11 +179,12 @@ public class UserPurchaseController {
 
   /**
    * Admin method for retrieving a particular purchased archive for a particular user.
-   * @param user_id Path variable showing the userId of interest
+   *
+   * @param user_id   Path variable showing the userId of interest
    * @param archiveId Archive to be retrieved
    * @return The list of positions in the archive.
    */
-  @ApiOperation(value="Admin endpoint for retrieving a particular purchased archive for a particular user")
+  @ApiOperation(value = "Admin endpoint for retrieving a particular purchased archive for a particular user")
   @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Operation terminated successfully"),
           @ApiResponse(code = 401, message = "User unauthorized"),
@@ -190,7 +200,7 @@ public class UserPurchaseController {
     try {
       List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
               user_id, new ObjectId(archiveId));
-      if (positionList == null){
+      if (positionList == null) {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
       positions = new Positions(positionList);
@@ -202,16 +212,17 @@ public class UserPurchaseController {
 
   /**
    * Method for retrieving a user purchased archive.
+   *
    * @param archiveId the archive to be downloaded.
    * @return ResponseEntity object containing the user purchased archive and the properly HTTP status code:
-   *        200: if the operation terminate successfully
-   *        500: if an error occurs
+   * 200: if the operation terminate successfully
+   * 500: if an error occurs
    */
-  @ApiOperation(value="Endpoint for retrieving a user purchased archive")
+  @ApiOperation(value = "Endpoint for retrieving a user purchased archive")
   @ApiResponses(value = {
           @ApiResponse(code = 200, message = "Operation terminated successfully"),
           @ApiResponse(code = 401, message = "User unauthorized"),
-          @ApiResponse(code=403, message= "You can't access this resource"),
+          @ApiResponse(code = 403, message = "You can't access this resource"),
           @ApiResponse(code = 404, message = "Archive not found"),
           @ApiResponse(code = 500, message = "An error occur on server. Try again")
   })
@@ -225,7 +236,7 @@ public class UserPurchaseController {
       try {
         List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
                 user_id, new ObjectId(archiveId));
-        if (positionList == null){
+        if (positionList == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         positions = new Positions(positionList);

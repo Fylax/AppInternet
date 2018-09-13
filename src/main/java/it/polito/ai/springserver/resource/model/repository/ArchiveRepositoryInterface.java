@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface ArchiveRepositoryInterface extends MongoRepository<Archive, ObjectId> {
+  boolean existsArchiveByArchiveId (ObjectId archiveId);
   Archive findByArchiveId(ObjectId archiveId);
 
   List<Archive> findByUserIdAndAvailableForSale(long userId, boolean availableForSale, Pageable pageable);

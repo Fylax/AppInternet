@@ -57,6 +57,9 @@ public class Archive {
     return countSales;
   }
 
+  public void setCountSales(){
+    this.countSales++;
+  }
   @JsonIgnore
   public boolean getAvailableForSale(){
     return this.availableForSale;

@@ -74,7 +74,7 @@ public class UserArchiveController {
           @RequestParam(value = "limit", defaultValue = "5") Integer limit) {
     page = page < 1 ? 1 : page;
     limit = limit < 1 ? 1 : limit;
-    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
+    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.DESC, "timestamp");
     List<Archive> archives = archiveRepositoryInterface.findByUserIdAndAvailableForSale(user_id,
             true, pageRequest);
     int totalElements = archiveRepositoryInterface.countByUserIdAndAvailableForSale(user_id, true);
@@ -150,7 +150,7 @@ public class UserArchiveController {
           @RequestParam(value = "limit", defaultValue = "5") Integer limit) {
     page = page < 1 ? 1 : page;
     limit = limit < 1 ? 1 : limit;
-    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
+    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.DESC, "timestamp");
     long user_id = userId.getUserId();
     List<Archive> archives = archiveRepositoryInterface.findByUserIdAndAvailableForSale(user_id,
             true, pageRequest);

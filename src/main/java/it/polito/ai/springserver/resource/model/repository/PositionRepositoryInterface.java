@@ -16,4 +16,5 @@ public interface PositionRepositoryInterface extends MongoRepository<Position, S
                                                                               long start, long end, long userId);
 
   List<Position> findByUseridAndArchiveId(long userId, ObjectId archiveId);
+  List<Position> findByArchiveId(ObjectId archiveId);
 }

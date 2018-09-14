@@ -68,8 +68,10 @@ public class UserPurchaseController {
       }
     }
     for (ApproximatedArchive a : archives) {
-      if (archiveRepositoryInterface.findByArchiveId(new ObjectId(a.getArchiveId()))
-              .getAvailableForSale()) {
+      Archive ar = archiveRepositoryInterface.findByArchiveId(new ObjectId(a.getArchiveId()));
+      if (ar.getAvailableForSale()) {
+        ar.setCountSales();
+        archiveRepositoryInterface.save(ar);
         purchasedArchiveRepositoryInterface.save(new PurchasedArchive(a, user_id));
       }
     }
@@ -102,7 +104,7 @@ public class UserPurchaseController {
           @RequestParam(value = "limit", defaultValue = "5") Integer limit) {
     page = page < 1 ? 1 : page;
     limit = limit < 1 ? 1 : limit;
-    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
+    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.DESC, "timestamp");
     List<PurchasedArchive> purchasedArchiveList =
             purchasedArchiveRepositoryInterface.findByUserId(user_id, pageRequest);
     int totalElements = purchasedArchiveRepositoryInterface.countByUserId(user_id);
@@ -153,7 +155,7 @@ public class UserPurchaseController {
     long user_id = userId.getUserId();
     page = page < 1 ? 1 : page;
     limit = limit < 1 ? 1 : limit;
-    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.ASC, "timestamp");
+    PageRequest pageRequest = new PageRequest(page - 1, limit, Sort.Direction.DESC, "timestamp");
     List<PurchasedArchive> purchasedArchiveList =
             purchasedArchiveRepositoryInterface.findByUserId(user_id, pageRequest);
     int totalElements = purchasedArchiveRepositoryInterface.countByUserId(user_id);
@@ -234,8 +236,7 @@ public class UserPurchaseController {
     if (purchasedArchiveRepositoryInterface.existsByArchiveIdAndUserId(archiveId, user_id)) {
       Positions positions;
       try {
-        List<Position> positionList = positionRepositoryInterface.findByUseridAndArchiveId(
-                user_id, new ObjectId(archiveId));
+        List<Position> positionList = positionRepositoryInterface.findByArchiveId(new ObjectId(archiveId));
         if (positionList == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
